@@ -11,9 +11,13 @@ import { KPICard } from './KPICard';
 
 const KPIContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 50px;
+
+  @media (min-width: 1200px) {
+    justify-content: space-between;
+  }
 `;
 
 export const KPI = () => {

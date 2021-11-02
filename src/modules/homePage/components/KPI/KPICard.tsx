@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { ReactNode } from 'react';
 
 const KPICardContainer = styled.div`
-  margin: 5px;
+  margin: 10px;
   padding: 10px;
   height: 200px;
   width: 220px;

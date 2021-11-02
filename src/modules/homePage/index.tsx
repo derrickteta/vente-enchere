@@ -3,6 +3,7 @@ import slide2 from '../../assets/images/slide1.jpg';
 import slide3 from '../../assets/images/slide3.jpg';
 import slide1 from '../../assets/images/slide4.jpg';
 import { Layout } from '../shared/Layout';
+import { Announcements } from './components/Announcements';
 import { Auction } from './components/Auctions';
 import { CustomCarousel } from './components/Carousel';
 import { KPI } from './components/KPI';
@@ -55,6 +56,8 @@ export const HomePage = () => {
       <Auction />
 
       <KPI />
+
+      <Announcements />
     </Layout>
   );
 };
