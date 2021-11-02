@@ -1,7 +1,9 @@
 import styled from '@emotion/styled';
 import { Card, Image, Space, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
+import { FaFacebookMessenger } from 'react-icons/fa';
 import slide1 from '../../../assets/images/slide4.jpg';
+import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
 
 const CardContainer = styled.div`
@@ -70,9 +72,14 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
               src={slide1}
               fallback={defaultImage}
             />
-            <Tooltip title='Ajouter aux favoris'>
-              <AiOutlineHeart size={35} color='red' />
-            </Tooltip>
+            <Space style={{ justifyContent: 'center' }}>
+              <Tooltip title='Ajouter aux favoris'>
+                <AiOutlineHeart size={30} color='red' />
+              </Tooltip>
+              <Tooltip title='Me rappeler'>
+                <FaFacebookMessenger size={25} color={PRIMARY} />
+              </Tooltip>
+            </Space>
           </>
         }
       >
