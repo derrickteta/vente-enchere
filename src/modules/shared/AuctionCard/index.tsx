@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Card, Image, Space, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { FaFacebookMessenger } from 'react-icons/fa';
+import { FaRegPaperPlane } from 'react-icons/fa';
 import slide1 from '../../../assets/images/slide4.jpg';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
@@ -74,10 +74,10 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
             />
             <Space style={{ justifyContent: 'center' }}>
               <Tooltip title='Ajouter aux favoris'>
-                <AiOutlineHeart size={30} color='red' />
+                <AiOutlineHeart size={25} color='red' />
               </Tooltip>
               <Tooltip title='Me rappeler'>
-                <FaFacebookMessenger size={25} color={PRIMARY} />
+                <FaRegPaperPlane size={20} color={PRIMARY} />
               </Tooltip>
             </Space>
           </>

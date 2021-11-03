@@ -6,7 +6,7 @@ import { AuctionCard } from '../../../shared/AuctionCard';
 
 const AuctionContainer = styled.div`
   margin-bottom: 50px;
-  > h2 {
+  h2 {
     color: ${PRIMARY};
   }
 
