@@ -11,7 +11,7 @@ export const Layout = ({
   return (
     <div>
       <Header />
-      <div>{other}</div>
+      <>{other}</>
       <div style={{ maxWidth: 1000, margin: 'auto', padding: 20 }}>
         {children}
       </div>

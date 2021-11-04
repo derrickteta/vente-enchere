@@ -1,7 +1,9 @@
+import { AdminContainer } from '../components/AdminContainer';
+
 export const AdminDashBoard = () => {
   return (
-    <div>
-      <h1>Admin Dashboard</h1>
-    </div>
+    <AdminContainer clicked='dashboard'>
+      <h2>Admin Dashboard</h2>
+    </AdminContainer>
   );
 };
