@@ -7,6 +7,7 @@ import { Announcements } from './components/Announcements';
 import { Auction } from './components/Auctions';
 import { CustomCarousel } from './components/Carousel';
 import { Comments } from './components/Comments';
+import { Footer } from './components/Footer';
 import { KPI } from './components/KPI';
 import { SearchBar } from './components/SearchBar';
 
@@ -51,6 +52,7 @@ export const HomePage = () => {
           ]}
         />
       }
+      footer={<Footer />}
     >
       <SearchBar />
 
