@@ -13,6 +13,7 @@ const NavLink = styled.p`
   cursor: pointer;
   margin-bottom: 5px;
   color: white;
+  font-family: Tauri;
 
   &:hover {
     text-decoration: underline;
