@@ -1,7 +1,11 @@
+import { VendeurContainer } from '../components/VendeurContainer';
+
 export const VendeurDashboard = () => {
   return (
-    <div>
-      <h1>Vendeur Dashboard</h1>
-    </div>
+    <VendeurContainer clicked='dashboard'>
+      <div>
+        <h2>Vendeur Dashboard</h2>
+      </div>
+    </VendeurContainer>
   );
 };
