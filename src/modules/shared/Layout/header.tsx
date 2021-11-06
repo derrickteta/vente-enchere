@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaOutdent } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import logo from '../../../assets/images/logo.png';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
@@ -169,7 +170,7 @@ export const Header = () => {
       <Space className='logo'>
         <Image
           alt='logo'
-          src={undefined}
+          src={logo}
           height={60}
           width={90}
           preview={false}
