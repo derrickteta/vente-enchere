@@ -140,12 +140,18 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       </NavLink>
       <Space>
         <NavLink onClick={() => {}}>
-          <Button style={{ height: 35, width: 100 }}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNIN)}
+          >
             <span style={{ fontSize: 14 }}>Sign in</span>
           </Button>
         </NavLink>
         <NavLink onClick={() => {}}>
-          <Button style={{ height: 35, width: 100 }}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNUP)}
+          >
             <span style={{ fontSize: 14 }}>Sign up</span>
           </Button>
         </NavLink>
