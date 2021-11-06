@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaOutdent } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import logo from '../../../assets/images/logo.png';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
@@ -140,12 +141,18 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       </NavLink>
       <Space>
         <NavLink onClick={() => {}}>
-          <Button style={{ height: 35, width: 100 }}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNIN)}
+          >
             <span style={{ fontSize: 14 }}>Sign in</span>
           </Button>
         </NavLink>
         <NavLink onClick={() => {}}>
-          <Button style={{ height: 35, width: 100 }}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNUP)}
+          >
             <span style={{ fontSize: 14 }}>Sign up</span>
           </Button>
         </NavLink>
@@ -163,7 +170,7 @@ export const Header = () => {
       <Space className='logo'>
         <Image
           alt='logo'
-          src={undefined}
+          src={logo}
           height={60}
           width={90}
           preview={false}
