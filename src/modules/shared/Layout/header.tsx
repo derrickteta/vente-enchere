@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaOutdent } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import logo from '../../../assets/images/logo.png';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
@@ -11,10 +12,9 @@ import { defaultImage } from '../../../shared/defaultImage';
 const NavLink = styled.p`
   font-size: 13px;
   cursor: pointer;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
   color: white;
-  // font-weight: bold;
-  font-family: Montserrat;
+  font-family: Tauri;
 
   &:hover {
     text-decoration: underline;
@@ -28,9 +28,7 @@ const NavLink = styled.p`
 const HeaderContainer = styled.div`
   display: flex;
   align-items: center;
-  padding: 15px;
-  margin-bottom: -30px;
-  background-color: transparent;
+  background-color: ${PRIMARY};
 
   > .logo {
     flex: 2;
@@ -43,6 +41,7 @@ const HeaderContainer = styled.div`
   > .menu-button {
     display: block;
     cursor: pointer;
+    margin-right: 10px;
   }
 
   @media (min-width: 768px) {
@@ -99,7 +98,6 @@ const HeaderContainer = styled.div`
 
 const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
   const history = useHistory();
-
   return (
     <div className={closeMenu ? 'menu-linkContainer' : 'linkContainer'}>
       <NavLink
@@ -116,7 +114,7 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
           history.push(ROUTES.HOME_PAGE);
         }}
       >
-        Terrains à vendre
+        Catalogue
       </NavLink>
       <NavLink
         onClick={() => {
@@ -124,7 +122,15 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
           history.push(ROUTES.HOME_PAGE);
         }}
       >
-        Articles
+        Dashboard
+      </NavLink>
+      <NavLink
+        onClick={() => {
+          closeMenu?.();
+          history.push(ROUTES.HOME_PAGE);
+        }}
+      >
+        Evènements
       </NavLink>
       <NavLink
         onClick={() => {
@@ -133,11 +139,24 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
       >
         Contacts
       </NavLink>
-      <NavLink onClick={() => {}}>
-        <Button style={{ height: 35, width: 150 }}>
-          <span style={{ fontSize: 14 }}>Connexion</span>
-        </Button>
-      </NavLink>
+      <Space>
+        <NavLink onClick={() => {}}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNIN)}
+          >
+            <span style={{ fontSize: 14 }}>Sign in</span>
+          </Button>
+        </NavLink>
+        <NavLink onClick={() => {}}>
+          <Button
+            style={{ height: 35, width: 100 }}
+            onClick={() => history.push(ROUTES.SIGNUP)}
+          >
+            <span style={{ fontSize: 14 }}>Sign up</span>
+          </Button>
+        </NavLink>
+      </Space>
     </div>
   );
 };
@@ -151,8 +170,9 @@ export const Header = () => {
       <Space className='logo'>
         <Image
           alt='logo'
-          height={70}
-          width={100}
+          src={logo}
+          height={60}
+          width={90}
           preview={false}
           style={{ objectFit: 'cover', cursor: 'pointer' }}
           fallback={defaultImage}
