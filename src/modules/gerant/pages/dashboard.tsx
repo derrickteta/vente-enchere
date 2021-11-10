@@ -1,7 +1,11 @@
+import { GerantContainer } from '../components/GerantContainer';
+
 export const GerantDashboard = () => {
   return (
-    <div>
-      <h1>Gerant Dashboard</h1>
-    </div>
+    <GerantContainer clicked='dashboard'>
+      <div>
+        <h2>Gerant Dashboard</h2>
+      </div>
+    </GerantContainer>
   );
 };
