@@ -29,6 +29,9 @@ export const NewProductPage = () => {
           Ensuite l'importer dans ce composant et c'est okay!!! La logique de
           création sera faite plus tard
         </p>
+        <p>
+          <b>NB :</b> S'inspirer du composant register et register form.
+        </p>
       </div>
     </VendeurContainer>
   );
