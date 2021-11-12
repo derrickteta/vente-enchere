@@ -16,7 +16,7 @@ const SideBarContainer = styled.div`
 
   .side-nav {
     height: 100%;
-    width: 220px;
+    width: 250px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -103,7 +103,7 @@ const SideBarContainer = styled.div`
     }
 
     .shrink-nav-bar {
-      width: 200px;
+      width: 250px;
       transition: 0.5s;
 
       > h2 {
