@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
-import { FaChalkboardTeacher, FaClipboardList, FaUser } from 'react-icons/fa';
+import {
+  FaChalkboardTeacher,
+  FaClipboardList,
+  FaRegChartBar,
+} from 'react-icons/fa';
+import { FiActivity } from 'react-icons/fi';
 import { SideBar } from '../../shared/SideBar';
 
 const Container = styled.div`
@@ -70,10 +75,21 @@ const ROUTES = [
   },
   {
     icon: (clicked: string) => (
-      <FaUser color={clicked === 'account' ? 'white' : 'black'} size={24} />
+      <FiActivity color={clicked === 'log' ? 'white' : 'black'} size={24} />
     ),
-    link: '/admin/my-account',
-    text: 'Mon Compte',
-    clicked: 'account',
+    link: '/admin/logs',
+    text: 'Logs et activités',
+    clicked: 'log',
+  },
+  {
+    icon: (clicked: string) => (
+      <FaRegChartBar
+        color={clicked === 'stats' ? 'white' : 'black'}
+        size={24}
+      />
+    ),
+    link: '/admin/statistics',
+    text: 'Statistics',
+    clicked: 'stats',
   },
 ];

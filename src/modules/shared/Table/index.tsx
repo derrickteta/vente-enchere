@@ -39,7 +39,7 @@ export const DataTable = <T extends { _id: string }>({
       <Space style={{ marginBottom: 10 }}>
         <Input
           placeholder='Filtrer'
-          style={{ maxWidth: 200 }}
+          style={{ width: 300 }}
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
@@ -48,7 +48,7 @@ export const DataTable = <T extends { _id: string }>({
         dataSource={dataToShow}
         columns={columns}
         loading={loading}
-        size='small'
+        size='middle'
         rowKey='_id'
         rowClassName={(row, index) =>
           rowId === row._id
