@@ -1,9 +1,12 @@
 import styled from '@emotion/styled';
+import { Image } from 'antd';
 import React from 'react';
 import { FaOutdent, FaSignInAlt } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import logo from '../../../assets/images/logo2.png';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
+import { defaultImage } from '../../../shared/defaultImage';
 
 const SideBarContainer = styled.div`
   .side-line {
@@ -16,7 +19,7 @@ const SideBarContainer = styled.div`
 
   .side-nav {
     height: 100%;
-    width: 220px;
+    width: 250px;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -28,11 +31,9 @@ const SideBarContainer = styled.div`
     box-shadow: 0 3px 5px 0 rgba(81, 45, 168, 0.3),
       0 6px 20px 0 rgba(81, 45, 168, 0.3);
 
-    > h2 {
-      text-align: center;
-      font-family: 'Montserrat';
-      color: ${PRIMARY};
-      font-size: 20px;
+    > .img {
+      display: flex;
+      justify-content: center;
     }
 
     .link {
@@ -80,7 +81,7 @@ const SideBarContainer = styled.div`
     width: 50px;
     transition: 0.5s;
 
-    > h2 {
+    > .img {
       display: none;
     }
 
@@ -94,7 +95,7 @@ const SideBarContainer = styled.div`
       width: 50px;
       transition: 0.5s;
 
-      > h2 {
+      > .img {
         display: none;
       }
       .side-bar-text {
@@ -103,10 +104,10 @@ const SideBarContainer = styled.div`
     }
 
     .shrink-nav-bar {
-      width: 200px;
+      width: 250px;
       transition: 0.5s;
 
-      > h2 {
+      > .img {
         display: block;
       }
 
@@ -140,8 +141,17 @@ export const SideBar = ({
             onClick={() => setShrink(!shrink)}
           />
         </div>
-
-        <h2>Agric Auction</h2>
+        <div className='img'>
+          <Image
+            alt='logo'
+            src={logo}
+            height={120}
+            width={150}
+            preview={false}
+            style={{ objectFit: 'cover' }}
+            fallback={defaultImage}
+          />
+        </div>
         <div className='side-line' />
 
         {routes.map((item) => (

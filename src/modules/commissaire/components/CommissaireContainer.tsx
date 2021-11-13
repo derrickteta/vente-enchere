@@ -11,7 +11,7 @@ const Container = styled.div`
   transition: 0.5s;
 
   @media (min-width: 1200px) {
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 50px;
     transition: 0.5s;
 

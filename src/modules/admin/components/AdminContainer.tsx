@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
-import { FaChalkboardTeacher, FaClipboardList, FaUser } from 'react-icons/fa';
+import {
+  FaChalkboardTeacher,
+  FaClipboardList,
+  FaRegChartBar,
+} from 'react-icons/fa';
+import { FiActivity } from 'react-icons/fi';
 import { SideBar } from '../../shared/SideBar';
 
 const Container = styled.div`
@@ -11,7 +16,7 @@ const Container = styled.div`
   transition: 0.5s;
 
   @media (min-width: 1200px) {
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 50px;
     transition: 0.5s;
 
@@ -60,20 +65,31 @@ const ROUTES = [
   {
     icon: (clicked: string) => (
       <FaClipboardList
-        color={clicked === 'produits' ? 'white' : 'black'}
+        color={clicked === 'personnel' ? 'white' : 'black'}
         size={24}
       />
     ),
-    link: '/admin/products',
-    text: 'Produits',
-    clicked: 'produits',
+    link: '/admin/personnel',
+    text: 'Personnel',
+    clicked: 'personnel',
   },
   {
     icon: (clicked: string) => (
-      <FaUser color={clicked === 'account' ? 'white' : 'black'} size={24} />
+      <FiActivity color={clicked === 'log' ? 'white' : 'black'} size={24} />
     ),
-    link: '/admin/my-account',
-    text: 'Mon Compte',
-    clicked: 'account',
+    link: '/admin/logs',
+    text: 'Logs et activités',
+    clicked: 'log',
+  },
+  {
+    icon: (clicked: string) => (
+      <FaRegChartBar
+        color={clicked === 'stats' ? 'white' : 'black'}
+        size={24}
+      />
+    ),
+    link: '/admin/statistics',
+    text: 'Statistics',
+    clicked: 'stats',
   },
 ];

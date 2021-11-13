@@ -7,6 +7,9 @@ export const ROUTES = {
   },
   VENDEUR_PAGE: {
     DASHBOARD: '/vendeur/dashboard',
+    PRODUCTS: '/vendeur/products',
+    ACCOUNT: '/vendeur/account',
+    NEW_PRODUCT: '/vendeur/products/new',
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',

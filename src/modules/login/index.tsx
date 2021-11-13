@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button, Form, Image, Input, Space } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo2.png';
 import slide2 from '../../assets/images/slide4.jpg';
 import { ROUTES } from '../../routes';
 import { PRIMARY } from '../../shared/colors';
@@ -60,7 +60,7 @@ export const LoginPage = () => {
               alt='logo'
               src={logo}
               height={120}
-              width={120}
+              width={150}
               preview={false}
               style={{ objectFit: 'cover' }}
               fallback={defaultImage}

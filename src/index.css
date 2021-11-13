@@ -25,3 +25,9 @@ code {
   src: url('./assets/fonts/Tauri-Regular.ttf');
   font-style: normal;
 }
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-Light.ttf');
+  font-style: normal;
+}
