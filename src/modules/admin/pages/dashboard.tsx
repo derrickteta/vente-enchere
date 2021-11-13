@@ -1,6 +1,7 @@
 import { Button, Space, Tag, Tooltip } from 'antd';
 import {
   FaChartLine,
+  FaCheckCircle,
   FaDollarSign,
   FaProductHunt,
   FaRegCommentAlt,
@@ -32,7 +33,87 @@ export const AdminDashBoard = () => {
       </div>
 
       <h2 style={{ marginTop: 50 }}>Utilisateurs</h2>
-      <DataTable loading={false} data={[]} columns={userColumns} />
+      <DataTable
+        loading={false}
+        data={[
+          {
+            localisation: {
+              adresse: 'Melen',
+              pays: 'Cameroun',
+              ville: 'Yaoundé',
+            },
+            _id: '618cc6a426e48fde9feb1230',
+            nom: 'Talom',
+            prenom: 'Franklin',
+            telephone: '690115022',
+            roles: ['vendeur'],
+            nombreProduitsAchetes: 0,
+            totalArgentDepense: 0,
+            produitsAchetes: [],
+            compte: {
+              _id: '618cb77d2bfd4df51c675685',
+              email: 'talomfranklin@gmail.com',
+              password:
+                '$2a$10$7l516SN11EljIY/bxPeM.OA7hs0bGk2GlWB2UZqBnNIkapdnv5aDe',
+              isActivated: false,
+              __v: 0,
+            },
+            dateAjout: '2021-11-11T07:21:05.369Z',
+            __v: 0,
+          },
+          {
+            localisation: {
+              adresse: 'Akwa',
+              pays: 'Cameroun',
+              ville: 'Douala',
+            },
+            _id: '618cd0258835531fcf9ac673',
+            nom: 'Talla',
+            prenom: 'James',
+            telephone: '690155022',
+            roles: ['gerant', 'commissaire'],
+            nombreProduitsAchetes: 0,
+            totalArgentDepense: 0,
+            produitsAchetes: [],
+            compte: {
+              _id: '618cd0258835531fcf9ac671',
+              email: 'franklinfrost14@gmail.com',
+              password:
+                '$2a$10$QFLd5.KqADmfLGtZQcfqaemuCM68d4/sW82xlimuAoglSqMaUqAJC',
+              isActivated: true,
+              __v: 0,
+            },
+            dateAjout: '2021-11-11T08:11:03.691Z',
+            __v: 0,
+          },
+          {
+            localisation: {
+              adresse: 'Akwa',
+              pays: 'Cameroun',
+              ville: 'Douala',
+            },
+            _id: '618cd0fbd518846e591746c7',
+            nom: 'Talla',
+            prenom: 'James',
+            telephone: '690155022',
+            roles: ['gerant', 'commissaire'],
+            nombreProduitsAchetes: 0,
+            totalArgentDepense: 0,
+            produitsAchetes: [],
+            compte: {
+              _id: '618cd0fbd518846e591746c5',
+              email: 'talla@gmail.com',
+              password:
+                '$2a$10$ZBG9sZsylT.pJgJ3Fj8XP.arndStbq3yO7zI60ko2RAUxks.mbWHG',
+              isActivated: false,
+              __v: 0,
+            },
+            dateAjout: '2021-11-11T08:14:27.923Z',
+            __v: 0,
+          },
+        ]}
+        columns={userColumns}
+      />
     </AdminContainer>
   );
 };
@@ -122,7 +203,7 @@ const userColumns = [
     render: (cell: string[], row: any) => (
       <Space>
         {cell.map((item) => (
-          <Tag key={item} color='magenta'>
+          <Tag key={item} color='purple'>
             {item}
           </Tag>
         ))}
@@ -139,7 +220,20 @@ const userColumns = [
     title: 'Etat du compte',
     dataIndex: 'compte',
     key: 'isActivated',
-    render: (cell: any, row: any) => <span>{cell.isActivated} </span>,
+    render: (cell: any, row: any) => (
+      <span>
+        {cell.isActivated ? (
+          <Tag
+            icon={<FaCheckCircle size={10} style={{ marginRight: 5 }} />}
+            color='success'
+          >
+            activé{' '}
+          </Tag>
+        ) : (
+          <Tag color='error'>Non activé</Tag>
+        )}{' '}
+      </span>
+    ),
   },
   {
     title: "Date d'inscription",
