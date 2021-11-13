@@ -4,6 +4,9 @@ export const ROUTES = {
   SIGNUP: '/signup',
   ADMIN_PAGE: {
     DASHBOARD: '/admin/dashboard',
+    PERSONNEL: '/admin/personnel',
+    LOGS: '/admin/logs',
+    STATISTICS: '/admin/statistics',
   },
   VENDEUR_PAGE: {
     DASHBOARD: '/vendeur/dashboard',
@@ -13,5 +16,10 @@ export const ROUTES = {
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',
+  },
+  CATALOG_PAGE: {
+    CATALOG: '/catalog',
+    PRODUCT: (productId: string) => `/catalog/product/?id=${productId}`,
+    LOT: (lotId: string) => `/catalog/lot/?id=${lotId}`,
   },
 };

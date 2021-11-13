@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Card, Image, Space, Tooltip } from 'antd';
+import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
 import slide1 from '../../../assets/images/slide4.jpg';
@@ -99,7 +99,10 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
 
           <hr />
           <h4>Début de l'enchère dans</h4>
-          <h3>13h 51m 48s</h3>
+          <Statistic.Countdown
+            valueStyle={{ fontSize: 20, color: 'red' }}
+            value={Date.now() + 1000 * 60 * 60 * 24 * 1 + 1000 * 30}
+          />
         </div>
       </Card>
     </CardContainer>
