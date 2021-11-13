@@ -174,7 +174,7 @@ export const Header = () => {
           height={60}
           width={90}
           preview={false}
-          style={{ objectFit: 'cover', cursor: 'pointer' }}
+          style={{ objectFit: 'contain', cursor: 'pointer' }}
           fallback={defaultImage}
           onClick={() => history.push(ROUTES.HOME_PAGE)}
         />

@@ -2,7 +2,7 @@
 import styled from '@emotion/styled';
 import { Button, Image, Space } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
-import logo from '../../assets/images/logo.png';
+import logo from '../../assets/images/logo2.png';
 import slide1 from '../../assets/images/slide3.jpg';
 import { ROUTES } from '../../routes';
 import { PRIMARY } from '../../shared/colors';
@@ -69,6 +69,7 @@ const RegistrationContainer = styled.div`
           height: 100%;
           justify-content: center;
           padding: 20px;
+          padding-top: 0;
 
           h2 {
             color: white;
@@ -107,8 +108,8 @@ export const RegistrationPage = () => {
               <Image
                 alt='logo'
                 src={logo}
-                height={120}
-                width={120}
+                height={200}
+                width={200}
                 preview={false}
                 style={{ objectFit: 'cover' }}
                 fallback={defaultImage}

@@ -11,7 +11,7 @@ const Container = styled.div`
   transition: 0.5s;
 
   @media (min-width: 1200px) {
-    margin-left: 200px;
+    margin-left: 250px;
     padding: 50px;
     transition: 0.5s;
 
@@ -60,19 +60,19 @@ const ROUTES = [
   {
     icon: (clicked: string) => (
       <FaClipboardList
-        color={clicked === 'produits' ? 'white' : 'black'}
+        color={clicked === 'products' ? 'white' : 'black'}
         size={24}
       />
     ),
     link: '/vendeur/products',
     text: 'Mes Produits',
-    clicked: 'produits',
+    clicked: 'products',
   },
   {
     icon: (clicked: string) => (
       <FaUser color={clicked === 'account' ? 'white' : 'black'} size={24} />
     ),
-    link: '/vendeur/my-account',
+    link: '/vendeur/account',
     text: 'Mon Compte',
     clicked: 'account',
   },
