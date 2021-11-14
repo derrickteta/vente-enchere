@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Form, Image, Input, Space } from 'antd';
+import { Button, Form, Image, Input, notification, Space } from 'antd';
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import logo from '../../assets/images/logo2.png';
@@ -7,6 +7,7 @@ import slide2 from '../../assets/images/slide4.jpg';
 import { ROUTES } from '../../routes';
 import { PRIMARY } from '../../shared/colors';
 import { defaultImage } from '../../shared/defaultImage';
+import { signIn } from './network';
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
 
@@ -74,8 +75,31 @@ export const LoginPage = () => {
             scrollToFirstError
             size='large'
             onFinish={async (data) => {
-              // const { matricule, password } = data;
               setIsLoading(true);
+              const { email, password } = data;
+              await signIn(email, password)
+                .then((data) => {
+                  if (data.success) {
+                    notification.success({
+                      message: 'Succès',
+                      description: data.message,
+                    });
+                    router.push(`${data.result.roles[0]}/dashboard`);
+                  } else {
+                    notification.error({
+                      message: 'Erreur',
+                      description: data.message,
+                    });
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  notification.error({
+                    message: 'Erreur',
+                    description: 'Une erreur est survenu',
+                  });
+                });
+              setIsLoading(false);
             }}
           >
             <Form.Item
