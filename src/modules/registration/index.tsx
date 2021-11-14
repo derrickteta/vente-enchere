@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import styled from '@emotion/styled';
 import { Button, Image, Space } from 'antd';
+import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import logo from '../../assets/images/logo2.png';
 import slide1 from '../../assets/images/slide3.jpg';
@@ -99,6 +100,8 @@ const RegistrationContainer = styled.div`
 
 export const RegistrationPage = () => {
   const router = useHistory();
+  const [isClient, setIsClient] = useState(true);
+
   return (
     <RegistrationContainer>
       <div>
@@ -151,7 +154,21 @@ export const RegistrationPage = () => {
         </div>
         <div className='forms'>
           <h1>Créez un compte</h1>
-          <RegistrationForm />
+          <Space style={{ width: '100%', justifyContent: 'center' }}>
+            <Button
+              type={isClient ? 'primary' : 'default'}
+              onClick={() => setIsClient(true)}
+            >
+              Client
+            </Button>
+            <Button
+              type={!isClient ? 'primary' : 'default'}
+              onClick={() => setIsClient(false)}
+            >
+              Vendeur
+            </Button>
+          </Space>
+          <RegistrationForm isClient={isClient} />
           <Space
             style={{
               display: 'flex',

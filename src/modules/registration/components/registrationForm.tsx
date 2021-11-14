@@ -2,18 +2,16 @@
 import { Button, Form, Input, notification } from 'antd';
 import { useState } from 'react';
 import { PRIMARY } from '../../../shared/colors';
+import { signUp } from '../network';
 
-type LayoutType = Parameters<typeof Form>[0]['layout'];
-
-export const RegistrationForm = () => {
+export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
   // const router = useRouter();
   const [form] = Form.useForm();
-  const [formLayout] = useState<LayoutType>('vertical');
   const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Form
-      layout={formLayout}
+      layout='vertical'
       form={form}
       labelCol={{ span: 20 }}
       wrapperCol={{ span: 25 }}
@@ -21,7 +19,68 @@ export const RegistrationForm = () => {
       scrollToFirstError
       onFinish={async (data) => {
         setIsLoading(true);
-        notification.success({ message: 'Success' });
+        let dataToPost: any = {
+          nom: data.nom,
+          prenom: data.prenom,
+          telephone: data.telephone,
+          email: data.email,
+          password: data.password,
+          roles: [],
+          localisation: {
+            adresse: data.adresse,
+            ville: data.ville,
+            pays: 'Cameroun',
+          },
+        };
+
+        if (isClient) {
+          dataToPost.roles = ['client'];
+          await signUp('client', dataToPost)
+            .then((data) => {
+              if (data.success) {
+                notification.success({
+                  message: 'Succès',
+                  description: data.message,
+                });
+              } else {
+                notification.error({
+                  message: 'Erreur',
+                  description: data.message,
+                });
+              }
+            })
+            .catch((error) => {
+              notification.error({
+                message: 'Erreur',
+                description: 'une erreur est survenu',
+              });
+            });
+        } else {
+          dataToPost.roles = ['vendeur'];
+          dataToPost.specialite = data.specialite;
+          dataToPost.numeroCNI = data.numeroCNI;
+          await signUp('vendeur', dataToPost)
+            .then((data) => {
+              if (data.success) {
+                notification.success({
+                  message: 'Succès',
+                  description: data.message,
+                });
+              } else {
+                notification.error({
+                  message: 'Erreur',
+                  description: data.message,
+                });
+              }
+            })
+            .catch((error) => {
+              notification.error({
+                message: 'Erreur',
+                description: 'une erreur est survenu',
+              });
+            });
+        }
+        setIsLoading(false);
       }}
     >
       <Form.Item
@@ -111,6 +170,38 @@ export const RegistrationForm = () => {
       >
         <Input placeholder='ville' />
       </Form.Item>
+
+      {!isClient && (
+        <>
+          <Form.Item
+            label='Numéro CNI'
+            name='numeroCNI'
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez renseigner votre numéro de CNI',
+              },
+            ]}
+          >
+            <Input placeholder='numéro de cni' />
+          </Form.Item>
+
+          <Form.Item
+            label='Spécialité'
+            name='specialite'
+            hasFeedback
+            rules={[
+              {
+                required: true,
+                message: 'Veuillez renseigner votre spécialité',
+              },
+            ]}
+          >
+            <Input placeholder='spécialité' />
+          </Form.Item>
+        </>
+      )}
 
       <Form.Item
         label='Password'
