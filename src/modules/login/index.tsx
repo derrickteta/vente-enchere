@@ -77,15 +77,28 @@ export const LoginPage = () => {
             onFinish={async (data) => {
               setIsLoading(true);
               const { email, password } = data;
-              await signIn(email, password).then((data) => {
-                if (data.success) {
-                  notification.success({
-                    message: 'Succès',
-                    description: data.message,
+              await signIn(email, password)
+                .then((data) => {
+                  if (data.success) {
+                    notification.success({
+                      message: 'Succès',
+                      description: data.message,
+                    });
+                    router.push(`${data.result.roles[0]}/dashboard`);
+                  } else {
+                    notification.error({
+                      message: 'Erreur',
+                      description: data.message,
+                    });
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  notification.error({
+                    message: 'Erreur',
+                    description: 'Une erreur est survenu',
                   });
-                  router.push(`${data.result.roles[0]}/dashboard`);
-                }
-              });
+                });
               setIsLoading(false);
             }}
           >
