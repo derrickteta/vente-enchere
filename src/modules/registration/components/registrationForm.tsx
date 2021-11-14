@@ -1,11 +1,13 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input, notification } from 'antd';
 import { useState } from 'react';
+import { useHistory } from 'react-router';
+import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { signUp } from '../network';
 
 export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
-  // const router = useRouter();
+  const router = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -42,6 +44,7 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   message: 'Succès',
                   description: data.message,
                 });
+                router.push(ROUTES.CATALOG_PAGE.CATALOG);
               } else {
                 notification.error({
                   message: 'Erreur',
@@ -66,6 +69,7 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   message: 'Succès',
                   description: data.message,
                 });
+                router.push(ROUTES.VENDEUR_PAGE.DASHBOARD);
               } else {
                 notification.error({
                   message: 'Erreur',
