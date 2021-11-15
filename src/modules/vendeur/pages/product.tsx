@@ -1,4 +1,5 @@
 import { Button, notification, Space } from 'antd';
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
@@ -8,6 +9,7 @@ import { createLot } from '../network';
 
 export const VendeurProductPage = () => {
   const router = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <VendeurContainer clicked='products'>
@@ -20,9 +22,12 @@ export const VendeurProductPage = () => {
         >
           {() => (
             <div>
-              <h3>Voulez vous commencer la création du lot des produit(s) ?</h3>
+              <h3 style={{ marginBottom: 20 }}>
+                Voulez vous commencer la création du lot des produit(s) ?
+              </h3>
               <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
                 <Button
+                  danger
                   onClick={() => router.push(ROUTES.VENDEUR_PAGE.NEW_PRODUCT)}
                 >
                   Fermer
@@ -30,10 +35,10 @@ export const VendeurProductPage = () => {
                 <Button
                   type='primary'
                   style={{ backgroundColor: PRIMARY, borderWidth: 0 }}
+                  loading={isLoading}
                   onClick={async () => {
-                    await createLot({
-                      numeroLot: 123456,
-                    }).then((data) => {
+                    setIsLoading(true);
+                    await createLot({}).then((data) => {
                       if (data.success) {
                         notification.success({
                           message: 'Succes',
@@ -50,11 +55,10 @@ export const VendeurProductPage = () => {
                         });
                       }
                     });
-
-                    // logic pour création  du lot : Appel à l'API
+                    setIsLoading(false);
                   }}
                 >
-                  Continuer
+                  Créer le lot
                 </Button>
               </Space>
             </div>
