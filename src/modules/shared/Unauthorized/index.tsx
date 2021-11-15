@@ -1,7 +1,10 @@
 import styled from '@emotion/styled';
 import { Button, Image } from 'antd';
 import { useHistory } from 'react-router';
+import im401 from '../../../assets/images/401.svg';
 import { ROUTES } from '../../../routes';
+import { PRIMARY } from '../../../shared/colors';
+import { defaultImage } from '../../../shared/defaultImage';
 
 const UnauthorizedContainer = styled.div`
   display: flex;
@@ -48,10 +51,11 @@ export const Unauthorized = () => {
         <h3 className='title'>Attention!!!</h3>
         <Image
           alt='unauthorized'
-          src='/401.svg'
+          src={im401}
           width={250}
           style={{ objectFit: 'cover' }}
           preview={false}
+          fallback={defaultImage}
         />
         <h3 className='text-description'>
           Vous n`êtes pas authorisé a accéder à cette ressource. Veuillez vous
@@ -60,6 +64,7 @@ export const Unauthorized = () => {
         <Button
           size='large'
           type='primary'
+          style={{ backgroundColor: PRIMARY, borderWidth: 0 }}
           onClick={() => router.push(ROUTES.SIGNIN)}
         >
           Connexion
