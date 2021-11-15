@@ -1,9 +1,10 @@
-import { Button, Space } from 'antd';
+import { Button, notification, Space } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { VendeurContainer } from '../components/VendeurContainer';
+import { createLot } from '../network';
 
 export const VendeurProductPage = () => {
   const router = useHistory();
@@ -29,9 +30,28 @@ export const VendeurProductPage = () => {
                 <Button
                   type='primary'
                   style={{ backgroundColor: PRIMARY, borderWidth: 0 }}
-                  onClick={() => {
-                    // logic pour création du lot : Appel à l'API
-                    router.push(ROUTES.VENDEUR_PAGE.NEW_PRODUCT);
+                  onClick={async () => {
+                    await createLot({
+                      numeroLot: 123456,
+                    }).then((data) => {
+                      if (data.success) {
+                        notification.success({
+                          message: 'Succes',
+                          description: data.message,
+                        });
+                        router.push(
+                          ROUTES.VENDEUR_PAGE.NEW_PRODUCT,
+                          data.result,
+                        );
+                      } else {
+                        notification.error({
+                          message: 'Erreur',
+                          description: data.message,
+                        });
+                      }
+                    });
+
+                    // logic pour création  du lot : Appel à l'API
                   }}
                 >
                   Continuer
