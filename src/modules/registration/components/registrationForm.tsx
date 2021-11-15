@@ -44,7 +44,6 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   message: 'Succès',
                   description: data.message,
                 });
-                router.push(ROUTES.CATALOG_PAGE.CATALOG);
               } else {
                 notification.error({
                   message: 'Erreur',
@@ -69,7 +68,6 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   message: 'Succès',
                   description: data.message,
                 });
-                router.push(ROUTES.VENDEUR_PAGE.DASHBOARD);
               } else {
                 notification.error({
                   message: 'Erreur',
@@ -85,6 +83,7 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
             });
         }
         setIsLoading(false);
+        router.push(ROUTES.ACTIVATE_ACCOUNT);
       }}
     >
       <Form.Item
