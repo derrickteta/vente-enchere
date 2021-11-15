@@ -3,6 +3,7 @@ import { Button, Image, Spin } from 'antd';
 import { useState } from 'react';
 import stop from '../../../assets/images/stop.png';
 import logo from '../../../assets/images/welcome.png';
+import { PRIMARY } from '../../../shared/colors';
 
 const InfoContainer = styled.div`
   width: 300px;
@@ -30,7 +31,7 @@ const InfoContainer = styled.div`
   }
 
   .top-line {
-    background-color: #7a39e0;
+    background-color: ${PRIMARY};
     height: 5px;
   }
 
@@ -45,7 +46,7 @@ const InfoContainer = styled.div`
     width: 500px;
   }
 `;
-export const InfoContainerComponent = ({
+export const MessageContainer = ({
   title,
   description,
   showError,
