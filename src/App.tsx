@@ -7,6 +7,8 @@ import { GerantRoutes } from './modules/gerant/routes/gerant.routes';
 import { HomePage } from './modules/homePage';
 import { LoginPage } from './modules/login';
 import { RegistrationPage } from './modules/registration';
+import { ActivateAccount } from './modules/registration/activateAcount';
+import { Unauthorized } from './modules/shared/Unauthorized';
 import { VendeurRoutes } from './modules/vendeur/routes/vendeur.routes';
 
 function App() {
@@ -15,12 +17,15 @@ function App() {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/signin' component={LoginPage} />
+        <Route exact path='/activate-account' component={ActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
         <Route exact path='/catalog' component={CatalogPage} />
         <Route path='/admin' render={() => <AdminRoutes />} />
         <Route path='/vendeur' render={() => <VendeurRoutes />} />
         <Route path='/gerant' render={() => <GerantRoutes />} />
         <Route path='/commissaire' render={() => <CommissaireRoutes />} />
+
+        <Route exact path='/unauthorized' component={Unauthorized} />
       </Switch>
     </BrowserRouter>
   );
