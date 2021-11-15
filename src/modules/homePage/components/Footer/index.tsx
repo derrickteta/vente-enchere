@@ -106,8 +106,8 @@ export const Footer = () => {
             <p>Assurance</p>
             <div className='social-icon'>
               <Space size={30}>
-                {socialLinks.map(({ link, icon }) => (
-                  <a key={link} href={link} target='_blank' rel='noreferrer'>
+                {socialLinks.map(({ link, icon }, index) => (
+                  <a key={index} href={link} target='_blank' rel='noreferrer'>
                     {icon}
                   </a>
                 ))}
