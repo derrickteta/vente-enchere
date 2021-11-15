@@ -17,7 +17,7 @@ function App() {
       <Switch>
         <Route exact path='/' component={HomePage} />
         <Route exact path='/signin' component={LoginPage} />
-        <Route exact path='/activate-account' component={ActivateAccount} />
+        <Route path='/activate-account' component={ActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
         <Route exact path='/catalog' component={CatalogPage} />
         <Route path='/admin' render={() => <AdminRoutes />} />

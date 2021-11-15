@@ -3,7 +3,7 @@ export const ROUTES = {
   SIGNIN: '/signin',
   SIGNUP: '/signup',
   UNAUTHORIZED: '/unauthorized',
-  ACTIVATE_ACCOUNT: '/activate-account',
+  ACTIVATE_ACCOUNT: (userId: string) => `/activate-account/id=${userId}`,
   ADMIN_PAGE: {
     DASHBOARD: '/admin/dashboard',
     PERSONNEL: '/admin/personnel',
