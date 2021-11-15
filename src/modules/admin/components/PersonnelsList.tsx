@@ -1,11 +1,9 @@
-import { Form, Table } from 'antd';
-
-type LayoutType = Parameters<typeof Form>[0]['layout'];
+import { DataTable } from '../../shared/Table';
 
 export const PersonelsList = () => {
   const dataSource = [
     {
-      key: '1',
+      _id: '1',
       nom: 'talom',
       prenom: 'patrick',
       ville: 'Yaounde',
@@ -16,7 +14,7 @@ export const PersonelsList = () => {
       email: 'talom@email.com',
     },
     {
-      key: '2',
+      _id: '2',
       nom: 'toto',
       prenom: 'junior',
       ville: 'Douala',
@@ -27,7 +25,7 @@ export const PersonelsList = () => {
       email: 'toto@email.com',
     },
     {
-      key: '3',
+      _id: '3',
       nom: 'madjio',
       prenom: 'cyrielle',
       ville: 'Mbouda',
@@ -38,7 +36,7 @@ export const PersonelsList = () => {
       email: 'madjio@email.com',
     },
     {
-      key: '4',
+      _id: '4',
       nom: 'moussa',
       prenom: 'wadoudou',
       ville: 'Maroua',
@@ -49,7 +47,7 @@ export const PersonelsList = () => {
       email: 'moussa@email.com',
     },
     {
-      key: '1',
+      _id: '5',
       nom: 'talom',
       prenom: 'patrick',
       ville: 'Yaounde',
@@ -58,90 +56,13 @@ export const PersonelsList = () => {
       telephone: '002346854755',
       pseudo: 'talomp',
       email: 'talom@email.com',
-    },
-    {
-      key: '2',
-      nom: 'toto',
-      prenom: 'junior',
-      ville: 'Douala',
-      pays: 'Cameroun',
-      adresse: '125 rue Stand alone',
-      telephone: '002346854755',
-      pseudo: 'toto',
-      email: 'toto@email.com',
-    },
-    {
-      key: '3',
-      nom: 'madjio',
-      prenom: 'cyrielle',
-      ville: 'Mbouda',
-      pays: 'Cameroun',
-      adresse: '125 dljfd',
-      telephone: '63952715',
-      pseudo: 'madjio',
-      email: 'madjio@email.com',
-    },
-    {
-      key: '4',
-      nom: 'moussa',
-      prenom: 'wadoudou',
-      ville: 'Maroua',
-      pays: 'Cameroun',
-      adresse: '125 Dak',
-      telephone: '00246854755',
-      pseudo: 'moussa',
-      email: 'moussa@email.com',
-    },
-    {
-      key: '1',
-      nom: 'talom',
-      prenom: 'patrick',
-      ville: 'Yaounde',
-      pays: 'Nigeria',
-      adresse: '125 Lagos',
-      telephone: '002346854755',
-      pseudo: 'talomp',
-      email: 'talom@email.com',
-    },
-    {
-      key: '2',
-      nom: 'toto',
-      prenom: 'junior',
-      ville: 'Douala',
-      pays: 'Cameroun',
-      adresse: '125 rue Stand alone',
-      telephone: '002346854755',
-      pseudo: 'toto',
-      email: 'toto@email.com',
-    },
-    {
-      key: '3',
-      nom: 'madjio',
-      prenom: 'cyrielle',
-      ville: 'Mbouda',
-      pays: 'Cameroun',
-      adresse: '125 dljfd',
-      telephone: '63952715',
-      pseudo: 'madjio',
-      email: 'madjio@email.com',
-    },
-    {
-      key: '4',
-      nom: 'moussa',
-      prenom: 'wadoudou',
-      ville: 'Maroua',
-      pays: 'Cameroun',
-      adresse: '125 Dak',
-      telephone: '00246854755',
-      pseudo: 'moussa',
-      email: 'moussa@email.com',
     },
   ];
   const columns = [
     {
       title: 'Nom',
       dataIndex: 'nom',
-      key: 'nom',
+      _id: 'nom',
     },
     {
       title: 'Prénom',
@@ -180,9 +101,5 @@ export const PersonelsList = () => {
     },
   ];
 
-  return (
-    <>
-      <Table dataSource={dataSource} columns={columns} />;
-    </>
-  );
+  return <>{<DataTable columns={columns} data={dataSource} />}</>;
 };
