@@ -1,5 +1,6 @@
 import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import './assets/global-css/modal-styles.css';
 import { AdminRoutes } from './modules/admin/routes/admin.routes';
 import { CatalogPage } from './modules/catalog/pages/catalog';
 import { CommissaireRoutes } from './modules/commissaire/routes/commissaire.routes';
