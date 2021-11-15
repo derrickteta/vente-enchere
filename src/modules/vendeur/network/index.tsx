@@ -1,7 +1,9 @@
 import { customFetch } from '../../../shared/customFetch';
+import { API_ROUTES } from '../../shared/ApiRoutes';
+
 export const createProduit = (produit: any) => {
-  return customFetch.post('http://192.168.43.215:3001/api/produits', produit);
+  return customFetch.post(API_ROUTES.PRODUITS.BASE, produit);
 };
 export const createLot = (lot: any) => {
-  return customFetch.post('http://192.168.43.215:3001/api/lots', lot);
+  return customFetch.post(API_ROUTES.LOTS.BASE, lot);
 };
