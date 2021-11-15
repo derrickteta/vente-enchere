@@ -2,6 +2,8 @@ export const ROUTES = {
   HOME_PAGE: '/',
   SIGNIN: '/signin',
   SIGNUP: '/signup',
+  UNAUTHORIZED: '/unauthorized',
+  ACTIVATE_ACCOUNT: '/activate-account',
   ADMIN_PAGE: {
     DASHBOARD: '/admin/dashboard',
     PERSONNEL: '/admin/personnel',
