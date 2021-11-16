@@ -16,7 +16,13 @@ import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.enti
 import { PRIMARY } from '../../../shared/colors';
 import { addImageProduit, createProduit, fetchCategories } from '../network';
 
-export const ProductForm = () => {
+export const ProductForm = ({
+  currentNum,
+  setCurrentNum,
+}: {
+  currentNum?: number;
+  setCurrentNum?: (val: number) => void;
+}) => {
   const router = useHistory();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
@@ -77,6 +83,10 @@ export const ProductForm = () => {
                 });
               }
             });
+            if (currentNum) {
+              setCurrentNum?.(currentNum + 1);
+              form.resetFields();
+            }
           }
         });
         setIsLoading(false);
