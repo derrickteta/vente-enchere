@@ -1,13 +1,18 @@
 import { VendeurEntity } from '../GestionCompte/vendeur.entity';
 import { CategorieEntity } from './categorie.entity';
 
+export type QuantityType = {
+  valeur: number;
+  unite: string;
+};
 export class ProduitEntity {
   _id: string;
   nom: string;
-  descirption: string;
-  prixMin: string;
+  description: string;
+  prixMin: number;
+  quantite: QuantityType;
   vendeur: VendeurEntity;
-  category: CategorieEntity;
+  categorie: CategorieEntity;
   images: string[];
   estBio: boolean;
   statut: string;
@@ -18,10 +23,11 @@ export class ProduitEntity {
   constructor(produit: ProduitEntity) {
     this._id = produit._id;
     this.nom = produit.nom;
-    this.descirption = produit.descirption;
+    this.description = produit.description;
     this.prixMin = produit.prixMin;
+    this.quantite = produit.quantite;
     this.vendeur = produit.vendeur;
-    this.category = produit.category;
+    this.categorie = produit.categorie;
     this.images = produit.images;
     this.estBio = produit.estBio;
     this.statut = produit.statut;
