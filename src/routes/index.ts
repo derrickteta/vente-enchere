@@ -24,4 +24,9 @@ export const ROUTES = {
     PRODUCT: (productId: string) => `/catalog/product?id=${productId}`,
     LOT: (lotId: string) => `/catalog/lot?id=${lotId}`,
   },
+  COMMISSAIRE_PAGE: {
+    DASHBOARD: '/commissaire/dashboard',
+    LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
+    PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
+  },
 };
