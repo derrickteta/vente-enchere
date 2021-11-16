@@ -7,9 +7,14 @@ export const API_ROUTES = {
   PRODUITS: {
     BASE: `${BASE_URL}api/produits`,
     BASEID: (id: string) => `${BASE_URL}api/produits/${id}`,
+    ADD_IMAGES: (id: string) => `${BASE_URL}api/produits/images/${id}`,
   },
   LOTS: {
     BASE: `${BASE_URL}api/lots`,
     BASEID: (id: string) => `${BASE_URL}api/lots/${id}`,
+  },
+  CATEGORIES: {
+    BASE: `${BASE_URL}api/categories`,
+    BASEID: (id: string) => `${BASE_URL}api/categories/${id}`,
   },
 };
