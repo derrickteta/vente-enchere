@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Input, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { PRIMARY } from '../../../shared/colors';
 
 const DataTableContainer = styled.div`
@@ -21,11 +21,13 @@ export const DataTable = <T extends { _id: string }>({
   columns,
   loading,
   filterFunction,
+  buttons,
 }: {
   columns: ColumnsType<T>;
   data: T[];
   loading?: boolean;
   filterFunction?: (dataItem: T, filterValue: string) => boolean;
+  buttons?: ReactNode;
 }) => {
   const [filterValue, setFilterValue] = useState('');
   const [rowId, setRowId] = useState('');
@@ -43,6 +45,7 @@ export const DataTable = <T extends { _id: string }>({
           value={filterValue}
           onChange={(e) => setFilterValue(e.target.value)}
         />
+        {buttons}
       </Space>
       <Table
         dataSource={dataToShow}
