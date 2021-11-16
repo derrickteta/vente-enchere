@@ -13,6 +13,7 @@ import { useEffect, useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
 import { useHistory } from 'react-router';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
+import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { PRIMARY } from '../../../shared/colors';
 import { addImageProduit, createProduit, fetchCategories } from '../network';
 
@@ -27,8 +28,7 @@ export const ProductForm = ({
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<CategorieEntity[]>([]);
-
-  console.log(router.location.state);
+  const lot: LotEntity = router.location.state as LotEntity;
 
   useEffect(() => {
     fetchCategories()
@@ -57,7 +57,7 @@ export const ProductForm = ({
           description: data.description,
           prixMin: Number(data.prixMin),
           vendeur: '61929568dddf79242bf38951',
-          lotId: '61923baead597fa09d6a1d88',
+          lotId: lot._id,
           category: data.category,
           quantite: {
             valeur: Number(data.quantite),
@@ -83,7 +83,7 @@ export const ProductForm = ({
                 });
               }
             });
-            if (currentNum) {
+            if (currentNum !== undefined) {
               setCurrentNum?.(currentNum + 1);
               form.resetFields();
             }
