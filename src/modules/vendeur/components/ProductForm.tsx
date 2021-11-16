@@ -1,99 +1,153 @@
 /* eslint-disable no-unused-vars */
-import { UploadOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input, message, Select, Upload } from 'antd';
-import { useState } from 'react';
+import {
+  Button,
+  Checkbox,
+  Form,
+  Input,
+  notification,
+  Select,
+  Space,
+  Upload,
+} from 'antd';
+import { useEffect, useState } from 'react';
+import { FiUpload } from 'react-icons/fi';
+import { useHistory } from 'react-router';
+import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { PRIMARY } from '../../../shared/colors';
-
-type LayoutType = Parameters<typeof Form>[0]['layout'];
-
-const { Option } = Select;
-
-function onChange(value: any) {
-  console.log(`selected ${value}`);
-}
-
-function onBlur() {
-  console.log('blur');
-}
-
-function onFocus() {
-  console.log('focus');
-}
-
-function onSearch(val: any) {
-  console.log('search:', val);
-}
-
-const props = {
-  name: 'file',
-  action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
-  headers: {
-    authorization: 'authorization-text',
-  },
-  onChange(info: any) {
-    if (info.file.status !== 'uploading') {
-      console.log(info.file, info.fileList);
-    }
-    if (info.file.status === 'done') {
-      message.success(`${info.file.name} file uploaded successfully`);
-    } else if (info.file.status === 'error') {
-      message.error(`${info.file.name} file upload failed.`);
-    }
-  },
-};
+import { addImageProduit, createProduit, fetchCategories } from '../network';
 
 export const ProductForm = () => {
-  // const router = useRouter();
+  const router = useHistory();
   const [form] = Form.useForm();
-  const [formLayout] = useState<LayoutType>('vertical');
   const [isLoading, setIsLoading] = useState(false);
+  const [categories, setCategories] = useState<CategorieEntity[]>([]);
+
+  console.log(router.location.state);
+
+  useEffect(() => {
+    fetchCategories()
+      .then((data) => {
+        if (data.success) {
+          setCategories(data.result);
+        }
+      })
+      .catch((err) => setCategories([]));
+  }, []);
 
   return (
     <Form
-      layout={formLayout}
+      layout='vertical'
       form={form}
       labelCol={{ span: 20 }}
+      size='large'
       wrapperCol={{ span: 25 }}
       initialValues={{}}
       scrollToFirstError
       onFinish={async (data) => {
         setIsLoading(true);
-        console.log(data);
+        const images = data.images?.fileList.map((im: any) => im.originFileObj);
+        const dataToPost = {
+          nom: data.nom,
+          description: data.description,
+          prixMin: Number(data.prixMin),
+          vendeur: '61929568dddf79242bf38951',
+          lotId: '61923baead597fa09d6a1d88',
+          category: data.category,
+          quantite: {
+            valeur: Number(data.quantite),
+            unite: data.unite,
+          },
+          estBio: data.estBio,
+        };
+        console.log(dataToPost);
 
-        /*await createProduit(produit).then((data) =>
-        {
-          if (data.success)
-          {
-            notification.success(
-              {
-                message:"Succes",
-                description:data.message,
+        await createProduit(dataToPost).then(async (data) => {
+          if (data.success) {
+            await addImageProduit(data.result[0]._id, images).then((dataIm) => {
+              if (data.success) {
+                notification.success({
+                  message: 'Succès',
+                  description: data.message,
+                });
+              } else {
+                notification.success({
+                  message: 'Succès',
+                  description:
+                    'Le produit a été enregistré avec succès, mais sans les images (une erreur) ',
+                });
               }
-            );
+            });
           }
-        }
-        
-      );*/
+        });
         setIsLoading(false);
       }}
     >
-      <Form.Item
-        label='Nom'
-        name='nom'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Veuillez renseigner votre nom',
-          },
-        ]}
-      >
-        <Input placeholder='nom' />
-      </Form.Item>
+      <Space size={40} style={{ width: '100%', flexWrap: 'wrap' }}>
+        <Form.Item
+          label='Nom'
+          name='nom'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Veuillez renseigner votre nom',
+            },
+          ]}
+          style={{ width: 500 }}
+        >
+          <Input placeholder='nom' />
+        </Form.Item>
+
+        <Form.Item
+          label='Quantité'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Quantité obligatoire',
+            },
+          ]}
+        >
+          <Input.Group compact style={{ margin: 0 }}>
+            <Form.Item
+              name='quantite'
+              rules={[
+                {
+                  required: true,
+                  message: 'Quantité obligatoire',
+                },
+              ]}
+              style={{ width: 150 }}
+            >
+              <Input placeholder='quantité' type='number' />
+            </Form.Item>
+
+            <Form.Item
+              name='unite'
+              rules={[
+                {
+                  required: true,
+                  message: "L'unité est obligatoire",
+                },
+              ]}
+            >
+              <Select style={{ width: 200 }} placeholder='unité du produit'>
+                <Select.Option value='Unité'>Unité</Select.Option>
+                <Select.Option value='Sac'>Sac</Select.Option>
+                <Select.Option value='Gramme'>Gramme</Select.Option>
+                <Select.Option value='Kilogramme'>Kilogramme</Select.Option>
+                <Select.Option value='Tonne'>Tonne</Select.Option>
+                <Select.Option value='Camion'>Camion</Select.Option>
+                <Select.Option value='Cajoule'>Cajoule</Select.Option>
+              </Select>
+            </Form.Item>
+          </Input.Group>
+        </Form.Item>
+      </Space>
 
       <Form.Item
         label='Description'
-        name='description' //verifier nom bd
+        name='description'
         hasFeedback
         rules={[
           {
@@ -101,115 +155,92 @@ export const ProductForm = () => {
             message: 'Veuillez renseigner votre prénom',
           },
         ]}
+        style={{ width: '75%' }}
       >
-        <Input placeholder='Veuillez donner plus de details sur votre produit' />
+        <Input.TextArea
+          rows={5}
+          placeholder='Veuillez donner plus de details sur votre produit'
+        />
       </Form.Item>
 
-      <Form.Item
-        label='Prix Minimal'
-        name='prix_min'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message:
-              'Veuillez renseigner le prix minimal auquel vous vendez votre priduit',
-          },
-        ]}
-      >
-        <Input placeholder='Prix Minimal' type='number' />
-      </Form.Item>
-
-      <Form.Item
-        label='Categorie'
-        name='category'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Veuillez renseigner la categorie de votre produit',
-          },
-        ]}
-      >
-        <Select
-          showSearch
-          style={{ width: 200 }}
-          placeholder='Choisissez la categorie a laquelle correspond votre produit'
-          optionFilterProp='children'
-          onChange={onChange}
-          onFocus={onFocus}
-          onBlur={onBlur}
-          onSearch={onSearch}
-          filterOption={(input, option) =>
-            option?.toLowerCase().indexOf(input.toLowerCase()) >= 0
-          }
+      <Space size={40} style={{ width: '100%', flexWrap: 'wrap' }}>
+        <Form.Item
+          label='Prix de mise au enchères'
+          name='prixMin'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message:
+                'Veuillez renseigner le prix minimal auquel vous vendez votre priduit',
+            },
+          ]}
+          style={{ width: 300 }}
         >
-          <Option value='Fruit'>Fruit</Option>
-          <Option value='Legumes'>Legumes</Option>
-          <Option value='Cereales'>Cereales</Option>
-        </Select>
-      </Form.Item>
+          <Input placeholder='mise à prix (FCFA) ' type='number' />
+        </Form.Item>
+
+        <Form.Item
+          label='Categorie'
+          name='category'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: 'Veuillez renseigner la categorie de votre produit',
+            },
+          ]}
+          style={{ width: 300 }}
+        >
+          <Select style={{ width: 300 }} placeholder='Choisissez la categorie'>
+            {categories.map((category) => (
+              <Select.Option key={category._id} value={category._id}>
+                {category.nom}
+              </Select.Option>
+            ))}
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          name='estBio'
+          valuePropName='checked'
+          label='Votre produit est-il 100% bio ?'
+          style={{ width: 300 }}
+        >
+          <Checkbox />
+        </Form.Item>
+      </Space>
 
       <Form.Item
-        name='estBio'
-        valuePropName='checked'
-        label='Votre produit est-il 100% bio ?'
-      >
-        <Checkbox />
-      </Form.Item>
-
-      <Form.Item
-        label='Quantite'
-        name='qte'
-        hasFeedback
+        name='images'
+        label='Images'
         rules={[
           {
             required: true,
-            message:
-              'Veuillez renseigner la quantite de produit que vous mettez en vente',
-          },
-          {
-            type: 'string',
-            message: "Veuillez entrer un entier s'il vous plait",
+            message: "L'image de l'article est obligatoire",
           },
         ]}
+        style={{ width: '90%' }}
       >
-        <Input placeholder='quantite' />
-      </Form.Item>
-
-      <Form.Item label='Inserez une image' name='image'>
-        <Upload {...props}>
-          <Button
-            icon={<UploadOutlined />}
-            type='primary'
-            loading={isLoading}
-            size='small'
-            style={{
-              width: '100%',
-              backgroundColor: PRIMARY,
-              borderColor: 'transparent',
-            }}
-          >
-            Cliquez ici
+        <Upload name='images' listType='picture' action={undefined}>
+          <Button icon={<FiUpload style={{ marginRight: 10 }} />}>
+            Chargez les image du produits
           </Button>
         </Upload>
       </Form.Item>
+
       <Form.Item>
         <Button
           type='primary'
           htmlType='submit'
           loading={isLoading}
-          size='middle'
+          size='large'
           style={{
-            width: '50%',
-            alignSelf: 'center',
             backgroundColor: PRIMARY,
-            borderColor: 'transparent',
-            marginBottom: 20,
-            borderRadius: 50,
+            borderWidth: 0,
           }}
         >
-          Ajouter le Produit au lot
+          Ajouter le Produit
         </Button>
       </Form.Item>
     </Form>

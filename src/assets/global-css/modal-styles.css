@@ -13,3 +13,8 @@
 .ant-divider-horizontal {
   margin: 10px 0px;
 }
+
+.ant-input-group.ant-input-group-compact {
+  display: block;
+  height: 45px;
+}
