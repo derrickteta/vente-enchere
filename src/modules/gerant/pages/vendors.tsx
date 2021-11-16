@@ -1,6 +1,6 @@
+import { Button } from 'antd';
 import Search from 'antd/lib/input/Search';
 import { GerantContainer } from '../components/GerantContainer';
-import { Stats } from '../components/Stats';
 import { VendorGroup } from '../components/VendorGroup';
 
 const headerChildren = () => {
@@ -10,11 +10,15 @@ const headerChildren = () => {
         style={{
           display: 'flex',
           flexDirection: 'row',
-          justifyContent: 'left',
+          justifyContent: 'space-around',
           width: '600px',
         }}
       >
-        <h2>Dashboard of the Manager</h2>
+        <h2>Vendor Accounts</h2>
+        <Button type='primary'>Ajouter</Button>
+        <Button type='primary' danger>
+          Supprimer
+        </Button>
       </div>
       <div
         style={{
@@ -30,9 +34,9 @@ const headerChildren = () => {
   );
 };
 
-export const GerantDashboard = () => {
+export const GerantVendors = () => {
   return (
-    <GerantContainer clicked='dashboard' headerChildren={headerChildren()}>
+    <GerantContainer clicked='vendors' headerChildren={headerChildren()}>
       <div
         style={{
           display: 'flex',
@@ -41,14 +45,6 @@ export const GerantDashboard = () => {
           padding: '0 50px',
         }}
       >
-        <Stats
-          stats={[
-            { label: 'All', value: 54 },
-            { label: 'Pending Requests', value: 4 },
-            { label: 'Activated Accounts', value: 44 },
-            { label: 'Deactivated Accounts', value: 6 },
-          ]}
-        />
         <VendorGroup label='Pending requests' vendors={[]} />
         <VendorGroup label='Activated vendors' vendors={[]} />
         <VendorGroup label='Deactivated vendors' vendors={[]} />
