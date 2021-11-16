@@ -33,3 +33,11 @@ export const createLot = (lot: any): Promise<ResponseType<LotEntity>> => {
 export const fetchCategories = (): Promise<ResponseType<CategorieEntity>> => {
   return customFetch.get(API_ROUTES.CATEGORIES.BASE);
 };
+
+export const fetchLot = (): Promise<ResponseType<LotEntity>> => {
+  return customFetch.get(API_ROUTES.LOTS.BASE);
+};
+
+export const fetchProduit = (): Promise<ResponseType<ProduitEntity>> => {
+  return customFetch.get(API_ROUTES.PRODUITS.BASE);
+};
