@@ -2,11 +2,11 @@ import styled from '@emotion/styled';
 import { Input, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { ReactNode, useState } from 'react';
-import { PRIMARY } from '../../../shared/colors';
+import { SEMIDARK } from '../../../shared/colors';
 
 const DataTableContainer = styled.div`
   th {
-    background-color: ${PRIMARY} !important;
+    background-color: ${SEMIDARK} !important;
     color: white !important;
     font-weight: bold;
   }
