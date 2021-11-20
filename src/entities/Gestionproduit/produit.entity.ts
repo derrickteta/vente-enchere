@@ -12,7 +12,7 @@ export class ProduitEntity {
   prixMin: number;
   quantite: QuantityType;
   vendeur: VendeurEntity;
-  categorie: CategorieEntity;
+  category: CategorieEntity;
   images: string[];
   estBio: boolean;
   statut: string;
@@ -27,7 +27,7 @@ export class ProduitEntity {
     this.prixMin = produit.prixMin;
     this.quantite = produit.quantite;
     this.vendeur = produit.vendeur;
-    this.categorie = produit.categorie;
+    this.category = produit.category;
     this.images = produit.images;
     this.estBio = produit.estBio;
     this.statut = produit.statut;
