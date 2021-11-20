@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { Avatar, Badge, Dropdown, Menu, Space } from 'antd';
 import { FaBell, FaRegUser } from 'react-icons/fa';
 import { FiLogOut, FiMail } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 import im from '../../../assets/images/slide1.jpg';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { SEMIDARK } from '../../../shared/colors';
 
 const Container = styled.div`
@@ -39,6 +41,10 @@ const Container = styled.div`
 `;
 
 export const DashboardHeader = ({ shrinked }: { shrinked: boolean }) => {
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+
   return (
     <div>
       <Container>
@@ -67,7 +73,9 @@ export const DashboardHeader = ({ shrinked }: { shrinked: boolean }) => {
               <Space>
                 <Avatar src={im} />
                 <Dropdown overlay={menu} placement='bottomCenter'>
-                  <p style={{ cursor: 'pointer' }}>Talom Franklin</p>
+                  <p style={{ cursor: 'pointer' }}>
+                    {connectedUser.nom} {connectedUser.prenom}{' '}
+                  </p>
                 </Dropdown>
               </Space>
             </Space>
