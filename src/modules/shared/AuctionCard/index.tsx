@@ -2,9 +2,10 @@ import styled from '@emotion/styled';
 import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
-import slide1 from '../../../assets/images/slide4.jpg';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
+import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
   margin: 10px;
@@ -23,6 +24,11 @@ const CardContainer = styled.div`
     font-size: 16px;
     margin-bottom: 10px;
     font-family: 'Montserrat';
+  }
+
+  .category {
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 
   .price {
@@ -51,7 +57,7 @@ const CardContainer = styled.div`
   }
 `;
 
-export const AuctionCard = ({ auction }: { auction: any }) => {
+export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
   return (
     <CardContainer>
       <Card
@@ -69,7 +75,7 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
                 borderTopLeftRadius: 20,
               }}
               preview={false}
-              src={slide1}
+              src={API_ROUTES.IMAGES(produit.images[0])}
               fallback={defaultImage}
             />
             <Space style={{ justifyContent: 'center' }}>
@@ -85,17 +91,14 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
       >
         <div style={{ overflow: 'hidden', marginTop: -10 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p className='name'>Sac de patate et plantains</p>
-            <p className='name'>{auction.localisation} </p>
+            <p className='name'>{produit.nom}</p>
+            <p className='category'>{produit.category.nom} </p>
           </div>
           <Space>
             <p style={{ margin: 0 }}>Mise à prix : </p>
-            <p className='price'>18,000 FCFA </p>
+            <p className='price'>{produit.prixMin} FCFA </p>
           </Space>
-          <p className='description'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            soluta consectetur ea odit veritatis illo!
-          </p>
+          <p className='description'>{produit.description}</p>
 
           <hr />
           <h4>Début de l'enchère dans</h4>
