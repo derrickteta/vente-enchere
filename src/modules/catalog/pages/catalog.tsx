@@ -3,9 +3,11 @@ import styled from '@emotion/styled';
 import { Cascader, Space } from 'antd';
 import { useEffect, useState } from 'react';
 import { FiFilter } from 'react-icons/fi';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { Footer } from '../../homePage/components/Footer';
 import { AuctionCard } from '../../shared/AuctionCard';
 import { Layout } from '../../shared/Layout';
+import { fetchProduit } from '../../vendeur/network';
 import { FilterOptions } from '../components/FilterOptions';
 
 const CatalogContainer = styled.div`
@@ -23,16 +25,14 @@ const CatalogContainer = styled.div`
 export const CatalogPage = () => {
   const [lands, setLands] = useState([]);
   const [filterLands, setFilterLands] = useState([]);
+  const [produits, setProduits] = useState<ProduitEntity[]>([]);
 
   useEffect(() => {
-    // fetchLands()
-    //   .then((lands) => {
-    //     setLands(lands.result);
-    //     setFilterLands(lands.result);
-    //   })
-    //   .catch((error) => {
-    //     console.log(error);
-    //   });
+    fetchProduit().then((data) => {
+      if (data.success) {
+        setProduits(data.result);
+      }
+    });
   }, []);
 
   return (
@@ -76,18 +76,9 @@ export const CatalogPage = () => {
             <FilterOptions auctions={lands} setFilterLands={setFilterLands} />
             <div>
               <div style={{ display: 'flex', flexWrap: 'wrap' }}>
-                {/* {filterLands.map((auction, index) => (
-                  <AuctionCard key={index} auction={{}} />
-                ))} */}
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
-                <AuctionCard auction={{}} />
+                {produits.map((produit) => (
+                  <AuctionCard key={produit._id} produit={produit} />
+                ))}
               </div>
             </div>
           </Space>
