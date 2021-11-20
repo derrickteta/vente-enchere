@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useHistory } from 'react-router';
 import logo from '../../assets/images/logo2.png';
 import slide2 from '../../assets/images/slide4.jpg';
+import { createUser } from '../../redux/userStore/actions';
 import { ROUTES } from '../../routes';
 import { PRIMARY } from '../../shared/colors';
 import { defaultImage } from '../../shared/defaultImage';
@@ -84,6 +85,18 @@ export const LoginPage = () => {
                       message: 'Succès',
                       description: data.message,
                     });
+                    dispatch(
+                      createUser({
+                        authentifie: true,
+                        roles: data.result.roles,
+                        _id: data.result._id,
+                        nom: data.result.nom,
+                        prenom: data.result.prenom,
+                        token: data.result.token,
+                        nextAuthDate:
+                          new Date().getTime() + 23.9 * 60 * 60 * 1000,
+                      }),
+                    );
                     router.push(`${data.result.roles[0]}/dashboard`);
                   } else {
                     notification.error({
@@ -185,3 +198,6 @@ export const LoginPage = () => {
     </SignInContainer>
   );
 };
+function dispatch(arg0: any) {
+  throw new Error('Function not implemented.');
+}
