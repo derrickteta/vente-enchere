@@ -1,13 +1,16 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input, notification } from 'antd';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
+import { createUser } from '../../../redux/userStore/actions';
 import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { signUp } from '../network';
 
 export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
   const router = useHistory();
+  const dispatch = useDispatch();
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
 
@@ -45,6 +48,17 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   description: data.message,
                 });
                 const clientId = data.result._id;
+                dispatch(
+                  createUser({
+                    authentifie: true,
+                    roles: data.result.roles,
+                    _id: data.result._id,
+                    nom: data.result.nom,
+                    prenom: data.result.prenom,
+                    token: data.result.token,
+                    nextAuthDate: new Date().getTime() + 23.9 * 60 * 60 * 1000,
+                  }),
+                );
                 router.push(ROUTES.ACTIVATE_ACCOUNT(clientId));
               } else {
                 notification.error({
@@ -71,6 +85,17 @@ export const RegistrationForm = ({ isClient }: { isClient: boolean }) => {
                   description: data.message,
                 });
                 const vendeurId = data.result._id;
+                dispatch(
+                  createUser({
+                    authentifie: true,
+                    roles: data.result.roles,
+                    _id: data.result._id,
+                    nom: data.result.nom,
+                    prenom: data.result.prenom,
+                    token: data.result.token,
+                    nextAuthDate: new Date().getTime() + 23.9 * 60 * 60 * 1000,
+                  }),
+                );
                 router.push(ROUTES.ACTIVATE_ACCOUNT(vendeurId));
               } else {
                 notification.error({
