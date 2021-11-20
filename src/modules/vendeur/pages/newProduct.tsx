@@ -1,6 +1,8 @@
 import { Button, Divider, Input, Modal, Space, Steps } from 'antd';
 import { useState } from 'react';
 import { FaRegSmileWink } from 'react-icons/fa';
+import { useHistory } from 'react-router';
+import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { ProductForm } from '../components/ProductForm';
 import { VendeurContainer } from '../components/VendeurContainer';
@@ -9,6 +11,7 @@ export const NewProductPage = () => {
   const [numProduit, setNumProduit] = useState(1);
   const [currentNum, setCurrentNum] = useState(0);
   const [isModalVisible, setIsModalVisible] = useState(true);
+  const router = useHistory();
 
   return (
     <div>
@@ -71,6 +74,7 @@ export const NewProductPage = () => {
                     backgroundColor: PRIMARY,
                     borderWidth: 0,
                   }}
+                  onClick={() => router.push(ROUTES.VENDEUR_PAGE.DASHBOARD)}
                 >
                   Terminer
                 </Button>
