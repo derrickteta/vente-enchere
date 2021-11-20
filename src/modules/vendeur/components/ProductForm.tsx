@@ -11,7 +11,9 @@ import {
 } from 'antd';
 import { useEffect, useState } from 'react';
 import { FiUpload } from 'react-icons/fi';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { PRIMARY } from '../../../shared/colors';
@@ -25,6 +27,10 @@ export const ProductForm = ({
   setCurrentNum?: (val: number) => void;
 }) => {
   const router = useHistory();
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [categories, setCategories] = useState<CategorieEntity[]>([]);
@@ -56,7 +62,7 @@ export const ProductForm = ({
           nom: data.nom,
           description: data.description,
           prixMin: Number(data.prixMin),
-          vendeur: '61929568dddf79242bf38951',
+          vendeur: connectedUser._id,
           lotId: lot._id,
           category: data.category,
           quantite: {
