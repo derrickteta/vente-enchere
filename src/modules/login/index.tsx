@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Button, Form, Image, Input, notification, Space } from 'antd';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import logo from '../../assets/images/logo2.png';
 import slide2 from '../../assets/images/slide4.jpg';
@@ -52,6 +53,7 @@ export const LoginPage = () => {
   const [formLayout] = useState<LayoutType>('vertical');
   const [isLoading, setIsLoading] = useState(false);
   const router = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <SignInContainer>
@@ -198,6 +200,3 @@ export const LoginPage = () => {
     </SignInContainer>
   );
 };
-function dispatch(arg0: any) {
-  throw new Error('Function not implemented.');
-}
