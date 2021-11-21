@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
+import { useHistory } from 'react-router';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
 import { API_ROUTES } from '../ApiRoutes';
@@ -58,11 +60,13 @@ const CardContainer = styled.div`
 `;
 
 export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
+  const router = useHistory();
   return (
     <CardContainer>
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
+        onClick={() => router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id))}
         cover={
           <>
             <Image
