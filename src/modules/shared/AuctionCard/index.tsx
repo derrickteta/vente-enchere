@@ -66,7 +66,9 @@ export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
-        onClick={() => router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id))}
+        onClick={() =>
+          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit)
+        }
         cover={
           <>
             <Image
