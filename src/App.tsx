@@ -2,7 +2,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './assets/global-css/modal-styles.css';
 import { AdminRoutes } from './modules/admin/routes/admin.routes';
-import { CatalogPage } from './modules/catalog/pages/catalog';
+import { CatalogRoutes } from './modules/catalog/routes/catalog.routes';
 import { CommissaireRoutes } from './modules/commissaire/routes/commissaire.routes';
 import { GerantRoutes } from './modules/gerant/routes/gerant.routes';
 import { HomePage } from './modules/homePage';
@@ -20,7 +20,7 @@ function App() {
         <Route exact path='/signin' component={LoginPage} />
         <Route path='/activate-account' component={ActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
-        <Route exact path='/catalog' component={CatalogPage} />
+        <Route path='/catalog' render={() => <CatalogRoutes />} />
         <Route path='/admin' render={() => <AdminRoutes />} />
         <Route path='/vendeur' render={() => <VendeurRoutes />} />
         <Route path='/gerant' render={() => <GerantRoutes />} />
