@@ -21,7 +21,7 @@ export const ROUTES = {
   },
   CATALOG_PAGE: {
     CATALOG: '/catalog',
-    PRODUCT: (productId: string) => `/catalog/product/?id=${productId}`,
-    LOT: (lotId: string) => `/catalog/lot/?id=${lotId}`,
+    PRODUCT: (productId: string) => `/catalog/product?id=${productId}`,
+    LOT: (lotId: string) => `/catalog/lot?id=${lotId}`,
   },
 };
