@@ -1,10 +1,13 @@
 import styled from '@emotion/styled';
-import { Card, Image, Space, Tooltip } from 'antd';
+import { Card, Image, Space, Statistic, Tooltip } from 'antd';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
-import slide1 from '../../../assets/images/slide4.jpg';
+import { useHistory } from 'react-router';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
+import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
   margin: 10px;
@@ -23,6 +26,11 @@ const CardContainer = styled.div`
     font-size: 16px;
     margin-bottom: 10px;
     font-family: 'Montserrat';
+  }
+
+  .category {
+    font-size: 14px;
+    margin-bottom: 10px;
   }
 
   .price {
@@ -51,12 +59,16 @@ const CardContainer = styled.div`
   }
 `;
 
-export const AuctionCard = ({ auction }: { auction: any }) => {
+export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
+  const router = useHistory();
   return (
     <CardContainer>
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
+        onClick={() =>
+          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit)
+        }
         cover={
           <>
             <Image
@@ -69,7 +81,7 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
                 borderTopLeftRadius: 20,
               }}
               preview={false}
-              src={slide1}
+              src={API_ROUTES.IMAGES(produit.images[0])}
               fallback={defaultImage}
             />
             <Space style={{ justifyContent: 'center' }}>
@@ -85,21 +97,21 @@ export const AuctionCard = ({ auction }: { auction: any }) => {
       >
         <div style={{ overflow: 'hidden', marginTop: -10 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p className='name'>Sac de patate et plantains</p>
-            <p className='name'>{auction.localisation} </p>
+            <p className='name'>{produit.nom}</p>
+            <p className='category'>{produit.category.nom} </p>
           </div>
           <Space>
             <p style={{ margin: 0 }}>Mise à prix : </p>
-            <p className='price'>18,000 FCFA </p>
+            <p className='price'>{produit.prixMin} FCFA </p>
           </Space>
-          <p className='description'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            soluta consectetur ea odit veritatis illo!
-          </p>
+          <p className='description'>{produit.description}</p>
 
           <hr />
           <h4>Début de l'enchère dans</h4>
-          <h3>13h 51m 48s</h3>
+          <Statistic.Countdown
+            valueStyle={{ fontSize: 20, color: 'red' }}
+            value={Date.now() + 1000 * 60 * 60 * 24 * 1 + 1000 * 30}
+          />
         </div>
       </Card>
     </CardContainer>

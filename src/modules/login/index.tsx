@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
-import { Button, Form, Image, Input, Space } from 'antd';
+import { Button, Form, Image, Input, notification, Space } from 'antd';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import logo from '../../assets/images/logo2.png';
 import slide2 from '../../assets/images/slide4.jpg';
+import { createUser } from '../../redux/userStore/actions';
 import { ROUTES } from '../../routes';
 import { PRIMARY } from '../../shared/colors';
 import { defaultImage } from '../../shared/defaultImage';
+import { signIn } from './network';
 
 type LayoutType = Parameters<typeof Form>[0]['layout'];
 
@@ -50,6 +53,7 @@ export const LoginPage = () => {
   const [formLayout] = useState<LayoutType>('vertical');
   const [isLoading, setIsLoading] = useState(false);
   const router = useHistory();
+  const dispatch = useDispatch();
 
   return (
     <SignInContainer>
@@ -74,8 +78,43 @@ export const LoginPage = () => {
             scrollToFirstError
             size='large'
             onFinish={async (data) => {
-              // const { matricule, password } = data;
               setIsLoading(true);
+              const { email, password } = data;
+              await signIn(email, password)
+                .then((data) => {
+                  if (data.success) {
+                    notification.success({
+                      message: 'Succès',
+                      description: data.message,
+                    });
+                    dispatch(
+                      createUser({
+                        authentifie: true,
+                        roles: data.result.roles,
+                        _id: data.result._id,
+                        nom: data.result.nom,
+                        prenom: data.result.prenom,
+                        token: data.result.token,
+                        nextAuthDate:
+                          new Date().getTime() + 23.9 * 60 * 60 * 1000,
+                      }),
+                    );
+                    router.push(`${data.result.roles[0]}/dashboard`);
+                  } else {
+                    notification.error({
+                      message: 'Erreur',
+                      description: data.message,
+                    });
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  notification.error({
+                    message: 'Erreur',
+                    description: 'Une erreur est survenu',
+                  });
+                });
+              setIsLoading(false);
             }}
           >
             <Form.Item
