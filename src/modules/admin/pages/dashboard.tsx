@@ -160,7 +160,7 @@ const userColumns = [
     title: 'Total dépensé',
     dataIndex: 'totalArgentDepense',
     key: 'totalArgentDepense',
-    render: (cell: any, row: any) => <span>{cell} FCFA </span>,
+    render: (cell: any, row: any) => <span>{cell || 0} FCFA </span>,
   },
   {
     title: 'Etat du compte',
