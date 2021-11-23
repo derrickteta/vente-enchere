@@ -18,4 +18,8 @@ export const API_ROUTES = {
     BASE: `${BASE_URL}api/categories`,
     BASEID: (id: string) => `${BASE_URL}api/categories/${id}`,
   },
+  USERS: {
+    BASE: `${BASE_URL}api/users`,
+    BASEID: (id: string) => `${BASE_URL}api/users/${id}`,
+  },
 };
