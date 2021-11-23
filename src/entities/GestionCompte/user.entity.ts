@@ -4,6 +4,13 @@ export type LocalisationType = {
   adresse: string;
 };
 
+export type RoleType =
+  | 'client'
+  | 'vendeur'
+  | 'gerant'
+  | 'commissaire'
+  | 'admin';
+
 export class UserEntity {
   _id: string;
   nom: string;
@@ -12,7 +19,7 @@ export class UserEntity {
   telephone: string;
   email: string;
   pseudo: string;
-  roles: string[];
+  roles: RoleType[];
   numeroCompte: string;
   numeroMomo: string;
   compte: string;
