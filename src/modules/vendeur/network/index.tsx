@@ -26,8 +26,10 @@ export const addImageProduit = (
   }).then((res) => res.json());
 };
 
-export const createLot = (lot: any): Promise<ResponseType<LotEntity>> => {
-  return customFetch.post(API_ROUTES.LOTS.BASE, lot);
+export const createLot = (
+  vendeurId: string,
+): Promise<ResponseType<LotEntity>> => {
+  return customFetch.post(API_ROUTES.LOTS.BASE, { vendeur: vendeurId });
 };
 
 export const fetchCategories = (): Promise<ResponseType<CategorieEntity>> => {

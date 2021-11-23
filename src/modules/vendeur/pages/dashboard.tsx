@@ -7,7 +7,9 @@ import {
   FaShopify,
   FaShoppingCart,
 } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
@@ -26,6 +28,9 @@ export const VendeurDashboard = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [lots, setLots] = useState<LotEntity[]>([]);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
 
   useEffect(() => {
     fetchLot().then((data) => {
@@ -136,7 +141,7 @@ export const VendeurDashboard = () => {
                         loading={isLoading}
                         onClick={async () => {
                           setIsLoading(true);
-                          await createLot({}).then((data) => {
+                          await createLot(connectedUser._id).then((data) => {
                             if (data.success) {
                               notification.success({
                                 message: 'Succes',
