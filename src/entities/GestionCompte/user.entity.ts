@@ -7,13 +7,6 @@ export type RoleType =
   | 'commissaire'
   | 'admin';
 
-export type RoleType =
-  | 'client'
-  | 'vendeur'
-  | 'gerant'
-  | 'commissaire'
-  | 'admin';
-
 export class UserEntity {
   _id: string;
   nom: string;
