@@ -1,42 +1,22 @@
-import { Button } from 'antd';
-import Search from 'antd/lib/input/Search';
+import { useEffect, useState } from 'react';
+import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { GerantContainer } from '../components/GerantContainer';
 import { VendorGroup } from '../components/VendorGroup';
-
-const headerChildren = () => {
-  return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          width: '600px',
-        }}
-      >
-        <h2>Vendor Accounts</h2>
-        <Button type='primary'>Ajouter</Button>
-        <Button type='primary' danger>
-          Supprimer
-        </Button>
-      </div>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-around',
-          width: '300px',
-        }}
-      >
-        <Search placeholder='input search text' enterButton width='200px' />
-      </div>
-    </>
-  );
-};
+import { fetchVendeurs } from '../network/gerant.network';
 
 export const GerantVendors = () => {
+  const [vendeurs, setVendeurs] = useState<VendeurEntity[]>([]);
+
+  useEffect(() => {
+    fetchVendeurs().then((data) => {
+      if (data.success) {
+        setVendeurs(data.result);
+      }
+    });
+  }, []);
+
   return (
-    <GerantContainer clicked='vendors' headerChildren={headerChildren()}>
+    <GerantContainer clicked='vendors'>
       <div
         style={{
           display: 'flex',
@@ -46,7 +26,7 @@ export const GerantVendors = () => {
         }}
       >
         <VendorGroup label='Pending requests' vendors={[]} />
-        <VendorGroup label='Activated vendors' vendors={[]} />
+        <VendorGroup label='Activated vendors' vendors={vendeurs} />
         <VendorGroup label='Deactivated vendors' vendors={[]} />
       </div>
     </GerantContainer>

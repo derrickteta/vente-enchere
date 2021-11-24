@@ -18,4 +18,12 @@ export const API_ROUTES = {
     BASE: `${BASE_URL}api/categories`,
     BASEID: (id: string) => `${BASE_URL}api/categories/${id}`,
   },
+  VENDEURS: {
+    BASE: `${BASE_URL}api/vendeurs`,
+    BASEID: (id: string) => `${BASE_URL}api/vendeurs/${id}`,
+  },
+  PRODUITS_VENDEUR: {
+    BASEID: (vendeur_id: string) =>
+      `${BASE_URL}api/produits/vendeur/${vendeur_id}`,
+  },
 };

@@ -18,6 +18,9 @@ export const ROUTES = {
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',
+    VENDEURS: '/gerant/vendors',
+    DETAIL: `/gerant/details`,
+    ACCOUNT: '/gerant/my-account',
   },
   CATALOG_PAGE: {
     CATALOG: '/catalog',

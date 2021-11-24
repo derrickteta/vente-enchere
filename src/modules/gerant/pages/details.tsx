@@ -1,35 +1,30 @@
-import { Button, Space, Typography } from 'antd';
-import Paragraph from 'antd/lib/typography/Paragraph';
+import { Space } from 'antd';
 import Title from 'antd/lib/typography/Title';
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import slide1 from '../../../assets/images/slide1.jpg';
+import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { GerantContainer } from '../components/GerantContainer';
 import { ProductGroup } from '../components/ProductGroup';
 import { RatedAvatar } from '../components/RatedAvatar';
-
-const headerChildren = () => {
-  return (
-    <>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'left',
-          gap: '40px',
-        }}
-      >
-        <h2>Vendor informations</h2>
-        <Button type='primary'>Activer</Button>
-        <Button type='primary' danger>
-          Désactiver
-        </Button>
-      </div>
-    </>
-  );
-};
+import { fetchProduitsVendeur } from '../network/gerant.network';
 
 export const GerantVendorDetail = () => {
+  const router = useHistory();
+  const [produits, setProduits] = useState<ProduitEntity[]>([]);
+  const vendeur: VendeurEntity = router.location.state as VendeurEntity;
+
+  useEffect(() => {
+    fetchProduitsVendeur(vendeur._id).then((data) => {
+      if (data.success) {
+        setProduits(data.result);
+      }
+    });
+  }, [vendeur]);
+
   return (
-    <GerantContainer clicked='details' headerChildren={headerChildren()}>
+    <GerantContainer clicked='details'>
       <div
         style={{
           display: 'flex',
@@ -39,7 +34,9 @@ export const GerantVendorDetail = () => {
         }}
       >
         <Space style={{ borderBottom: '1px solid gray' }}>
-          <Title level={2}>Césaire Honoré, MOUNAH</Title>
+          <Title level={2}>
+            {vendeur.user.prenom}, {vendeur.user.nom}
+          </Title>
         </Space>
         <div
           style={{
@@ -48,7 +45,54 @@ export const GerantVendorDetail = () => {
             justifyContent: 'row',
           }}
         >
-          <Typography
+          <div style={{ display: 'flex', flexDirection: 'column' }}>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '[first] 225px [line2] 225px [end]',
+              }}
+            >
+              <Title level={3} italic>
+                Numéro CNI :
+              </Title>
+              <p style={{ fontSize: '1.8em' }}>{vendeur.numeroCNI}</p>
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '[first] 225px [line2] 225px [end]',
+              }}
+            >
+              <Title level={3} italic>
+                Spécialité :
+              </Title>
+              <p style={{ fontSize: '1.8em' }}>{vendeur.specialite}</p>
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '[first] 225px [line2] 225px [end]',
+              }}
+            >
+              <Title level={3} italic>
+                Chiffre d'affaire :
+              </Title>
+              <p style={{ fontSize: '1.8em' }}>{vendeur.chiffreAffaire}</p>
+            </div>
+            <div
+              style={{
+                display: 'grid',
+                gridTemplateColumns: '[first] 225px [line2] 225px [end]',
+              }}
+            >
+              <Title level={3} italic>
+                Lots vendus :
+              </Title>
+              <p style={{ fontSize: '1.8em' }}>{vendeur.nombreLotsVendu}</p>
+            </div>
+          </div>
+
+          {/* <Typography
             style={{ maxWidth: '500px', flex: '1', paddingLeft: '30px' }}
           >
             <Title level={3} italic>
@@ -69,7 +113,7 @@ export const GerantVendorDetail = () => {
               perspiciatis modi expedita molestiae perferendis, corrupti ratione
               nesciunt vel laudantium totam quidem maiores possimus.
             </Paragraph>
-          </Typography>
+          </Typography> */}
           <div
             style={{
               display: 'flex',
@@ -81,7 +125,7 @@ export const GerantVendorDetail = () => {
             <RatedAvatar image={slide1} rate={4} />
           </div>
         </div>
-        <ProductGroup products={[]} />
+        <ProductGroup products={produits} />
       </div>
     </GerantContainer>
   );

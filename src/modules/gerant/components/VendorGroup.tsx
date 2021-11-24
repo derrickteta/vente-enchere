@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Space } from 'antd';
 import { FaAngleRight } from 'react-icons/fa';
+import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { PRIMARY } from '../../../shared/colors';
 import { VendorCard } from '../../shared/VendorCard';
 
@@ -21,7 +22,7 @@ export const VendorGroup = ({
   vendors,
 }: {
   label: string;
-  vendors: any[];
+  vendors: VendeurEntity[];
 }) => {
   return (
     <VendorGroupContainer>
@@ -39,9 +40,9 @@ export const VendorGroup = ({
         </h3>
       </Space>
       <div>
-        <VendorCard vendor={{}} />
-        <VendorCard vendor={{}} />
-        <VendorCard vendor={{}} />
+        {vendors.map((vendor: VendeurEntity) => (
+          <VendorCard key={vendor._id} vendor={vendor} />
+        ))}
       </div>
     </VendorGroupContainer>
   );
