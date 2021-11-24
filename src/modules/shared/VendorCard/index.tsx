@@ -1,6 +1,9 @@
 import styled from '@emotion/styled';
 import { Button, Card, Image } from 'antd';
+import { useHistory } from 'react-router-dom';
 import slide1 from '../../../assets/images/slide1.jpg';
+import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
+import { ROUTES } from '../../../routes';
 import { defaultImage } from '../../../shared/defaultImage';
 
 const CardContainer = styled.div`
@@ -53,7 +56,9 @@ const CardContainer = styled.div`
   }
 `;
 
-export const VendorCard = ({ vendor }: { vendor: any }) => {
+export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
+  const router = useHistory();
+
   return (
     <CardContainer>
       <Card
@@ -87,17 +92,18 @@ export const VendorCard = ({ vendor }: { vendor: any }) => {
           }}
         >
           <div style={{ alignSelf: 'center' }}>
-            {/* <p className='name'>
-              {vendor.name} {vendor.surname}
-            </p> */}
-            <p className='name'>Césaire Honoré Mounah</p>
+            <p className='name'>
+              {vendor.user.nom} {vendor.user.prenom}
+            </p>
+            {/* <p className='name'>Césaire Honoré Mounah</p> */}
           </div>
-          <p className='description'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            soluta consectetur ea odit veritatis illo!
-          </p>
+          <p className='description'>{vendor.specialite}</p>
 
-          <Button type='primary' className='action-button'>
+          <Button
+            type='primary'
+            className='action-button'
+            onClick={() => router.push(ROUTES.GERANT_PAGE.DETAIL, vendor)}
+          >
             Plus d'infos
           </Button>
         </div>

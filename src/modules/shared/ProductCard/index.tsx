@@ -1,7 +1,8 @@
 import styled from '@emotion/styled';
 import { Card, Image, Space } from 'antd';
-import slide1 from '../../../assets/images/slide4.jpg';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { defaultImage } from '../../../shared/defaultImage';
+import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
   margin: 10px;
@@ -48,7 +49,7 @@ const CardContainer = styled.div`
   }
 `;
 
-export const ProductCard = ({ product }: { product: any }) => {
+export const ProductCard = ({ product }: { product: ProduitEntity }) => {
   return (
     <CardContainer>
       <Card
@@ -66,7 +67,7 @@ export const ProductCard = ({ product }: { product: any }) => {
                 borderTopLeftRadius: 20,
               }}
               preview={false}
-              src={slide1}
+              src={API_ROUTES.IMAGES(product.images[0])}
               fallback={defaultImage}
             />
           </>
@@ -74,20 +75,13 @@ export const ProductCard = ({ product }: { product: any }) => {
       >
         <div style={{ overflow: 'hidden', marginTop: -10 }}>
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p className='name'>Sac de patate et plantains</p>
+            <p className='name'>{product.nom}</p>
           </div>
           <Space>
             <p style={{ margin: 0 }}>Mise à prix : </p>
-            <p className='price'>18,000 FCFA </p>
+            <p className='price'>{product.prixMin} FCFA </p>
           </Space>
-          <p className='description'>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Dicta
-            soluta consectetur ea odit veritatis illo!
-          </p>
-
-          <hr />
-          <h4>Début de l'enchère dans</h4>
-          <h3>13h 51m 48s</h3>
+          <p className='description'>{product.description}</p>
         </div>
       </Card>
     </CardContainer>
