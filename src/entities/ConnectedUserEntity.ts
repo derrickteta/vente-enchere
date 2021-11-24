@@ -1,9 +1,11 @@
+type RoleType = 'client' | 'vendeur' | 'gerant' | 'commissaire' | 'admin';
+
 export class ConnectedUserEntity {
   _id: string;
   authentifie: boolean;
   nom: string;
   prenom: string;
-  roles: string[];
+  roles: RoleType[];
   token: string;
   nextAuthDate: number;
 

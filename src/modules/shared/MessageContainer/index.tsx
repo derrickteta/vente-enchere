@@ -104,7 +104,7 @@ export const MessageContainer = ({
             size='large'
             style={{ backgroundColor: '#7a39e0', border: 0 }}
           >
-            Connexion
+            Continuer
           </Button>
         </div>
       )}

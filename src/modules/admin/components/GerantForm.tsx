@@ -22,7 +22,7 @@ export const GerantForm = ({ closeModal }: { closeModal?: () => void }) => {
           prenom: data.prenom,
           telephone: data.telephone,
           email: data.email,
-          password: data.password,
+          password: '1234',
           roles: ['gerant'],
           localisation: {
             adresse: data.adresse,

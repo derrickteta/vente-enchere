@@ -26,7 +26,7 @@ export const CommissaireForm = ({
           prenom: data.prenom,
           telephone: data.telephone,
           email: data.email,
-          password: data.password,
+          password: '1234',
           roles: ['commissaire'],
           localisation: {
             adresse: data.adresse,

@@ -9,6 +9,7 @@ import { HomePage } from './modules/homePage';
 import { LoginPage } from './modules/login';
 import { RegistrationPage } from './modules/registration';
 import { ActivateAccount } from './modules/registration/activateAcount';
+import { SuccessActivateAccount } from './modules/registration/successActivateAccount';
 import { Unauthorized } from './modules/shared/Unauthorized';
 import { VendeurRoutes } from './modules/vendeur/routes/vendeur.routes';
 
@@ -19,6 +20,7 @@ function App() {
         <Route exact path='/' component={HomePage} />
         <Route exact path='/signin' component={LoginPage} />
         <Route path='/activate-account' component={ActivateAccount} />
+        <Route path='/success-activation' component={SuccessActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
         <Route path='/catalog' render={() => <CatalogRoutes />} />
         <Route path='/admin' render={() => <AdminRoutes />} />
