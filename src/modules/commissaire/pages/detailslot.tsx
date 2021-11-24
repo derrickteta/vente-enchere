@@ -32,7 +32,7 @@ export const DetailLot = () => {
       </h3>
       <Space style={{ justifyContent: 'flex-end', display: 'flex' }}>
         <Tooltip title='Valider le Lot'>
-          <Button onClick={() => {}}>
+          <Button style={{ backgroundColor: 'green' }} onClick={() => {}}>
             Valider <FiCheck />
           </Button>
         </Tooltip>
