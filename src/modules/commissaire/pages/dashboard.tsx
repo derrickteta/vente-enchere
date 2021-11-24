@@ -1,50 +1,90 @@
-import { Button } from 'antd';
-import { FaProductHunt, FaShopify, FaShoppingCart } from 'react-icons/fa';
+import { Button, Tag, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
+import {
+  FaExternalLinkAlt,
+  FaProductHunt,
+  FaShopify,
+  FaShoppingCart,
+} from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
+import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
+import { getColor } from '../../../shared/colors';
 import { StatsCard } from '../../shared/StatsCard';
 import { DataTable } from '../../shared/Table';
+import { dateFormatter } from '../../shared/Table/cellFormatter';
+import { fetchLot } from '../../vendeur/network';
 import { CommissaireContainer } from '../components/CommissaireContainer';
 
 export const CommissaireDashboard = () => {
   const router = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const [lots, setLots] = useState<LotEntity[]>([]);
+  const [produits, setProduits] = useState<ProduitEntity[]>([]);
+
+  useEffect(() => {
+    fetchLot().then((data) => {
+      if (data.success) {
+        setLots(data.result);
+      }
+    });
+  }, []);
 
   const LotColumns = [
     {
-      title: 'Lots',
+      title: 'Lot N°',
+      dataIndex: 'numeroLot',
       key: 'numeroLot',
-      render: (cell: any, row: any) => <span>{row.numeroLot}</span>,
+      render: (cell: number, row: any) => {
+        const val = String(cell);
+        return <span>{`${val.slice(0, 3)}-${val.slice(3)}`} </span>;
+      },
     },
     {
       title: 'Etat',
-      key: '',
-      render: (cell: any, row: any) => <span>{cell.statut}</span>,
+      dataIndex: 'statut',
+      key: 'statut',
+      render: (cell: string, row: any) => (
+        <Tag color={getColor(cell)}>{cell}</Tag>
+      ),
     },
     {
-      title: 'Prix Min',
+      title: 'Prix Minimum',
+      dataIndex: 'prixMin',
       key: 'prixMin',
-      render: (cell: any, row: any) => (
+      render: (cell: number, row: any) => (
         <span>
-          {cell.prixMin} {'XAF'}{' '}
+          {cell} {'FCFA'}
         </span>
       ),
     },
     {
+      title: 'Nombre de Produit',
+      dataIndex: 'produits',
+      key: 'produits',
+      render: (cell: [], row: any) => <span>{cell.length}</span>,
+    },
+    {
       title: 'Date Reception',
-      key: 'dateReception',
-      render: (cell: any, row: any) => <span>{cell.dateReception}</span>,
+      dataIndex: 'dateCreation',
+      key: 'dateCreation',
+      render: dateFormatter,
     },
     {
       title: 'Action',
       key: 'action',
       render: (cell: any, row: any) => (
-        <Button
-          onClick={() =>
-            router.push(ROUTES.COMMISSAIRE_PAGE.LOT_DETAIL(row._id), row)
-          }
-        >
-          Details
-        </Button>
+        <Tooltip title='Détails du lot'>
+          <Button
+            type='primary'
+            onClick={() =>
+              router.push(ROUTES.COMMISSAIRE_PAGE.LOT_DETAIL(row._id), row)
+            }
+          >
+            <FaExternalLinkAlt />
+          </Button>
+        </Tooltip>
       ),
     },
   ];
@@ -64,89 +104,12 @@ export const CommissaireDashboard = () => {
       </div>
 
       <h2 style={{ marginTop: 50 }}>Liste Lots</h2>
-      <DataTable
-        loading={false}
-        data={[
-          {
-            _id: '618cd0fbd518846e591746c7',
-            numeroLot: 1,
-            statut: 'en_attente_vente',
-            prixMin: '8000',
-            nonVendu: false,
-            produits: [
-              {
-                _id: '8cd0fbd518846e5917dfc7',
-                nom: 'TOMATE',
-                description: 'Tomates fraiches de l Est',
-                prixMin: '3000',
-                category: 'Fruits',
-                images: 'Hello word!!!!',
-                estBio: true,
-                statut: 'Actif',
-                dateCreation: '15/11/2021',
-              },
-              {
-                _id: '8cd0fbd518846e5917dfc7',
-                nom: 'Banane',
-                description: 'Banane fraiches de l Est',
-                prixMin: '1000',
-                category: 'Fruits',
-                images: 'Hello BABABABA!!!!',
-                estBio: true,
-                statut: 'Actif',
-                dateCreation: '15/11/2021',
-              },
-            ],
-            commentaireRefus: '',
-            dateReception: '15/11/2021',
-          },
-          {
-            _id: '618cd0fbd518846e5917dfc7',
-            numeroLot: 5,
-            statut: 'refuse',
-            prixMin: '80000',
-            nonVendu: false,
-            produits: [
-              {
-                _id: '8cd0fbd518846e5917dfc7',
-                nom: 'TOMATE',
-                description: 'Tomates fraiches de l Est',
-                prixMin: '3000',
-                category: 'Fruits',
-                images: 'Hello word!!!!',
-                estBio: true,
-                statut: 'Actif',
-                dateCreation: '15/11/2021',
-              },
-              {
-                _id: '8cd0fbd518846e5917dfc7',
-                nom: 'Banane',
-                description: 'Banane fraiches de l Est',
-                prixMin: '1000',
-                category: 'Fruits',
-                images: 'Hello BABABABA!!!!',
-                estBio: true,
-                statut: 'Actif',
-                dateCreation: '15/11/2021',
-              },
-            ],
-            commentaireRefus: '',
-            dateReception: '19/11/2021',
-          },
-        ]}
-        columns={LotColumns}
-      />
+      <DataTable loading={false} data={lots} columns={LotColumns} />
     </CommissaireContainer>
   );
 };
 
 const Stats = [
-  {
-    icon: <FaShopify size={30} color='white' />,
-    text: 'Enchères',
-    stat: 23,
-    gradientColors: ['#2c3e50', '#bdc3c7'],
-  },
   {
     icon: <FaShoppingCart size={30} color='white' />,
     text: 'Lots',
@@ -158,5 +121,11 @@ const Stats = [
     text: 'Produits',
     stat: 156,
     gradientColors: ['#FF425C', '#FFA8B4'],
+  },
+  {
+    icon: <FaShopify size={30} color='white' />,
+    text: 'Enchères',
+    stat: 23,
+    gradientColors: ['#2193b0', '#6dd5ed'],
   },
 ];
