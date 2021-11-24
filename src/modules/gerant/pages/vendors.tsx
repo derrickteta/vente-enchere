@@ -7,6 +7,14 @@ import { fetchVendeurs } from '../network/gerant.network';
 export const GerantVendors = () => {
   const [vendeurs, setVendeurs] = useState<VendeurEntity[]>([]);
 
+  const activatedVendors: VendeurEntity[] = vendeurs.filter(
+    (vendeur) => vendeur.accredidation,
+  );
+
+  const deactivatedVendors: VendeurEntity[] = vendeurs.filter(
+    (vendeur) => !vendeur.accredidation,
+  );
+
   useEffect(() => {
     fetchVendeurs().then((data) => {
       if (data.success) {
@@ -26,8 +34,8 @@ export const GerantVendors = () => {
         }}
       >
         <VendorGroup label='Pending requests' vendors={[]} />
-        <VendorGroup label='Activated vendors' vendors={vendeurs} />
-        <VendorGroup label='Deactivated vendors' vendors={[]} />
+        <VendorGroup label='Activated vendors' vendors={activatedVendors} />
+        <VendorGroup label='Deactivated vendors' vendors={deactivatedVendors} />
       </div>
     </GerantContainer>
   );

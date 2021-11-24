@@ -9,6 +9,14 @@ export const GerantDashboard = () => {
   // const [isLoading, setIsLoading] = useState(false);
   const [vendeurs, setVendeurs] = useState<VendeurEntity[]>([]);
 
+  const activatedVendors: VendeurEntity[] = vendeurs.filter(
+    (vendeur) => vendeur.accredidation,
+  );
+
+  const deactivatedVendors: VendeurEntity[] = vendeurs.filter(
+    (vendeur) => !vendeur.accredidation,
+  );
+
   useEffect(() => {
     fetchVendeurs().then((data) => {
       if (data.success) {
@@ -29,15 +37,15 @@ export const GerantDashboard = () => {
       >
         <Stats
           stats={[
-            { label: 'All', value: 54 },
-            { label: 'Pending Requests', value: 4 },
-            { label: 'Activated Accounts', value: 44 },
-            { label: 'Deactivated Accounts', value: 6 },
+            { label: 'All', value: vendeurs.length },
+            { label: 'Pending Requests', value: 0 },
+            { label: 'Activated Accounts', value: activatedVendors.length },
+            { label: 'Deactivated Accounts', value: deactivatedVendors.length },
           ]}
         />
         <VendorGroup label='Pending requests' vendors={[]} />
-        <VendorGroup label='Activated vendors' vendors={vendeurs} />
-        <VendorGroup label='Deactivated vendors' vendors={[]} />
+        <VendorGroup label='Activated vendors' vendors={activatedVendors} />
+        <VendorGroup label='Deactivated vendors' vendors={deactivatedVendors} />
       </div>
     </GerantContainer>
   );
