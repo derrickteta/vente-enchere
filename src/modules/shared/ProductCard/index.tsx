@@ -2,6 +2,7 @@ import styled from '@emotion/styled';
 import { Card, Image, Space } from 'antd';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { defaultImage } from '../../../shared/defaultImage';
+import { API_ROUTES } from '../ApiRoutes';
 
 const CardContainer = styled.div`
   margin: 10px;
@@ -66,7 +67,7 @@ export const ProductCard = ({ product }: { product: ProduitEntity }) => {
                 borderTopLeftRadius: 20,
               }}
               preview={false}
-              src={product.images[0]}
+              src={API_ROUTES.IMAGES(product.images[0])}
               fallback={defaultImage}
             />
           </>
