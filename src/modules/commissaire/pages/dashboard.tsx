@@ -8,7 +8,6 @@ import {
 } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
-import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
 import { getColor } from '../../../shared/colors';
 import { StatsCard } from '../../shared/StatsCard';
@@ -19,9 +18,7 @@ import { CommissaireContainer } from '../components/CommissaireContainer';
 
 export const CommissaireDashboard = () => {
   const router = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
   const [lots, setLots] = useState<LotEntity[]>([]);
-  const [produits, setProduits] = useState<ProduitEntity[]>([]);
 
   useEffect(() => {
     fetchLot().then((data) => {
