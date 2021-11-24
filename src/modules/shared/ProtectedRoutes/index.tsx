@@ -1,10 +1,8 @@
 import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
-import {
-  ConnectedUserEntity,
-  RoleType,
-} from '../../../entities/ConnectedUserEntity';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
+import { RoleType } from '../../../entities/GestionCompte/user.entity';
 import { ROUTES } from '../../../routes';
 import { Unauthorized } from '../Unauthorized';
 
