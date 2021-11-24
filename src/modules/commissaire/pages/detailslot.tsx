@@ -1,5 +1,6 @@
 import { Button, Form, Image, Input, Space, Tag, Tooltip } from 'antd';
-import { FiCheck, FiTrash2 } from 'react-icons/fi';
+import { FaCheckCircle, FaClock } from 'react-icons/fa';
+import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { getColor } from '../../../shared/colors';
@@ -13,46 +14,50 @@ import { CommissaireContainer } from '../components/CommissaireContainer';
 
 export const DetailLot = () => {
   const router = useHistory();
-  console.log(router.location.state);
   const lot: LotEntity = router.location.state as any;
 
   return (
     <CommissaireContainer clicked='dashboard'>
-      <h2 style={{ marginTop: -30 }}>
-        Detail Lot N° <strong>{lot.numeroLot}</strong>{' '}
+      <h1>
+        Detail Lot <strong>N° {lot.numeroLot}</strong>{' '}
+      </h1>
+      <h2>
+        Etat Lot :{' '}
+        <Tag style={{ fontSize: 16 }} color={getColor(lot.statut)}>
+          {lot.statut}
+        </Tag>
       </h2>
-      <h3>
-        Etat Lot: <Tag color={getColor(lot.statut)}>{lot.statut}</Tag>
-      </h3>
-      <h3>
+      <h2>
         Prix Minimun: <strong>{lot.prixMin} FCFA</strong>{' '}
-      </h3>
-      <h3>
+      </h2>
+      <h2>
         Date Reception: <strong>{DateFrHrWithTime(lot.dateCreation)}</strong>
-      </h3>
+      </h2>
       <Space style={{ justifyContent: 'flex-end', display: 'flex' }}>
         <Tooltip title='Valider le Lot'>
-          <Button style={{ backgroundColor: 'green' }} onClick={() => {}}>
-            Valider <FiCheck />
+          <Button
+            size='large'
+            type='primary'
+            style={{ backgroundColor: '#4caf50', borderWidth: 0 }}
+            onClick={() => {}}
+          >
+            Valider <FaCheckCircle style={{ marginLeft: 10 }} />
           </Button>
         </Tooltip>
 
-        <Tooltip title='Rejeter le Lot'>
+        <Tooltip title='Refuser  le Lot'>
           <ButtonWithModal
             buttonText={
               <>
-                Rejeter <FiTrash2 />
+                Refuser <FaClock style={{ marginLeft: 10 }} />
               </>
             }
-            buttonProps={{
-              danger: true,
-              style: { backgroundColor: '#7B0000' },
-            }}
+            buttonProps={{ danger: true, size: 'large' }}
             modalProps={{ title: 'Confirmation' }}
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous rejeter ce lot ?</h3>
+                <h3>Voulez vous refuser ce lot ?</h3>
                 <Form>
                   <Form.Item
                     label='Motif'
@@ -61,7 +66,7 @@ export const DetailLot = () => {
                     rules={[
                       {
                         required: true,
-                        message: 'Veuillez saisir le motif de votre rejet',
+                        message: 'Veuillez saisir le motif de votre refus',
                       },
                     ]}
                   >
@@ -86,19 +91,23 @@ export const DetailLot = () => {
           </ButtonWithModal>
         </Tooltip>
 
-        <Tooltip title='Refuser Lot'>
+        <Tooltip title='Rejeter le Lot'>
           <ButtonWithModal
             buttonText={
               <>
-                Refuser <FiTrash2 />
+                Rejeter <FiTrash2 style={{ marginLeft: 10 }} />
               </>
             }
-            buttonProps={{ danger: true }}
+            buttonProps={{
+              danger: true,
+              size: 'large',
+              style: { backgroundColor: '#7B0000' },
+            }}
             modalProps={{ title: 'Confirmation' }}
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous refuser ce lot ?</h3>
+                <h3>Voulez vous rejeter ce lot ?</h3>
                 <Form>
                   <Form.Item
                     label='Motif'
@@ -107,7 +116,7 @@ export const DetailLot = () => {
                     rules={[
                       {
                         required: true,
-                        message: 'Veuillez saisir le motif de votre refus',
+                        message: 'Veuillez saisir le motif de votre rejet',
                       },
                     ]}
                   >

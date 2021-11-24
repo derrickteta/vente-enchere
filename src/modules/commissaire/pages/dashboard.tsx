@@ -19,11 +19,13 @@ import { CommissaireContainer } from '../components/CommissaireContainer';
 export const CommissaireDashboard = () => {
   const router = useHistory();
   const [lots, setLots] = useState<LotEntity[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchLot().then((data) => {
       if (data.success) {
         setLots(data.result);
+        setIsLoading(false);
       }
     });
   }, []);
@@ -100,8 +102,8 @@ export const CommissaireDashboard = () => {
         ))}
       </div>
 
-      <h2 style={{ marginTop: 50 }}>Liste Lots</h2>
-      <DataTable loading={false} data={lots} columns={LotColumns} />
+      <h2 style={{ marginTop: 50 }}>Liste des Lots</h2>
+      <DataTable loading={isLoading} data={lots} columns={LotColumns} />
     </CommissaireContainer>
   );
 };
