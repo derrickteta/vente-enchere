@@ -26,6 +26,8 @@ import { createLot, fetchLot, fetchProduit } from '../network';
 export const VendeurDashboard = () => {
   const router = useHistory();
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoading1, setIsLoading1] = useState(true);
+  const [isLoading2, setIsLoading2] = useState(true);
   const [lots, setLots] = useState<LotEntity[]>([]);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
   const connectedUser: ConnectedUserEntity = useSelector(
@@ -36,11 +38,13 @@ export const VendeurDashboard = () => {
     fetchLot().then((data) => {
       if (data.success) {
         setLots(data.result);
+        setIsLoading1(false);
       }
     });
     fetchProduit().then((data) => {
       if (data.success) {
         setProduits(data.result);
+        setIsLoading2(false);
       }
     });
   }, []);
@@ -114,6 +118,7 @@ export const VendeurDashboard = () => {
         <div style={{ marginTop: 100 }}>
           <h2>Vos différents lot</h2>
           <DataTable
+            loading={isLoading1}
             data={lots}
             columns={LotColumns}
             buttons={
@@ -173,7 +178,11 @@ export const VendeurDashboard = () => {
 
         <div style={{ marginTop: 100 }}>
           <h2>Vos différents Produits</h2>
-          <DataTable data={produits} columns={ProductColumns} />
+          <DataTable
+            loading={isLoading2}
+            data={produits}
+            columns={ProductColumns}
+          />
         </div>
       </div>
     </VendeurContainer>

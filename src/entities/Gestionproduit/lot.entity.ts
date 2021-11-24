@@ -4,6 +4,7 @@ export class LotEntity {
   _id: string;
   numeroLot: number;
   prixFinalVente: string;
+  vendeur: string;
   statut: string;
   prixMin: string;
   nonVendu: boolean;
@@ -20,6 +21,7 @@ export class LotEntity {
     this._id = lot._id;
     this.numeroLot = lot.numeroLot;
     this.prixFinalVente = lot.prixFinalVente;
+    this.vendeur = lot.vendeur;
     this.statut = lot.statut;
     this.prixMin = lot.prixMin;
     this.nonVendu = lot.nonVendu;

@@ -1,4 +1,5 @@
 import { Button, Space, Tag, Tooltip } from 'antd';
+import { useEffect, useState } from 'react';
 import {
   FaChartLine,
   FaCheckCircle,
@@ -11,13 +12,27 @@ import {
   FaUsersCog,
 } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
+import { UserEntity } from '../../../entities/GestionCompte/user.entity';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { StatsCard } from '../../shared/StatsCard';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { AdminContainer } from '../components/AdminContainer';
+import { fetchUsers } from '../network/admin.network';
 
 export const AdminDashBoard = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [users, setUsers] = useState<UserEntity[]>([]);
+
+  useEffect(() => {
+    fetchUsers().then((data) => {
+      if (data.success) {
+        setUsers(data.result);
+        setIsLoading(false);
+      }
+    });
+  }, []);
+
   return (
     <AdminContainer clicked='dashboard'>
       <div style={{ display: 'flex', flexWrap: 'wrap' }}>
@@ -34,85 +49,16 @@ export const AdminDashBoard = () => {
 
       <h2 style={{ marginTop: 50 }}>Utilisateurs</h2>
       <DataTable
-        loading={false}
-        data={[
-          {
-            localisation: {
-              adresse: 'Melen',
-              pays: 'Cameroun',
-              ville: 'Yaoundé',
-            },
-            _id: '618cc6a426e48fde9feb1230',
-            nom: 'Talom',
-            prenom: 'Franklin',
-            telephone: '690115022',
-            roles: ['vendeur'],
-            nombreProduitsAchetes: 0,
-            totalArgentDepense: 0,
-            produitsAchetes: [],
-            compte: {
-              _id: '618cb77d2bfd4df51c675685',
-              email: 'talomfranklin@gmail.com',
-              password:
-                '$2a$10$7l516SN11EljIY/bxPeM.OA7hs0bGk2GlWB2UZqBnNIkapdnv5aDe',
-              isActivated: false,
-              __v: 0,
-            },
-            dateAjout: '2021-11-11T07:21:05.369Z',
-            __v: 0,
-          },
-          {
-            localisation: {
-              adresse: 'Akwa',
-              pays: 'Cameroun',
-              ville: 'Douala',
-            },
-            _id: '618cd0258835531fcf9ac673',
-            nom: 'Talla',
-            prenom: 'James',
-            telephone: '690155022',
-            roles: ['gerant', 'commissaire'],
-            nombreProduitsAchetes: 0,
-            totalArgentDepense: 0,
-            produitsAchetes: [],
-            compte: {
-              _id: '618cd0258835531fcf9ac671',
-              email: 'franklinfrost14@gmail.com',
-              password:
-                '$2a$10$QFLd5.KqADmfLGtZQcfqaemuCM68d4/sW82xlimuAoglSqMaUqAJC',
-              isActivated: true,
-              __v: 0,
-            },
-            dateAjout: '2021-11-11T08:11:03.691Z',
-            __v: 0,
-          },
-          {
-            localisation: {
-              adresse: 'Akwa',
-              pays: 'Cameroun',
-              ville: 'Douala',
-            },
-            _id: '618cd0fbd518846e591746c7',
-            nom: 'Talla',
-            prenom: 'James',
-            telephone: '690155022',
-            roles: ['gerant', 'commissaire'],
-            nombreProduitsAchetes: 0,
-            totalArgentDepense: 0,
-            produitsAchetes: [],
-            compte: {
-              _id: '618cd0fbd518846e591746c5',
-              email: 'talla@gmail.com',
-              password:
-                '$2a$10$ZBG9sZsylT.pJgJ3Fj8XP.arndStbq3yO7zI60ko2RAUxks.mbWHG',
-              isActivated: false,
-              __v: 0,
-            },
-            dateAjout: '2021-11-11T08:14:27.923Z',
-            __v: 0,
-          },
-        ]}
+        loading={isLoading}
+        data={users}
         columns={userColumns}
+        filterFunction={(user: UserEntity, filterValue: string) =>
+          user.nom.toLowerCase().includes(filterValue) ||
+          user.prenom.toLowerCase().includes(filterValue) ||
+          user.email.toLowerCase().includes(filterValue) ||
+          user.localisation.adresse.toLowerCase().includes(filterValue) ||
+          user.telephone.toLowerCase().includes(filterValue)
+        }
       />
     </AdminContainer>
   );
@@ -214,7 +160,7 @@ const userColumns = [
     title: 'Total dépensé',
     dataIndex: 'totalArgentDepense',
     key: 'totalArgentDepense',
-    render: (cell: any, row: any) => <span>{cell} FCFA </span>,
+    render: (cell: any, row: any) => <span>{cell || 0} FCFA </span>,
   },
   {
     title: 'Etat du compte',
