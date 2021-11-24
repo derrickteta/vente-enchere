@@ -1,4 +1,4 @@
-import { Space } from 'antd';
+import { Button, Space } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -12,15 +12,18 @@ import { fetchProduitsVendeur } from '../network/gerant.network';
 
 export const GerantVendorDetail = () => {
   const router = useHistory();
+  const [loading, setLoading] = useState<boolean>(false);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
   const vendeur: VendeurEntity = router.location.state as VendeurEntity;
 
   useEffect(() => {
+    setLoading(true);
     fetchProduitsVendeur(vendeur._id).then((data) => {
       if (data.success) {
         setProduits(data.result);
       }
     });
+    setLoading(false);
   }, [vendeur]);
 
   return (
@@ -33,10 +36,24 @@ export const GerantVendorDetail = () => {
           padding: '0 50px',
         }}
       >
-        <Space style={{ borderBottom: '1px solid gray' }}>
+        <Space
+          style={{ borderBottom: '1px solid gray' }}
+          size={50}
+          align='baseline'
+        >
           <Title level={2}>
             {vendeur.user.prenom}, {vendeur.user.nom}
           </Title>
+
+          {vendeur.accredidation ? (
+            <Button type='primary' danger size='large'>
+              Désactiver
+            </Button>
+          ) : (
+            <Button type='primary' size='large'>
+              Activer
+            </Button>
+          )}
         </Space>
         <div
           style={{
@@ -125,7 +142,7 @@ export const GerantVendorDetail = () => {
             <RatedAvatar image={slide1} rate={4} />
           </div>
         </div>
-        <ProductGroup products={produits} />
+        {loading ? <p>Chargement...</p> : <ProductGroup products={produits} />}
       </div>
     </GerantContainer>
   );
