@@ -7,11 +7,17 @@ export type RoleType =
   | 'commissaire'
   | 'admin';
 
+export type LocalisationType = {
+  pays: string;
+  ville: string;
+  adresse: string;
+};
+
 export class UserEntity {
   _id: string;
   nom: string;
   prenom: string;
-  localisation: string;
+  localisation: LocalisationType;
   pays: string;
   ville: string;
   telephone: string;
