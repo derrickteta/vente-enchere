@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 import { FaChalkboardTeacher, FaClipboardList, FaUser } from 'react-icons/fa';
+import { DashboardHeader } from '../../shared/DashboardHeader';
 import { SideBar } from '../../shared/SideBar';
-import { GerantHeader } from './GerantHeader';
 
 const Container = styled.div`
   margin-left: 50px;
@@ -37,11 +37,9 @@ const Container = styled.div`
 export const GerantContainer = ({
   clicked,
   children,
-  headerChildren,
 }: {
   children: ReactNode;
   clicked: string;
-  headerChildren: ReactNode;
 }) => {
   const [shrink, setShrink] = useState(false);
   return (
@@ -53,8 +51,10 @@ export const GerantContainer = ({
         setShrink={setShrink}
       />
       <Container>
-        <GerantHeader shrinked={shrink}>{headerChildren}</GerantHeader>
-        <div className={shrink ? 'shrink' : ''}>{children}</div>
+        <DashboardHeader shrinked={shrink} />
+        <div style={{ marginTop: '30px' }} className={shrink ? 'shrink' : ''}>
+          {children}
+        </div>
       </Container>
     </div>
   );
@@ -83,7 +83,7 @@ const ROUTES = [
     text: 'Les Vendeurs',
     clicked: 'vendors',
   },
-  {
+  /* {
     icon: (clicked: string) => (
       <FaClipboardList
         color={clicked === 'details' ? 'white' : 'black'}
@@ -93,7 +93,7 @@ const ROUTES = [
     link: '/gerant/details',
     text: 'Détails',
     clicked: 'details',
-  },
+  }, */
   {
     icon: (clicked: string) => (
       <FaUser color={clicked === 'account' ? 'white' : 'black'} size={24} />
