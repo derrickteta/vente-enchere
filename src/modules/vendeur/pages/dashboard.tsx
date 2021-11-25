@@ -92,7 +92,12 @@ export const VendeurDashboard = () => {
       key: 'action',
       render: (cell: any, row: any) => (
         <Tooltip title='Détails du lot'>
-          <Button type='primary' onClick={() => router.push('', row)}>
+          <Button
+            type='primary'
+            onClick={() =>
+              router.push(ROUTES.VENDEUR_PAGE.LOT_DETAIL(row._id), row)
+            }
+          >
             <FaExternalLinkAlt />
           </Button>
         </Tooltip>
