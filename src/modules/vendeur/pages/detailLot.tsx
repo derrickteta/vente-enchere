@@ -1,5 +1,6 @@
-import { Button, Form, Image, Input, Space, Tag, Tooltip } from 'antd';
-import { FaCheckCircle, FaClock } from 'react-icons/fa';
+import styled from '@emotion/styled';
+import { Button, Image, Space, Tag, Tooltip } from 'antd';
+import { FaCheckCircle } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
@@ -11,6 +12,21 @@ import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { VendeurContainer } from '../components/VendeurContainer';
+
+const RefusContainer = styled.div`
+  margin-top: 50px;
+  border: 2px solid red;
+  background-color: #ffcdd2;
+  padding: 30px;
+
+  > h2 {
+    font-weight: bold;
+  }
+
+  > p {
+    font-size: 16px;
+  }
+`;
 
 export const DetailLot = () => {
   const router = useHistory();
@@ -33,46 +49,28 @@ export const DetailLot = () => {
       <h2>
         Date Reception: <strong>{DateFrHrWithTime(lot.dateCreation)}</strong>
       </h2>
-      <Space style={{ justifyContent: 'flex-end', display: 'flex' }}>
-        <Tooltip title='Valider le Lot'>
-          <Button
-            size='large'
-            type='primary'
-            style={{ backgroundColor: '#4caf50', borderWidth: 0 }}
-            onClick={() => {}}
-          >
-            Valider <FaCheckCircle style={{ marginLeft: 10 }} />
-          </Button>
-        </Tooltip>
 
-        <Tooltip title='Refuser  le Lot'>
+      <DataTable data={lot.produits} columns={ProductColumns} />
+
+      <Space>
+        <Tooltip title='Relancer le Lot'>
           <ButtonWithModal
             buttonText={
               <>
-                Refuser <FaClock style={{ marginLeft: 10 }} />
+                Relancer le lot <FaCheckCircle style={{ marginLeft: 10 }} />
               </>
             }
-            buttonProps={{ danger: true, size: 'large' }}
+            buttonProps={{
+              danger: true,
+              size: 'large',
+              style: { backgroundColor: '#4caf50', borderWidth: 0 },
+            }}
             modalProps={{ title: 'Confirmation' }}
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous refuser ce lot ?</h3>
-                <Form>
-                  <Form.Item
-                    label='Motif'
-                    name='motif'
-                    hasFeedback
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Veuillez saisir le motif de votre refus',
-                      },
-                    ]}
-                  >
-                    <Input.TextArea placeholder='motif' />
-                  </Form.Item>
-                </Form>
+                <h2>Voulez vous relancer ce lot ?</h2>
+
                 <Space>
                   <Button type='primary' onClick={() => closeModal()}>
                     Fermer
@@ -91,38 +89,26 @@ export const DetailLot = () => {
           </ButtonWithModal>
         </Tooltip>
 
-        <Tooltip title='Rejeter le Lot'>
+        <Tooltip title='Annuler le Lot'>
           <ButtonWithModal
             buttonText={
               <>
-                Rejeter <FiTrash2 style={{ marginLeft: 10 }} />
+                Annuler le lot <FiTrash2 style={{ marginLeft: 10 }} />
               </>
             }
             buttonProps={{
               danger: true,
               size: 'large',
-              style: { backgroundColor: '#7B0000' },
             }}
             modalProps={{ title: 'Confirmation' }}
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous rejeter ce lot ?</h3>
-                <Form>
-                  <Form.Item
-                    label='Motif'
-                    name='motif'
-                    hasFeedback
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Veuillez saisir le motif de votre rejet',
-                      },
-                    ]}
-                  >
-                    <Input.TextArea placeholder='motif' />
-                  </Form.Item>
-                </Form>
+                <h2>
+                  Voulez vous annuler ce lot de façon définitif ? Il ne sera
+                  plus possible de retourner en arrière !{' '}
+                </h2>
+
                 <Space>
                   <Button type='primary' onClick={() => closeModal()}>
                     Fermer
@@ -141,7 +127,12 @@ export const DetailLot = () => {
           </ButtonWithModal>
         </Tooltip>
       </Space>
-      <DataTable data={lot.produits} columns={ProductColumns} />
+      {lot.commentaireRefus && (
+        <RefusContainer>
+          <h2>Raison de refus</h2>
+          <p>{lot.commentaireRefus}</p>
+        </RefusContainer>
+      )}
     </VendeurContainer>
   );
 };
