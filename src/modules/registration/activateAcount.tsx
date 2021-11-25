@@ -1,4 +1,5 @@
 import styled from '@emotion/styled';
+import { Header } from '../shared/Layout/header';
 import { MessageContainer } from '../shared/MessageContainer';
 
 const ActivateCompanyContainer = styled.div`
@@ -11,12 +12,15 @@ const ActivateCompanyContainer = styled.div`
 
 export const ActivateAccount = () => {
   return (
-    <ActivateCompanyContainer>
-      <MessageContainer
-        title='Votre compte a été créé.'
-        description='Vérifiez vos mails et cliquez sur le lien afin de pouvoir activer votre
+    <>
+      <Header />
+      <ActivateCompanyContainer>
+        <MessageContainer
+          title='Votre compte a été créé.'
+          description='Vérifiez vos mails et cliquez sur le lien afin de pouvoir activer votre
         compte'
-      />
-    </ActivateCompanyContainer>
+        />
+      </ActivateCompanyContainer>
+    </>
   );
 };

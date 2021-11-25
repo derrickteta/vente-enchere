@@ -26,7 +26,12 @@ export const Auction = () => {
   useEffect(() => {
     fetchProduit().then((data) => {
       if (data.success) {
-        setProduits(data.result);
+        if (data.result.length > 9) {
+          data.result.length = 9;
+          setProduits(data.result);
+        } else {
+          setProduits(data.result);
+        }
       }
     });
   }, []);

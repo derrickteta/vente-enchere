@@ -1,3 +1,4 @@
+import { Space } from 'antd';
 import { PRIMARY } from '../../../shared/colors';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { AdminContainer } from '../components/AdminContainer';
@@ -8,28 +9,23 @@ import { PersonelsList } from '../components/PersonnelsList';
 export const PersonnelPage = () => {
   return (
     <AdminContainer clicked='personnel'>
-      <ButtonWithModal
-        buttonText='Nouveau gérant'
-        buttonProps={{ style: { backgroundColor: PRIMARY, borderWidth: 0 } }}
-        modalProps={{ title: 'Création du nouvea gérant' }}
-      >
-        {() => (
-          <div>
-            <GerantForm />
-          </div>
-        )}
-      </ButtonWithModal>
-      <ButtonWithModal
-        buttonText='Nouveau commissaire'
-        buttonProps={{ style: { backgroundColor: PRIMARY, borderWidth: 0 } }}
-        modalProps={{ title: 'Création du nouvea Commissaire' }}
-      >
-        {() => (
-          <div>
-            <CommissaireForm />
-          </div>
-        )}
-      </ButtonWithModal>
+      <Space>
+        <ButtonWithModal
+          buttonText='Nouveau Gérant'
+          buttonProps={{ style: { backgroundColor: PRIMARY, borderWidth: 0 } }}
+          modalProps={{ title: 'Création du nouveau gérant' }}
+        >
+          {(closeModal) => <GerantForm closeModal={closeModal} />}
+        </ButtonWithModal>
+
+        <ButtonWithModal
+          buttonText='Nouveau Commissaire'
+          buttonProps={{ style: { backgroundColor: PRIMARY, borderWidth: 0 } }}
+          modalProps={{ title: 'Création du nouveay Commissaire' }}
+        >
+          {(closeModal) => <CommissaireForm closeModal={closeModal} />}
+        </ButtonWithModal>
+      </Space>
 
       <PersonelsList />
     </AdminContainer>

@@ -32,8 +32,8 @@ export const DataTable = <T extends { _id: string }>({
   const [filterValue, setFilterValue] = useState('');
   const [rowId, setRowId] = useState('');
 
-  const dataToShow = data?.filter(
-    (dataItem) => filterFunction?.(dataItem, filterValue) || dataItem,
+  const dataToShow = data?.filter((dataItem) =>
+    filterFunction ? filterFunction(dataItem, filterValue) : true,
   );
 
   return (

@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
+import { RoleType } from '../../../entities/GestionCompte/user.entity';
 import { ROUTES } from '../../../routes';
 import { Unauthorized } from '../Unauthorized';
 
@@ -10,7 +11,7 @@ export const ProtectedRoutes = ({
   authorization,
 }: {
   children: ReactNode;
-  authorization: string;
+  authorization: RoleType;
 }) => {
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
