@@ -25,6 +25,10 @@ export const GerantVendorDetail = () => {
   const vendeur: VendeurEntity = router.location.state as VendeurEntity;
 
   useEffect(() => {
+    console.log('Detail page of ', vendeur);
+  });
+
+  useEffect(() => {
     setLoading(true);
     fetchProduitsVendeur(vendeur._id).then((data) => {
       if (data.success) {
@@ -52,21 +56,29 @@ export const GerantVendorDetail = () => {
           <Title level={2}>
             {vendeur.user.prenom}, {vendeur.user.nom}
           </Title>
+          <p>{String(vendeur.accreditation)}</p>
           <ButtonWithModal
-            buttonText={vendeur.accredidation ? 'Désactiver' : 'Activer'}
+            buttonText={
+              vendeur.accreditation
+                ? "Retirer l'accréditation"
+                : "Accorder l'accréditation"
+            }
             buttonProps={{
               style: { backgroundColor: PRIMARY, borderWidth: 0 },
             }}
             modalProps={
-              vendeur.accredidation
-                ? { title: 'Désactiver un vendeur' }
-                : { title: 'Activer un vendeur' }
+              vendeur.accreditation
+                ? { title: "Retirer l'accréditation à un un vendeur" }
+                : { title: "Accorder l'accréditation à un un vendeur" }
             }
           >
             {(closeModal) => (
               <div>
                 <h3 style={{ marginBottom: 20 }}>
-                  Voulez vous {vendeur.accredidation ? 'désactiver' : 'activer'}
+                  Voulez vous{' '}
+                  {vendeur.accreditation
+                    ? "retirer l'accréditation"
+                    : "accorder l'accréditation"}
                   le vendeur : {vendeur.user.nom + ' ' + vendeur.user.prenom}
                 </h3>
                 <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
@@ -80,7 +92,7 @@ export const GerantVendorDetail = () => {
                     loading={isLoading}
                     onClick={async () => {
                       setIsLoading(true);
-                      if (vendeur.accredidation) {
+                      if (vendeur.accreditation) {
                         console.log('Désactiver Vendeur');
                         await desactivateVendeur(vendeur._id).then((data) => {
                           if (data.success) {
@@ -140,7 +152,9 @@ export const GerantVendorDetail = () => {
                       closeModal();
                     }}
                   >
-                    {vendeur.accredidation ? 'Désactiver' : 'Activer'}
+                    {vendeur.accreditation
+                      ? "Retirer l'accréditation"
+                      : "Accorder l'accréditation"}
                   </Button>
                 </Space>
               </div>
