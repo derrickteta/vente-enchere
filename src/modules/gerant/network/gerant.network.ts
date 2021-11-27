@@ -22,7 +22,7 @@ export const fetchProduitsVendeur = (
 
 export const activateVendeur = (
   id: string,
-): Promise<ResponseType<ProduitEntity>> => {
+): Promise<ResponseType<VendeurEntity>> => {
   return customFetch.put(API_ROUTES.VENDEURS.BASEID(id), {
     accreditation: true,
   });
@@ -30,7 +30,7 @@ export const activateVendeur = (
 
 export const desactivateVendeur = (
   id: string,
-): Promise<ResponseType<ProduitEntity>> => {
+): Promise<ResponseType<VendeurEntity>> => {
   return customFetch.put(API_ROUTES.VENDEURS.BASEID(id), {
     accreditation: false,
   });
