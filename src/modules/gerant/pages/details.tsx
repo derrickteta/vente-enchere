@@ -125,23 +125,6 @@ export const GerantVendorDetail = () => {
                           }
                         });
                       }
-                      /* await createLot(connectedUser._id).then((data) => {
-                        if (data.success) {
-                          notification.success({
-                            message: 'Succes',
-                            description: data.message,
-                          });
-                          router.push(
-                            ROUTES.VENDEUR_PAGE.NEW_PRODUCT,
-                            data.result,
-                          );
-                        } else {
-                          notification.error({
-                            message: 'Erreur',
-                            description: data.message,
-                          });
-                        }
-                      }); */
                       setIsLoading(false);
                       closeModal();
                     }}

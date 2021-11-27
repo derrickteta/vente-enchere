@@ -76,7 +76,6 @@ export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
                 borderTopLeftRadius: 20,
               }}
               preview={false}
-              /* src={vendor.image} */
               src={slide1}
               fallback={defaultImage}
             />
@@ -98,8 +97,6 @@ export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
               </p>
               {vendor.accreditation && <Tag color='blue'>Accrédité</Tag>}
             </Space>
-
-            {/* <p className='name'>Césaire Honoré Mounah</p> */}
           </div>
           <p className='description'>{vendor.specialite}</p>
 
