@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Card, Image } from 'antd';
+import { Button, Card, Image, Space, Tag } from 'antd';
 import { useHistory } from 'react-router-dom';
 import slide1 from '../../../assets/images/slide1.jpg';
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
@@ -38,7 +38,7 @@ const CardContainer = styled.div`
 
   .description {
     color: #777;
-    font-size: 12px;
+    font-size: 1.5em;
     margin-bottom: 0;
     margin-top: 10px;
     display: -webkit-box;
@@ -92,9 +92,13 @@ export const VendorCard = ({ vendor }: { vendor: VendeurEntity }) => {
           }}
         >
           <div style={{ alignSelf: 'center' }}>
-            <p className='name'>
-              {vendor.user.nom} {vendor.user.prenom}
-            </p>
+            <Space align='baseline' size={5}>
+              <p className='name'>
+                {vendor.user.nom} {vendor.user.prenom}
+              </p>
+              {vendor.accreditation && <Tag color='blue'>Accrédité</Tag>}
+            </Space>
+
             {/* <p className='name'>Césaire Honoré Mounah</p> */}
           </div>
           <p className='description'>{vendor.specialite}</p>
