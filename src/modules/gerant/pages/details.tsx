@@ -1,18 +1,26 @@
-import { Button, Space } from 'antd';
+import { Button, notification, Space } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import slide1 from '../../../assets/images/slide1.jpg';
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../routes';
+import { PRIMARY } from '../../../shared/colors';
+import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { GerantContainer } from '../components/GerantContainer';
 import { ProductGroup } from '../components/ProductGroup';
 import { RatedAvatar } from '../components/RatedAvatar';
-import { fetchProduitsVendeur } from '../network/gerant.network';
+import {
+  activateVendeur,
+  desactivateVendeur,
+  fetchProduitsVendeur,
+} from '../network/gerant.network';
 
 export const GerantVendorDetail = () => {
   const router = useHistory();
   const [loading, setLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
   const vendeur: VendeurEntity = router.location.state as VendeurEntity;
 
@@ -44,16 +52,100 @@ export const GerantVendorDetail = () => {
           <Title level={2}>
             {vendeur.user.prenom}, {vendeur.user.nom}
           </Title>
-
-          {vendeur.accredidation ? (
-            <Button type='primary' danger size='large'>
-              Désactiver
-            </Button>
-          ) : (
-            <Button type='primary' size='large'>
-              Activer
-            </Button>
-          )}
+          <ButtonWithModal
+            buttonText={vendeur.accredidation ? 'Désactiver' : 'Activer'}
+            buttonProps={{
+              style: { backgroundColor: PRIMARY, borderWidth: 0 },
+            }}
+            modalProps={
+              vendeur.accredidation
+                ? { title: 'Désactiver un vendeur' }
+                : { title: 'Activer un vendeur' }
+            }
+          >
+            {(closeModal) => (
+              <div>
+                <h3 style={{ marginBottom: 20 }}>
+                  Voulez vous {vendeur.accredidation ? 'désactiver' : 'activer'}
+                  le vendeur : {vendeur.user.nom + ' ' + vendeur.user.prenom}
+                </h3>
+                <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+                  <Button danger onClick={() => closeModal()}>
+                    Fermer
+                  </Button>
+                  <Button
+                    type='primary'
+                    style={{ backgroundColor: PRIMARY, borderWidth: 0 }}
+                    size='large'
+                    loading={isLoading}
+                    onClick={async () => {
+                      setIsLoading(true);
+                      if (vendeur.accredidation) {
+                        console.log('Désactiver Vendeur');
+                        await desactivateVendeur(vendeur._id).then((data) => {
+                          if (data.success) {
+                            notification.success({
+                              message: 'Succes',
+                              description: data.message,
+                            });
+                            router.push(
+                              ROUTES.GERANT_PAGE.VENDEURS,
+                              data.result,
+                            );
+                          } else {
+                            notification.error({
+                              message: 'Erreur',
+                              description: data.message,
+                            });
+                          }
+                        });
+                      } else {
+                        console.log('Activer vendeur');
+                        await activateVendeur(vendeur._id).then((data) => {
+                          if (data.success) {
+                            notification.success({
+                              message: 'Succes',
+                              description: data.message,
+                            });
+                            router.push(
+                              ROUTES.GERANT_PAGE.VENDEURS,
+                              data.result,
+                            );
+                          } else {
+                            notification.error({
+                              message: 'Erreur',
+                              description: data.message,
+                            });
+                          }
+                        });
+                      }
+                      /* await createLot(connectedUser._id).then((data) => {
+                        if (data.success) {
+                          notification.success({
+                            message: 'Succes',
+                            description: data.message,
+                          });
+                          router.push(
+                            ROUTES.VENDEUR_PAGE.NEW_PRODUCT,
+                            data.result,
+                          );
+                        } else {
+                          notification.error({
+                            message: 'Erreur',
+                            description: data.message,
+                          });
+                        }
+                      }); */
+                      setIsLoading(false);
+                      closeModal();
+                    }}
+                  >
+                    {vendeur.accredidation ? 'Désactiver' : 'Activer'}
+                  </Button>
+                </Space>
+              </div>
+            )}
+          </ButtonWithModal>
         </Space>
         <div
           style={{
