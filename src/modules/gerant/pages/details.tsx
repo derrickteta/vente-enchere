@@ -1,4 +1,4 @@
-import { Button, notification, Space } from 'antd';
+import { Button, notification, Space, Tag } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -23,10 +23,6 @@ export const GerantVendorDetail = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [produits, setProduits] = useState<ProduitEntity[]>([]);
   const vendeur: VendeurEntity = router.location.state as VendeurEntity;
-
-  useEffect(() => {
-    console.log('Detail page of ', vendeur);
-  });
 
   useEffect(() => {
     setLoading(true);
@@ -56,7 +52,7 @@ export const GerantVendorDetail = () => {
           <Title level={2}>
             {vendeur.user.prenom}, {vendeur.user.nom}
           </Title>
-          <p>{String(vendeur.accreditation)}</p>
+          {vendeur.accreditation && <Tag>"Accrédité"</Tag>}
           <ButtonWithModal
             buttonText={
               vendeur.accreditation
@@ -93,7 +89,6 @@ export const GerantVendorDetail = () => {
                     onClick={async () => {
                       setIsLoading(true);
                       if (vendeur.accreditation) {
-                        console.log('Désactiver Vendeur');
                         await desactivateVendeur(vendeur._id).then((data) => {
                           if (data.success) {
                             notification.success({
@@ -112,7 +107,6 @@ export const GerantVendorDetail = () => {
                           }
                         });
                       } else {
-                        console.log('Activer vendeur');
                         await activateVendeur(vendeur._id).then((data) => {
                           if (data.success) {
                             notification.success({
