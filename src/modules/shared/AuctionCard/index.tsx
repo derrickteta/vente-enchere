@@ -84,7 +84,7 @@ export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
               src={API_ROUTES.IMAGES(produit.images[0])}
               fallback={defaultImage}
             />
-            <Space style={{ justifyContent: 'center' }}>
+            <Space style={{ display: 'flex', justifyContent: 'center' }}>
               <Tooltip title='Ajouter aux favoris'>
                 <AiOutlineHeart size={25} color='red' />
               </Tooltip>
