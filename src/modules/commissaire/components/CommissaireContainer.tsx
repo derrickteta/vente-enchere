@@ -80,7 +80,7 @@ const ROUTES = [
       />
     ),
     link: '/commissaire/products',
-    text: 'Mes Produits',
+    text: 'Evènements',
     clicked: 'produits',
   },
   {

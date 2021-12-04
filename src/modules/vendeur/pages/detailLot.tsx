@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Button, Image, Space, Tag, Tooltip } from 'antd';
+import { Button, Image, message, Space, Tag, Tooltip } from 'antd';
 import { FaCheckCircle } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
@@ -52,81 +52,90 @@ export const DetailLot = () => {
 
       <DataTable data={lot.produits} columns={ProductColumns} />
 
-      <Space>
-        <Tooltip title='Relancer le Lot'>
-          <ButtonWithModal
-            buttonText={
-              <>
-                Relancer le lot <FaCheckCircle style={{ marginLeft: 10 }} />
-              </>
-            }
-            buttonProps={{
-              danger: true,
-              size: 'large',
-              style: { backgroundColor: '#4caf50', borderWidth: 0 },
-            }}
-            modalProps={{ title: 'Confirmation' }}
-          >
-            {(closeModal) => (
-              <div>
-                <h2>Voulez vous relancer ce lot ?</h2>
+      {['en_attente_selection', 'refuse', 'rejete'].includes(lot.statut) && (
+        <Space>
+          <Tooltip title='Relancer le Lot'>
+            <ButtonWithModal
+              buttonText={
+                <>
+                  Relancer le lot <FaCheckCircle style={{ marginLeft: 10 }} />
+                </>
+              }
+              buttonProps={{
+                danger: true,
+                size: 'large',
+                style: { backgroundColor: '#4caf50', borderWidth: 0 },
+              }}
+              modalProps={{ title: 'Confirmation' }}
+            >
+              {(closeModal) => (
+                <div>
+                  <h3>Voulez vous relancer ce lot ?</h3>
 
-                <Space>
-                  <Button type='primary' onClick={() => closeModal()}>
-                    Fermer
-                  </Button>
-                  <Button
-                    danger
-                    onClick={async () => {
-                      closeModal();
-                    }}
-                  >
-                    Oui
-                  </Button>
-                </Space>
-              </div>
-            )}
-          </ButtonWithModal>
-        </Tooltip>
+                  <Space>
+                    <Button type='primary' onClick={() => closeModal()}>
+                      Fermer
+                    </Button>
+                    <Button
+                      danger
+                      onClick={async () => {
+                        if (lot.statut === 'rejete') {
+                          message.error({
+                            content:
+                              'Desolé!! Il est impossible de relancer un lot qui a été completement rejété',
+                          });
+                        }
+                        closeModal();
+                      }}
+                    >
+                      Oui
+                    </Button>
+                  </Space>
+                </div>
+              )}
+            </ButtonWithModal>
+          </Tooltip>
 
-        <Tooltip title='Annuler le Lot'>
-          <ButtonWithModal
-            buttonText={
-              <>
-                Annuler le lot <FiTrash2 style={{ marginLeft: 10 }} />
-              </>
-            }
-            buttonProps={{
-              danger: true,
-              size: 'large',
-            }}
-            modalProps={{ title: 'Confirmation' }}
-          >
-            {(closeModal) => (
-              <div>
-                <h2>
-                  Voulez vous annuler ce lot de façon définitif ? Il ne sera
-                  plus possible de retourner en arrière !{' '}
-                </h2>
+          <Tooltip title='Annuler le Lot'>
+            <ButtonWithModal
+              buttonText={
+                <>
+                  Annuler le lot <FiTrash2 style={{ marginLeft: 10 }} />
+                </>
+              }
+              buttonProps={{
+                danger: true,
+                size: 'large',
+              }}
+              modalProps={{ title: 'Confirmation' }}
+            >
+              {(closeModal) => (
+                <div>
+                  <h4>
+                    Voulez vous annuler ce lot de façon définitif ? Il ne sera
+                    plus possible de retourner en arrière !{' '}
+                  </h4>
 
-                <Space>
-                  <Button type='primary' onClick={() => closeModal()}>
-                    Fermer
-                  </Button>
-                  <Button
-                    danger
-                    onClick={async () => {
-                      closeModal();
-                    }}
-                  >
-                    Oui
-                  </Button>
-                </Space>
-              </div>
-            )}
-          </ButtonWithModal>
-        </Tooltip>
-      </Space>
+                  <Space>
+                    <Button type='primary' onClick={() => closeModal()}>
+                      Fermer
+                    </Button>
+                    <Button
+                      danger
+                      onClick={async () => {
+                        closeModal();
+                      }}
+                    >
+                      Oui
+                    </Button>
+                  </Space>
+                </div>
+              )}
+            </ButtonWithModal>
+          </Tooltip>
+        </Space>
+      )}
+
       {lot.commentaireRefus && (
         <RefusContainer>
           <h2>Raison de refus</h2>
