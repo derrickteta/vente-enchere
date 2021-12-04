@@ -44,6 +44,17 @@ const CardContainer = styled.div`
     text-align: center;
   }
 
+  .qte {
+    color: blue;
+    font-size: 12px;
+    margin-bottom: 0px;
+    border: 1.5px solid blue;
+    border-radius: 5px;
+    min-width: 50px;
+    padding: 3px;
+    text-align: center;
+  }
+
   .description {
     color: #777;
     font-size: 12px;
@@ -100,9 +111,14 @@ export const AuctionCard = ({ produit }: { produit: ProduitEntity }) => {
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
           </div>
-          <Space>
-            <p style={{ margin: 0 }}>Mise à prix : </p>
-            <p className='price'>{produit.prixMin} FCFA </p>
+          <Space size={20}>
+            <Space>
+              <p style={{ margin: 0 }}>Mise à prix : </p>
+              <p className='price'>{produit.prixMin} FCFA </p>
+            </Space>
+            <p className='qte'>
+              {produit.quantite.valeur} {produit.quantite.unite}{' '}
+            </p>
           </Space>
           <p className='description'>{produit.description}</p>
 
