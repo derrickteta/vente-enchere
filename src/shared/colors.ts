@@ -6,6 +6,8 @@ export const SEMIDARK = '#404e67';
 export const getColor = (value: string) => {
   if (value === 'en_attente_selection') {
     return 'purple';
+  } else if (value === 'valide') {
+    return 'green';
   } else if (value === 'en_attente_vente') {
     return 'blue';
   } else if (value === 'refuse') {
