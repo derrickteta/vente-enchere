@@ -1,8 +1,10 @@
-import { Button, Form, Image, Input, Space, Tag, Tooltip } from 'antd';
+import { Button, Image, Input, notification, Space, Tag, Tooltip } from 'antd';
+import { useState } from 'react';
 import { FaCheckCircle, FaClock } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { useHistory } from 'react-router-dom';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
+import { ROUTES } from '../../../routes';
 import { getColor } from '../../../shared/colors';
 import { defaultImage } from '../../../shared/defaultImage';
 import { API_ROUTES } from '../../shared/ApiRoutes';
@@ -11,10 +13,15 @@ import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { CommissaireContainer } from '../components/CommissaireContainer';
+import { refuserLot, rejeterLot, validerLot } from '../network';
 
 export const DetailLot = () => {
   const router = useHistory();
   const lot: LotEntity = router.location.state as any;
+  const [isLoading1, setIsLoading1] = useState(false);
+  const [isLoading2, setIsLoading2] = useState(false);
+  const [isLoading3, setIsLoading3] = useState(false);
+  const [motifRefus, setMotifRefus] = useState('');
 
   return (
     <CommissaireContainer clicked='dashboard'>
@@ -39,7 +46,25 @@ export const DetailLot = () => {
             size='large'
             type='primary'
             style={{ backgroundColor: '#4caf50', borderWidth: 0 }}
-            onClick={() => {}}
+            loading={isLoading1}
+            onClick={async () => {
+              setIsLoading1(true);
+              validerLot(lot._id).then((data) => {
+                if (data.success) {
+                  notification.success({
+                    message: 'Success',
+                    description: 'Le lot a été validé avec succès',
+                  });
+                  router.push(ROUTES.COMMISSAIRE_PAGE.DASHBOARD);
+                } else {
+                  notification.error({
+                    message: 'Erreur',
+                    description: 'Une erreur est survenu',
+                  });
+                }
+              });
+              setIsLoading1(false);
+            }}
           >
             Valider <FaCheckCircle style={{ marginLeft: 10 }} />
           </Button>
@@ -57,33 +82,41 @@ export const DetailLot = () => {
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous refuser ce lot ?</h3>
-                <Form>
-                  <Form.Item
-                    label='Motif'
-                    name='motif'
-                    hasFeedback
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Veuillez saisir le motif de votre refus',
-                      },
-                    ]}
-                  >
-                    <Input.TextArea placeholder='motif' />
-                  </Form.Item>
-                </Form>
-                <Space>
-                  <Button type='primary' onClick={() => closeModal()}>
+                <h3>Motif de refus du lot ?</h3>
+                <Input.TextArea
+                  rows={5}
+                  placeholder='motif'
+                  onChange={(event) => setMotifRefus(event.target.value)}
+                />
+                <Space style={{ marginTop: 20 }}>
+                  <Button type='default' onClick={() => closeModal()}>
                     Fermer
                   </Button>
                   <Button
-                    danger
+                    type='primary'
+                    loading={isLoading2}
                     onClick={async () => {
+                      setIsLoading2(true);
+                      refuserLot(lot._id, motifRefus).then((data) => {
+                        if (data.success) {
+                          notification.success({
+                            message: 'Success',
+                            description: 'Le lot a été refusé',
+                          });
+                          router.push(ROUTES.COMMISSAIRE_PAGE.DASHBOARD);
+                        } else {
+                          notification.error({
+                            message: 'Erreur',
+                            description: 'Une erreur est survenu',
+                          });
+                        }
+                      });
+                      setIsLoading2(false);
+
                       closeModal();
                     }}
                   >
-                    Oui
+                    Envoyer
                   </Button>
                 </Space>
               </div>
@@ -107,33 +140,41 @@ export const DetailLot = () => {
           >
             {(closeModal) => (
               <div>
-                <h3>Voulez vous rejeter ce lot ?</h3>
-                <Form>
-                  <Form.Item
-                    label='Motif'
-                    name='motif'
-                    hasFeedback
-                    rules={[
-                      {
-                        required: true,
-                        message: 'Veuillez saisir le motif de votre rejet',
-                      },
-                    ]}
-                  >
-                    <Input.TextArea placeholder='motif' />
-                  </Form.Item>
-                </Form>
-                <Space>
-                  <Button type='primary' onClick={() => closeModal()}>
+                <h3>Motif de rejet du lot ?</h3>
+                <Input.TextArea
+                  rows={5}
+                  placeholder='motif'
+                  onChange={(event) => setMotifRefus(event.target.value)}
+                />
+                <Space style={{ marginTop: 20 }}>
+                  <Button type='default' onClick={() => closeModal()}>
                     Fermer
                   </Button>
                   <Button
-                    danger
+                    type='primary'
+                    loading={isLoading3}
                     onClick={async () => {
+                      setIsLoading3(true);
+                      rejeterLot(lot._id, motifRefus).then((data) => {
+                        if (data.success) {
+                          notification.success({
+                            message: 'Success',
+                            description: 'Le lot a été réjeté',
+                          });
+                          router.push(ROUTES.COMMISSAIRE_PAGE.DASHBOARD);
+                        } else {
+                          notification.error({
+                            message: 'Erreur',
+                            description: 'Une erreur est survenu',
+                          });
+                        }
+                      });
+                      setIsLoading3(false);
+
                       closeModal();
                     }}
                   >
-                    Oui
+                    Envoyer
                   </Button>
                 </Space>
               </div>
