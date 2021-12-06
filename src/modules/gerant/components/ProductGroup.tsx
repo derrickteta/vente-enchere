@@ -35,7 +35,7 @@ export const ProductGroup = ({ products }: { products: ProduitEntity[] }) => {
       </Space>
       <div>
         {products.map((produit: ProduitEntity) => (
-          <ProductCard key={produit._id} product={produit}></ProductCard>
+          <ProductCard key={produit._id} produit={produit} />
         ))}
       </div>
     </ProductGroupContainer>

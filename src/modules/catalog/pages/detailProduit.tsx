@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import styled from '@emotion/styled';
-import { Space, Statistic, Tooltip } from 'antd';
+import { Button, Space, Statistic, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { FaRegPaperPlane } from 'react-icons/fa';
@@ -11,10 +11,10 @@ import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { PRIMARY } from '../../../shared/colors';
 import { Footer } from '../../homePage/components/Footer';
-import { AuctionCard } from '../../shared/AuctionCard';
 import { DateFrHrWithTime } from '../../shared/DateToFrench';
 import { ImageCarousel } from '../../shared/ImageCarousel';
 import { Layout } from '../../shared/Layout';
+import { ProductCard } from '../../shared/ProductCard';
 import { fetchLotProduit } from '../network';
 
 const ProductInfoContainer = styled.div`
@@ -114,6 +114,9 @@ export const ProductDetails = () => {
                 valueStyle={{ fontSize: 20, color: 'red' }}
                 value={Date.now() + 1000 * 60 * 60 * 24 * 1 + 1000 * 30}
               />
+              <Button type='primary' size='large'>
+                Visiter l'enchère
+              </Button>
             </Space>
           </div>
         </ProductInfoContainer>
@@ -127,7 +130,7 @@ export const ProductDetails = () => {
           lot.produits?.map(
             (produit) =>
               produit._id !== product._id && (
-                <AuctionCard key={produit._id} produit={produit} />
+                <ProductCard key={produit._id} produit={produit} showInfo />
               ),
           )}
       </div>
