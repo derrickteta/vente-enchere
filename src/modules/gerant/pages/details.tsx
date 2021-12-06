@@ -2,7 +2,7 @@ import { Button, notification, Space, Tag } from 'antd';
 import Title from 'antd/lib/typography/Title';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import slide1 from '../../../assets/images/slide1.jpg';
+import personImage from '../../../assets/images/person.png';
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ROUTES } from '../../../routes';
@@ -52,7 +52,11 @@ export const GerantVendorDetail = () => {
           <Title level={2}>
             {vendeur.user.prenom}, {vendeur.user.nom}
           </Title>
-          {vendeur.accreditation && <Tag>"Accrédité"</Tag>}
+          {vendeur.accreditation ? (
+            <Tag color='blue'>Accrédité</Tag>
+          ) : (
+            <Tag color='red'>Non Accrédité</Tag>
+          )}
           <ButtonWithModal
             buttonText={
               vendeur.accreditation
@@ -84,7 +88,6 @@ export const GerantVendorDetail = () => {
                   <Button
                     type='primary'
                     style={{ backgroundColor: PRIMARY, borderWidth: 0 }}
-                    size='large'
                     loading={isLoading}
                     onClick={async () => {
                       setIsLoading(true);
@@ -152,10 +155,8 @@ export const GerantVendorDetail = () => {
                 gridTemplateColumns: '[first] 225px [line2] 225px [end]',
               }}
             >
-              <Title level={3} italic>
-                Numéro CNI :
-              </Title>
-              <p style={{ fontSize: '1.8em' }}>{vendeur.numeroCNI}</p>
+              <Title level={4}>Numéro CNI :</Title>
+              <p style={{ fontSize: '1.2em' }}>{vendeur.numeroCNI}</p>
             </div>
             <div
               style={{
@@ -163,10 +164,8 @@ export const GerantVendorDetail = () => {
                 gridTemplateColumns: '[first] 225px [line2] 225px [end]',
               }}
             >
-              <Title level={3} italic>
-                Spécialité :
-              </Title>
-              <p style={{ fontSize: '1.8em' }}>{vendeur.specialite}</p>
+              <Title level={4}>Spécialité :</Title>
+              <p style={{ fontSize: '1.2em' }}>{vendeur.specialite}</p>
             </div>
             <div
               style={{
@@ -174,10 +173,8 @@ export const GerantVendorDetail = () => {
                 gridTemplateColumns: '[first] 225px [line2] 225px [end]',
               }}
             >
-              <Title level={3} italic>
-                Chiffre d'affaire :
-              </Title>
-              <p style={{ fontSize: '1.8em' }}>{vendeur.chiffreAffaire}</p>
+              <Title level={4}>Chiffre d'affaire :</Title>
+              <p style={{ fontSize: '1.2em' }}>{vendeur.chiffreAffaire}</p>
             </div>
             <div
               style={{
@@ -185,35 +182,10 @@ export const GerantVendorDetail = () => {
                 gridTemplateColumns: '[first] 225px [line2] 225px [end]',
               }}
             >
-              <Title level={3} italic>
-                Lots vendus :
-              </Title>
-              <p style={{ fontSize: '1.8em' }}>{vendeur.nombreLotsVendu}</p>
+              <Title level={4}>Lots vendus :</Title>
+              <p style={{ fontSize: '1.2em' }}>{vendeur.nombreLotsVendu}</p>
             </div>
           </div>
-
-          {/* <Typography
-            style={{ maxWidth: '500px', flex: '1', paddingLeft: '30px' }}
-          >
-            <Title level={3} italic>
-              Description
-            </Title>
-            <Paragraph style={{ fontSize: '1.2em' }}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-              ipsa, quaerat temporibus sit quam reprehenderit voluptatibus
-              perspiciatis modi expedita molestiae perferendis, corrupti ratione
-              nesciunt vel laudantium totam quidem maiores possimus.
-            </Paragraph>
-            <Title level={3} italic>
-              Spécialités
-            </Title>
-            <Paragraph style={{ fontSize: '1.2em' }}>
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Quos
-              ipsa, quaerat temporibus sit quam reprehenderit voluptatibus
-              perspiciatis modi expedita molestiae perferendis, corrupti ratione
-              nesciunt vel laudantium totam quidem maiores possimus.
-            </Paragraph>
-          </Typography> */}
           <div
             style={{
               display: 'flex',
@@ -222,7 +194,7 @@ export const GerantVendorDetail = () => {
               flex: 1,
             }}
           >
-            <RatedAvatar image={slide1} rate={4} />
+            <RatedAvatar image={personImage} rate={4} />
           </div>
         </div>
         {loading ? <p>Chargement...</p> : <ProductGroup products={produits} />}
