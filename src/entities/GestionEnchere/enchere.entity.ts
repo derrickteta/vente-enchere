@@ -1,9 +1,19 @@
-export class EnchereEntity {
-  _id: string;
-  date: string;
+import { LotEntity } from '../Gestionproduit/lot.entity';
 
-  constructor(enchere: EnchereEntity) {
+export type StatusType = 'en_cours' | 'termine';
+
+export class salleEnchereEntity {
+  _id: string;
+  lots: LotEntity[];
+  dateOuverture: string;
+  duree: number;
+  status: StatusType;
+
+  constructor(enchere: salleEnchereEntity) {
     this._id = enchere._id;
-    this.date = enchere.date;
+    this.lots = enchere.lots;
+    this.dateOuverture = enchere.dateOuverture;
+    this.duree = enchere.duree;
+    this.status = enchere.status;
   }
 }
