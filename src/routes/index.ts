@@ -15,6 +15,7 @@ export const ROUTES = {
     PRODUCTS: '/vendeur/products',
     ACCOUNT: '/vendeur/account',
     NEW_PRODUCT: '/vendeur/products/new',
+    UPDATE: '/vendeur/account/update',
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',
