@@ -1,13 +1,11 @@
-import { LotEntity } from '../Gestionproduit/lot.entity';
-
-export type StatusType = 'en_cours' | 'termine';
+export type StatusEnchereType = 'en_cours' | 'termine';
 
 export class EnchereEntity {
   _id: string;
-  lots: LotEntity[];
+  lots: string[];
   dateOuverture: string;
   duree: number;
-  status: StatusType;
+  status: StatusEnchereType;
 
   constructor(enchere: EnchereEntity) {
     this._id = enchere._id;
