@@ -40,7 +40,7 @@ export const DetailEnchere = () => {
         }
       });
     }
-  }, []);
+  }, [enchere.lots]);
 
   useEffect(() => {
     fetchLot().then((data) => {
@@ -49,7 +49,7 @@ export const DetailEnchere = () => {
         setIsLoading(false);
       }
     });
-  }, []);
+  }, [enchere.lots]);
 
   const LotColumns = [
     {
