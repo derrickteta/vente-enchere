@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Input, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
+import { Key } from 'antd/lib/table/interface';
 import { ReactNode, useState } from 'react';
 import { SEMIDARK } from '../../../shared/colors';
 
@@ -20,6 +21,8 @@ export const DataTable = <T extends { _id: string }>({
   data,
   columns,
   loading,
+  selectedRowKeys,
+  onSelectedRowKeysChange,
   filterFunction,
   buttons,
   expandable,
@@ -28,6 +31,8 @@ export const DataTable = <T extends { _id: string }>({
   columns: ColumnsType<T>;
   data: T[];
   loading?: boolean;
+  selectedRowKeys?: Key[];
+  onSelectedRowKeysChange?: (newSelectedRowKeys: Key[]) => any;
   filterFunction?: (dataItem: T, filterValue: string) => boolean;
   buttons?: ReactNode;
   expandable?: boolean;
@@ -40,6 +45,26 @@ export const DataTable = <T extends { _id: string }>({
     filterFunction ? filterFunction(dataItem, filterValue) : true,
   );
 
+  const selectRow = (rowId: string | number) => {
+    if (
+      selectedRowKeys !== undefined &&
+      onSelectedRowKeysChange !== undefined
+    ) {
+      let newSelectedRowKeys: Key[] = [];
+      if (selectedRowKeys.length === 0) {
+        newSelectedRowKeys = [rowId];
+      } else if (selectedRowKeys.indexOf(rowId) < 0) {
+        newSelectedRowKeys = [...selectedRowKeys, rowId];
+      }
+      onSelectedRowKeysChange(newSelectedRowKeys);
+    }
+  };
+
+  const rowSelection = {
+    selectedRowKeys,
+    onChange: onSelectedRowKeysChange,
+  };
+
   return (
     <DataTableContainer>
       <Space style={{ marginBottom: 10 }}>
@@ -51,34 +76,68 @@ export const DataTable = <T extends { _id: string }>({
         />
         {buttons}
       </Space>
-      <Table
-        dataSource={dataToShow}
-        columns={columns}
-        loading={loading}
-        expandable={
-          expandable && expandField
-            ? {
-                expandedRowRender: (row: any) => (
-                  <span>{row[expandField]}</span>
-                ),
-              }
-            : {}
-        }
-        size='middle'
-        rowKey='_id'
-        rowClassName={(row, index) =>
-          rowId === row._id
-            ? 'is-bold'
-            : index % 2 === 0
-            ? 'even-row'
-            : 'odd-row'
-        }
-        onRow={(row) => ({
-          onClick: () => {
-            setRowId(row._id);
-          },
-        })}
-      />
+      {selectedRowKeys !== undefined ? (
+        <Table
+          rowSelection={rowSelection}
+          dataSource={dataToShow}
+          columns={columns}
+          loading={loading}
+          expandable={
+            expandable && expandField
+              ? {
+                  expandedRowRender: (row: any) => (
+                    <span>{row[expandField]}</span>
+                  ),
+                }
+              : {}
+          }
+          size='middle'
+          rowKey='_id'
+          rowClassName={(row, index) =>
+            rowId === row._id
+              ? 'is-bold'
+              : index % 2 === 0
+              ? 'even-row'
+              : 'odd-row'
+          }
+          onRow={(row) => ({
+            onClick: () => {
+              setRowId(row._id);
+              selectRow(row._id);
+            },
+          })}
+        />
+      ) : (
+        <Table
+          dataSource={dataToShow}
+          columns={columns}
+          loading={loading}
+          expandable={
+            expandable && expandField
+              ? {
+                  expandedRowRender: (row: any) => (
+                    <span>{row[expandField]}</span>
+                  ),
+                }
+              : {}
+          }
+          size='middle'
+          rowKey='_id'
+          rowClassName={(row, index) =>
+            rowId === row._id
+              ? 'is-bold'
+              : index % 2 === 0
+              ? 'even-row'
+              : 'odd-row'
+          }
+          onRow={(row) => ({
+            onClick: () => {
+              setRowId(row._id);
+              selectRow(row._id);
+            },
+          })}
+        />
+      )}
     </DataTableContainer>
   );
 };
