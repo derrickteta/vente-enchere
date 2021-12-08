@@ -32,5 +32,7 @@ export const ROUTES = {
     DASHBOARD: '/commissaire/dashboard',
     LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
     PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
+    AUCTION: '/commissaire/auction',
+    AUCTION_DETAIL: (id: string) => `/commissaire/auction/?id=${id}`,
   },
 };
