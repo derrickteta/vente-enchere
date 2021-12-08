@@ -41,7 +41,7 @@ export const API_ROUTES = {
     BASEID: (id: string) => `${BASE_URL}api/commissaires/${id}`,
   },
   SALLES_ENCHERE: {
-    BASE: `${BASE_URL}api/salleEncheres`,
+    BASE: `${BASE_URL}api/salleEncheres/`,
     BASEID: (id: string) => `${BASE_URL}api/salleEncheres/${id}`,
   },
 };

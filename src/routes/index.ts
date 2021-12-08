@@ -33,6 +33,6 @@ export const ROUTES = {
     LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
     PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
     AUCTION: '/commissaire/auction',
-    AUCTION_DETAIL: (id: string) => `/commissaire/auction/?id=${id}`,
+    AUCTION_DETAIL: (id: string) => `/commissaire/auction-detail/?id=${id}`,
   },
 };
