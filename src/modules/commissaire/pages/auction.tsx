@@ -1,18 +1,30 @@
 import { Button, Tag, Tooltip } from 'antd';
-import { useState } from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { FaExternalLinkAlt, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ROUTES } from '../../../routes';
 import { getColor } from '../../../shared/colors';
+import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { CommissaireContainer } from '../components/CommissaireContainer';
+import { SalleEnchereForm } from '../components/SalleEnchereForm';
+import { fetchSallesEnchere } from '../network';
 
-export const CommissaireAuction = () => {
+export const CommissaireAuctions = () => {
   const router = useHistory();
   const [sallesEnchere, setSallesEnchere] = useState<EnchereEntity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    fetchSallesEnchere().then((data) => {
+      if (data.success) {
+        setSallesEnchere(data.result);
+        setIsLoading(false);
+      }
+    });
+  }, []);
 
   const SalleEnchereColumns = [
     {
@@ -48,9 +60,10 @@ export const CommissaireAuction = () => {
         <Tooltip title='Détails salle enchère'>
           <Button
             type='primary'
-            onClick={() =>
-              router.push(ROUTES.COMMISSAIRE_PAGE.LOT_DETAIL(row._id), row)
-            }
+            onClick={() => {
+              console.log('auction', row);
+              router.push(ROUTES.COMMISSAIRE_PAGE.AUCTION_DETAIL(row._id), row);
+            }}
           >
             <FaExternalLinkAlt />
           </Button>
@@ -64,6 +77,15 @@ export const CommissaireAuction = () => {
       <h2 style={{ marginTop: 20, marginBottom: 20 }}>
         Liste des Salles d'enchère
       </h2>
+      <ButtonWithModal
+        buttonText='Créer une salle'
+        buttonProps={{ style: { marginBottom: 20 }, icon: <FaPlus /> }}
+        modalProps={{ title: "Création d'une salle" }}
+      >
+        {(closeModal) => {
+          return <SalleEnchereForm closeModal={closeModal} />;
+        }}
+      </ButtonWithModal>
       <DataTable
         loading={isLoading}
         data={sallesEnchere}
