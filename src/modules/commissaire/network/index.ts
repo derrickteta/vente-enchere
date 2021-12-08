@@ -12,6 +12,10 @@ export const fetchSallesEnchere = (): Promise<ResponseType<EnchereEntity>> => {
   return customFetch.get(API_ROUTES.SALLES_ENCHERE.BASE);
 };
 
+export const getOneLot = (lotId: any): Promise<ResponseType<LotEntity>> => {
+  return customFetch.get(API_ROUTES.LOTS.BASEID(lotId));
+};
+
 export const createSalleEnchere = (
   salleEnchere: any,
 ): Promise<ResponseType<EnchereEntity>> => {
@@ -22,6 +26,15 @@ export const updateSalleEnchere = (
   salleEnchere: any,
 ): Promise<ResponseType<EnchereEntity>> => {
   return customFetch.put(API_ROUTES.SALLES_ENCHERE.BASE, salleEnchere);
+};
+
+export const updateLotOfSalle = (
+  salleEnchereId: string,
+  newLots: any[],
+): Promise<ResponseType<EnchereEntity>> => {
+  return customFetch.put(API_ROUTES.SALLES_ENCHERE.BASEID(salleEnchereId), {
+    lots: newLots,
+  });
 };
 
 export const refuserLot = (
