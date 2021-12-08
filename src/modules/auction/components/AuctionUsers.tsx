@@ -9,20 +9,11 @@ const UsersContainer = styled.div`
   padding: 20px;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
-
-  //remove scrollbar
-  -ms-overflow-style: none; /* for Internet Explorer, Edge */
-  scrollbar-width: none; /* for Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* for Chrome, Safari, and Opera */
-  }
 `;
 
 export const ConnectedAuctionUsers = ({ users }: { users: string[] }) => {
   return (
-    <UsersContainer>
+    <UsersContainer className='y-scroll'>
       <h3>Utilisateurs connectés</h3>
       <Divider />
       {users.map((item, index) => (
