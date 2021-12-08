@@ -22,6 +22,22 @@ export const createSalleEnchere = (
   return customFetch.post(API_ROUTES.SALLES_ENCHERE.BASE, salleEnchere);
 };
 
+export const fermerSalleEnchere = (
+  salleEnchereID: string,
+): Promise<ResponseType<EnchereEntity>> => {
+  const dataToPost = { statut: 'termine' };
+  return customFetch.put(
+    API_ROUTES.SALLES_ENCHERE.BASEID(salleEnchereID),
+    dataToPost,
+  );
+};
+
+export const deleteSalleEnchere = (
+  salleEnchereID: string,
+): Promise<ResponseType<EnchereEntity>> => {
+  return customFetch.delete(API_ROUTES.SALLES_ENCHERE.BASEID(salleEnchereID));
+};
+
 export const updateSalleEnchere = (
   salleEnchere: any,
 ): Promise<ResponseType<EnchereEntity>> => {
