@@ -1,18 +1,16 @@
 import styled from '@emotion/styled';
-import { SEMIDARK } from '../../../../shared/colors';
 import { DateFrHrWithTime } from '../../../shared/DateToFrench';
 import { MessageType } from '../ChatRoom';
 
 const SenderContainer = styled.div`
-  color: white;
   min-width: 40%;
   max-width: 50%;
   padding: 10px;
   margin: 5px;
   margin-bottom: 0;
   border-radius: 10px;
-  background-color: ${SEMIDARK};
   align-self: flex-end;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 
   p {
     margin: 0;
@@ -33,7 +31,7 @@ export const SenderMessage = ({ message }: { message: MessageType }) => {
           marginRight: 5,
         }}
       >
-        {DateFrHrWithTime(message.dateEnvoie.toUTCString())}
+        {DateFrHrWithTime(message.dateEnvoie)}
       </p>
     </>
   );
