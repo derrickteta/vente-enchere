@@ -1,5 +1,7 @@
 import styled from '@emotion/styled';
 import { Divider } from 'antd';
+import { Socket } from 'net';
+import { useEffect, useState } from 'react';
 import { UserItem } from './UserItem';
 
 const UsersContainer = styled.div`
@@ -11,7 +13,17 @@ const UsersContainer = styled.div`
   flex-direction: column;
 `;
 
-export const ConnectedAuctionUsers = ({ users }: { users: string[] }) => {
+export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    socket.on('count_clients', (data) => {
+      console.log(data);
+      setUsers(data);
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket]);
+
   return (
     <UsersContainer className='y-scroll'>
       <h3>Utilisateurs connectés</h3>
