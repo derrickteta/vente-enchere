@@ -18,6 +18,23 @@ export const createGerant = (
 ): Promise<ResponseType<GerantEntity>> => {
   return customFetch.post(API_ROUTES.GERANTS.BASE, gerantToCreate);
 };
+export const createCategory = (
+  categoryToCreate: string,
+): Promise<ResponseType<CategorieEntity>> => {
+  return customFetch.post(API_ROUTES.CATEGORIES.BASE, categoryToCreate);
+};
+
+export const updateCategory = (
+  id: string,
+  categoryToCreate: string,
+): Promise<ResponseType<CategorieEntity>> => {
+  return customFetch.put(API_ROUTES.CATEGORIES.BASEID(id), categoryToCreate);
+};
+export const deleteCategory = (
+  id: string,
+): Promise<ResponseType<CategorieEntity>> => {
+  return customFetch.delete(API_ROUTES.CATEGORIES.BASEID(id));
+};
 
 export const createCommissaire = (
   commissaireToCreate: string,
