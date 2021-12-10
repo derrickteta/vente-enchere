@@ -29,7 +29,7 @@ export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
       <h3>Utilisateurs connectés</h3>
       <Divider />
       {users.map((item, index) => (
-        <UserItem name={item} key={index} index={index} />
+        <UserItem name={item} key={index} index={index} socket={socket} />
       ))}
     </UsersContainer>
   );
