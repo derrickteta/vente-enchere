@@ -58,7 +58,7 @@ export const AuctionProductCard = ({ produit }: { produit: ProduitEntity }) => {
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
           </div>
-          <Space>
+          <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p className='price'>{produit.prixMin} FCFA </p>
             <p className='qte'>
               {produit.quantite.valeur} {produit.quantite.unite}
