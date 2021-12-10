@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { Divider } from 'antd';
-import { Socket } from 'net';
 import React, { useEffect, useState } from 'react';
 import { MdSend } from 'react-icons/md';
+import { Socket } from 'socket.io-client';
 import { RecieverMessage } from './message/reciever';
 import { SenderMessage } from './message/sender';
 
@@ -62,7 +62,7 @@ export const ChatRoom = ({
 }) => {
   const [textMessage, setTextMessage] = useState('');
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const name = (socket as any).id;
+  const name = socket.id;
 
   useEffect(() => {
     socket.on('receive_message', (data) => {

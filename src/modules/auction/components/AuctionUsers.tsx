@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Divider } from 'antd';
-import { Socket } from 'net';
 import { useEffect, useState } from 'react';
+import { Socket } from 'socket.io-client';
 import { UserItem } from './UserItem';
 
 const UsersContainer = styled.div`
