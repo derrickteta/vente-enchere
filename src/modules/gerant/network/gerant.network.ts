@@ -1,6 +1,9 @@
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
-import { ResponseType } from '../../../entities/Response.entity';
+import {
+  ResponseEntityType,
+  ResponseType,
+} from '../../../entities/Response.entity';
 import { customFetch } from '../../../shared/customFetch';
 import { API_ROUTES } from '../../shared/ApiRoutes';
 
@@ -10,7 +13,7 @@ export const fetchVendeurs = (): Promise<ResponseType<VendeurEntity>> => {
 
 export const fetchOneVendeur = (
   id: string,
-): Promise<ResponseType<VendeurEntity>> => {
+): Promise<ResponseEntityType<VendeurEntity>> => {
   return customFetch.get(API_ROUTES.VENDEURS.BASEID(id));
 };
 
