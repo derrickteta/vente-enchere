@@ -320,11 +320,6 @@ export const DetailEnchere = () => {
                     await updateLotOfSalle(enchere._id, dataToPost).then(
                       async (data) => {
                         if (data.success) {
-                          /* setEnchereLots([
-                            ...enchereLots,
-                            lots.filter((lot) => lot._id === lotID),
-                          ]);
-                          setLots(lots.filter((lot) => lot._id !== lotID)); */
                           notification.success({
                             message: 'Succès',
                             description: data.message,

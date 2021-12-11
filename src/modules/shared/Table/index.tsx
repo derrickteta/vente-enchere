@@ -40,17 +40,12 @@ export const DataTable = <T extends { _id: string }>({
   expandField?: string;
 }) => {
   const [filterValue, setFilterValue] = useState('');
-  const [rowId, setRowId] = useState('');
-
   const dataToShow = data?.filter((dataItem) =>
     filterFunction ? filterFunction(dataItem, filterValue) : true,
   );
 
   const selectRow = (rowId: string | number) => {
-    if (
-      selectedRowKeys !== undefined &&
-      onSelectedRowKeysChange !== undefined
-    ) {
+    if (selectedRowKeys && onSelectedRowKeysChange) {
       let newSelectedRowKeys: Key[] = [];
       if (selectedRowKeys.length === 0) {
         newSelectedRowKeys = [rowId];
@@ -77,71 +72,31 @@ export const DataTable = <T extends { _id: string }>({
         />
         {buttons}
       </Space>
-      {selectedRowKeys !== undefined ? (
-        <Table
-          rowSelection={rowSelection}
-          dataSource={dataToShow}
-          columns={columns}
-          loading={loading}
-          expandable={
-            expandable && expandField
-              ? {
-                  expandedRowRender: (row: any) => (
-                    <span>
-                      {'Categorie creee le : '}
-                      {DateFrHrWithTime(row[expandField])}
-                    </span>
-                  ),
-                }
-              : {}
-          }
-          size='middle'
-          rowKey='_id'
-          rowClassName={(row, index) =>
-            rowId === row._id
-              ? 'is-bold'
-              : index % 2 === 0
-              ? 'even-row'
-              : 'odd-row'
-          }
-          onRow={(row) => ({
-            onClick: () => {
-              setRowId(row._id);
-              selectRow(row._id);
-            },
-          })}
-        />
-      ) : (
-        <Table
-          dataSource={dataToShow}
-          columns={columns}
-          loading={loading}
-          expandable={
-            expandable && expandField
-              ? {
-                  expandedRowRender: (row: any) => (
-                    <span>{row[expandField]}</span>
-                  ),
-                }
-              : {}
-          }
-          size='middle'
-          rowKey='_id'
-          rowClassName={(row, index) =>
-            rowId === row._id
-              ? 'is-bold'
-              : index % 2 === 0
-              ? 'even-row'
-              : 'odd-row'
-          }
-          onRow={(row) => ({
-            onClick: () => {
-              setRowId(row._id);
-              selectRow(row._id);
-            },
-          })}
-        />
-      )}
+      <Table
+        rowSelection={selectedRowKeys ? rowSelection : undefined}
+        dataSource={dataToShow}
+        columns={columns}
+        loading={loading}
+        expandable={
+          expandable && expandField
+            ? {
+                expandedRowRender: (row: any) => (
+                  <span>
+                    {'Categorie creee le : '}
+                    {DateFrHrWithTime(row[expandField])}
+                  </span>
+                ),
+              }
+            : {}
+        }
+        size='middle'
+        rowKey='_id'
+        onRow={(row) => ({
+          onClick: () => {
+            selectRow(row._id);
+          },
+        })}
+      />
     </DataTableContainer>
   );
 };
