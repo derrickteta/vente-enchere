@@ -5,7 +5,7 @@ export const AccountUpdatePage = () => {
   return (
     <VendeurContainer clicked='account/update'>
       <div>
-        <UpdateAccout></UpdateAccout>
+        <UpdateAccout />
       </div>
     </VendeurContainer>
   );
