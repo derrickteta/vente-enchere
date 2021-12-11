@@ -33,4 +33,7 @@ export const ROUTES = {
     LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
     PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
   },
+  AUCTION_ROOM: {
+    ROOM: (id: string) => `/auction-room/?id=${id}`,
+  },
 };
