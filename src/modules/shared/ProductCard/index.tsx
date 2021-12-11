@@ -120,15 +120,14 @@ export const ProductCard = ({
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
           </div>
-          <Space size={20}>
-            <Space>
-              <p style={{ margin: 0 }}>Mise à prix : </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Tooltip title='Mise à prix'>
               <p className='price'>{produit.prixMin} FCFA </p>
-            </Space>
+            </Tooltip>
             <p className='qte'>
               {produit.quantite.valeur} {produit.quantite.unite}{' '}
             </p>
-          </Space>
+          </div>
           <p className='description'>{produit.description}</p>
           {showInfo && (
             <>
