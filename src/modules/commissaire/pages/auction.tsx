@@ -9,7 +9,7 @@ import {
 import { useHistory } from 'react-router';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ROUTES } from '../../../routes';
-import { getColor } from '../../../shared/colors';
+import { getColor, SEMIDARK } from '../../../shared/colors';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
@@ -43,10 +43,16 @@ export const CommissaireAuctions = () => {
       render: dateFormatter,
     },
     {
-      title: 'Durée',
+      title: 'Durée (heures)',
       dataIndex: 'duree',
       key: 'duree',
-      render: dateFormatter,
+      render: (cell: number, row: any) => <span>{cell} heures</span>,
+    },
+    {
+      title: 'Pas',
+      dataIndex: 'pas',
+      key: 'pas',
+      render: (cell: number, row: any) => <span>{cell} FCFA</span>,
     },
     {
       title: 'Nombre de Lots',
@@ -65,7 +71,7 @@ export const CommissaireAuctions = () => {
     {
       title: 'Action',
       key: 'action',
-      render: (cell: any, row: any) => (
+      render: (cell: any, row: EnchereEntity) => (
         <Space>
           <Tooltip title='Détails salle enchère'>
             <Button
@@ -181,30 +187,23 @@ export const CommissaireAuctions = () => {
       <h2 style={{ marginTop: 20, marginBottom: 20 }}>
         Liste des Salles d'enchère
       </h2>
-      <ButtonWithModal
-        buttonText='Créer une salle'
-        buttonProps={{
-          style: { marginBottom: 20 },
-          icon: <FaPlus />,
-          onClick: () => {
-            fetchSallesEnchere().then((data) => {
-              if (data.success) {
-                setSallesEnchere(data.result);
-                setIsLoading(false);
-              }
-            });
-          },
-        }}
-        modalProps={{ title: "Création d'une salle" }}
-      >
-        {(closeModal) => {
-          return <SalleEnchereForm closeModal={closeModal} />;
-        }}
-      </ButtonWithModal>
+
       <DataTable
         loading={isLoading}
         data={sallesEnchere}
         columns={SalleEnchereColumns}
+        buttons={
+          <ButtonWithModal
+            buttonText='Crée une salle'
+            buttonProps={{
+              style: { backgroundColor: SEMIDARK, borderWidth: 0 },
+              icon: <FaPlus style={{ marginRight: 5, marginBottom: -2 }} />,
+            }}
+            modalProps={{ title: "Création d'une salle" }}
+          >
+            {(closeModal) => <SalleEnchereForm closeModal={closeModal} />}
+          </ButtonWithModal>
+        }
       />
     </CommissaireContainer>
   );
