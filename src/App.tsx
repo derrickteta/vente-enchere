@@ -2,6 +2,7 @@ import 'antd/dist/antd.css';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import './assets/global-css/modal-styles.css';
 import { AdminRoutes } from './modules/admin/routes/admin.routes';
+import { AuctionRoom } from './modules/auction/pages/auctionRoom';
 import { CatalogRoutes } from './modules/catalog/routes/catalog.routes';
 import { CommissaireRoutes } from './modules/commissaire/routes/commissaire.routes';
 import { GerantRoutes } from './modules/gerant/routes/gerant.routes';
@@ -22,6 +23,7 @@ function App() {
         <Route path='/activate-account' component={ActivateAccount} />
         <Route path='/success-activation' component={SuccessActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
+        <Route path='/auction-room' component={AuctionRoom} />
         <Route path='/catalog' render={() => <CatalogRoutes />} />
         <Route path='/admin' render={() => <AdminRoutes />} />
         <Route path='/vendeur' render={() => <VendeurRoutes />} />

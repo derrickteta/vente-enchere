@@ -24,3 +24,14 @@ export const getColor = (value: string) => {
     return 'green';
   }
 };
+
+export const COLORS = [
+  '#f56a00',
+  '#8e24aa',
+  '#ff5252',
+  '#ff9800',
+  '#4caf50 ',
+  '#03a9f4',
+  '#f44336',
+  '#b71c1c',
+];

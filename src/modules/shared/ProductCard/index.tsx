@@ -73,9 +73,11 @@ const CardContainer = styled.div`
 export const ProductCard = ({
   produit,
   showInfo,
+  onClick,
 }: {
   produit: ProduitEntity;
   showInfo?: boolean;
+  onClick?: () => void;
 }) => {
   const router = useHistory();
   return (
@@ -83,9 +85,10 @@ export const ProductCard = ({
       <Card
         hoverable
         style={{ width: 300, height: '100%', borderRadius: 20 }}
-        onClick={() =>
-          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit)
-        }
+        onClick={() => {
+          router.push(ROUTES.CATALOG_PAGE.PRODUCT(produit._id), produit);
+          onClick?.();
+        }}
         cover={
           <>
             <Image
