@@ -21,12 +21,15 @@ export const SalleEnchereForm = ({
       scrollToFirstError
       onFinish={async (data) => {
         setIsLoading(true);
+        data.dateOuverture = data.dateOuverture.format('YYYY-MM-DD HH:mm:ss');
         let dataToPost: any = {
           lots: [],
           dateOuverture: data.dateOuverture,
           duree: data.duree,
           statut: 'en_cours',
         };
+        console.log(dataToPost);
+
         await createSalleEnchere(dataToPost).then(async (data) => {
           if (data.success) {
             notification.success({
@@ -44,21 +47,36 @@ export const SalleEnchereForm = ({
         setIsLoading(false);
       }}
     >
+      <Space>
+        <Form.Item
+          label="Date d'ouverture"
+          name='dateOuverture'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Veuillez renseigner la date de début d'enchère",
+            },
+          ]}
+        >
+          <DatePicker showTime picker='date' />
+        </Form.Item>
+        <Form.Item
+          label='Pas (FCFA)'
+          name='pas'
+          hasFeedback
+          rules={[
+            {
+              required: true,
+              message: "Veuillez renseigner le pas de l'enchère",
+            },
+          ]}
+        >
+          <Input type='number' placeholder='pas' />
+        </Form.Item>
+      </Space>
       <Form.Item
-        label="Date d'ouverture"
-        name='dateOuverture'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: "Veuillez renseigner la date de début d'enchère",
-          },
-        ]}
-      >
-        <DatePicker picker='date' />
-      </Form.Item>
-      <Form.Item
-        label='Durée'
+        label='Durée (heures)'
         name='duree'
         hasFeedback
         rules={[
@@ -77,7 +95,6 @@ export const SalleEnchereForm = ({
             type='primary'
             htmlType='submit'
             loading={isLoading}
-            size='large'
             style={{
               width: '100%',
               backgroundColor: PRIMARY,
