@@ -39,7 +39,7 @@ export const Auction = () => {
   return (
     <AuctionContainer>
       <Space style={{ justifyContent: 'space-between' }}>
-        <h2>Enchères programmé</h2>
+        <h2>Enchères programmées</h2>
         <h3
           style={{ margin: 0, textDecoration: 'underline', cursor: 'pointer' }}
         >
