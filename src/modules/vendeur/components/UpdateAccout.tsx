@@ -1,41 +1,81 @@
 /* eslint-disable no-unused-vars */
 import { Button, Form, Input, notification } from 'antd';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
+import { UserEntity } from '../../../entities/GestionCompte/user.entity';
 import { PRIMARY } from '../../../shared/colors';
+import { fetchOneVendeur } from '../../gerant/network/gerant.network';
+import { update } from '../network';
 
-type LayoutType = Parameters<typeof Form>[0]['layout'];
-
-export const AccountForm = () => {
+export const UpdateAccout = () => {
   // const router = useRouter();
   const [form] = Form.useForm();
-  const [formLayout] = useState<LayoutType>('vertical');
   const [isLoading, setIsLoading] = useState(false);
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+
+  const [user, setUser] = useState<UserEntity>();
+
+  useEffect(() => {
+    fetchOneVendeur(connectedUser._id).then((vendeur) => {
+      if (vendeur.success) {
+        setUser(vendeur.result.user);
+      }
+    });
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const datainform = {
+    ...user,
+    ville: user?.localisation.ville,
+    adresse: user?.localisation.adresse,
+    pays: user?.localisation.pays,
+  };
 
   return (
     <Form
-      layout={formLayout}
+      layout='vertical'
       form={form}
       labelCol={{ span: 20 }}
       wrapperCol={{ span: 25 }}
-      initialValues={{}}
+      initialValues={datainform}
       scrollToFirstError
       onFinish={async (data) => {
         setIsLoading(true);
-        notification.success({ message: 'Success' });
+
         let dataToPost: any = {
           nom: data.nom,
           prenom: data.prenom,
           telephone: data.telephone,
           email: data.email,
-          password: data.password,
-          roles: [],
+
+          roles: ['vendeur'],
           localisation: {
             adresse: data.adresse,
             ville: data.ville,
             pays: 'Cameroun',
           },
         };
-        console.log({ dataToPost });
+        console.log(dataToPost);
+        await update('61988cb9b62784f0da8d46cf', dataToPost)
+          .then((data) => {
+            if (data.success) {
+              notification.success({
+                message: 'Succes',
+                description: data.message,
+              });
+            } else {
+              notification.error({
+                message: 'Erreur',
+                description: data.message,
+              });
+            }
+          })
+          .catch((err) => console.log(err));
+        setIsLoading(false);
       }}
     >
       <Form.Item
@@ -49,7 +89,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='nom' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -63,7 +103,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='prénom' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -77,7 +117,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='VilleTown' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -91,12 +131,12 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='Pays-Bas' />
+        <Input />
       </Form.Item>
 
       <Form.Item
         label='Adresse'
-        name='Adresse'
+        name='adresse'
         hasFeedback
         rules={[
           {
@@ -105,7 +145,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='prénom' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -123,7 +163,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='email' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -133,42 +173,14 @@ export const AccountForm = () => {
         rules={[
           {
             required: true,
-            message: 'Veuillez renseigner votre contact téléphonique',
+            message: 'Veuillez renseigner votre contact téléhonique',
           },
         ]}
       >
-        <Input placeholder='telephone' />
+        <Input />
       </Form.Item>
 
-      <Form.Item
-        label='Adresse'
-        name='adresse'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Veuillez renseigner votre adresse',
-          },
-        ]}
-      >
-        <Input placeholder='adresse' />
-      </Form.Item>
-
-      <Form.Item
-        label='Ville'
-        name='ville'
-        hasFeedback
-        rules={[
-          {
-            required: true,
-            message: 'Veuillez renseigner votre ville',
-          },
-        ]}
-      >
-        <Input placeholder='ville' />
-      </Form.Item>
-
-      <Form.Item
+      {/* <Form.Item
         label='Pseudo'
         name='pseudo'
         hasFeedback
@@ -179,7 +191,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='Pseudonyme' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -193,7 +205,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='876556765' />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -208,7 +220,7 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder="Numero de piece d'identification" />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -222,8 +234,8 @@ export const AccountForm = () => {
           },
         ]}
       >
-        <Input placeholder='Specialiste' />
-      </Form.Item>
+        <Input />
+      </Form.Item> */}
 
       <Form.Item>
         <Button

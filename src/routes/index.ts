@@ -16,6 +16,7 @@ export const ROUTES = {
     ACCOUNT: '/vendeur/account',
     NEW_PRODUCT: '/vendeur/products/new',
     LOT_DETAIL: (id: string) => `/vendeur/lot-details/?id=${id}`,
+    UPDATE: '/vendeur/account/update',
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',

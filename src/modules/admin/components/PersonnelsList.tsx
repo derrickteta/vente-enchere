@@ -1,12 +1,15 @@
 import { Button, Space, Tag, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
-import { FaCheckCircle } from 'react-icons/fa';
+import { FaCheckCircle, FaPlus } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
 import { UserEntity } from '../../../entities/GestionCompte/user.entity';
+import { SEMIDARK } from '../../../shared/colors';
 import { ButtonWithModal } from '../../shared/ButtonWithModal';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { fetchUsers } from '../network/admin.network';
+import { CommissaireForm } from './CommissaireForm';
+import { GerantForm } from './GerantForm';
 
 export const PersonelsList = () => {
   const [isLoading, setIsLoading] = useState(true);
@@ -34,6 +37,31 @@ export const PersonelsList = () => {
           user.email.toLowerCase().includes(filterValue) ||
           user.localisation.adresse.toLowerCase().includes(filterValue) ||
           user.telephone.toLowerCase().includes(filterValue)
+        }
+        buttons={
+          <Space>
+            <ButtonWithModal
+              buttonText='Nouveau Gérant'
+              buttonProps={{
+                style: { backgroundColor: SEMIDARK, borderWidth: 0 },
+                icon: <FaPlus style={{ marginRight: 5, marginBottom: -2 }} />,
+              }}
+              modalProps={{ title: 'Création du nouveau gérant' }}
+            >
+              {(closeModal) => <GerantForm closeModal={closeModal} />}
+            </ButtonWithModal>
+
+            <ButtonWithModal
+              buttonText='Nouveau Commissaire'
+              buttonProps={{
+                style: { backgroundColor: SEMIDARK, borderWidth: 0 },
+                icon: <FaPlus style={{ marginRight: 5, marginBottom: -2 }} />,
+              }}
+              modalProps={{ title: 'Création du nouveay Commissaire' }}
+            >
+              {(closeModal) => <CommissaireForm closeModal={closeModal} />}
+            </ButtonWithModal>
+          </Space>
         }
       />
     </>
