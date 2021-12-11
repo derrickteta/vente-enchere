@@ -1,4 +1,5 @@
 import { Route } from 'react-router-dom';
+import { CategoriePage } from '../pages/categorie';
 import { AdminDashBoard } from '../pages/dashboard';
 import { LogPage } from '../pages/logs';
 import { PersonnelPage } from '../pages/personnel';
@@ -11,6 +12,7 @@ export const AdminRoutes = () => {
       <Route exact path='/admin/personnel' component={PersonnelPage} />
       <Route exact path='/admin/logs' component={LogPage} />
       <Route exact path='/admin/statistics' component={StatisticsPage} />
+      <Route exact path='/admin/categories' component={CategoriePage} />
     </>
   );
 };

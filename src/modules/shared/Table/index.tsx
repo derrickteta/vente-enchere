@@ -3,6 +3,7 @@ import { Input, Space, Table } from 'antd';
 import { ColumnsType } from 'antd/lib/table';
 import { ReactNode, useState } from 'react';
 import { SEMIDARK } from '../../../shared/colors';
+import { DateFrHrWithTime } from '../DateToFrench';
 
 const DataTableContainer = styled.div`
   th {
@@ -59,7 +60,10 @@ export const DataTable = <T extends { _id: string }>({
           expandable && expandField
             ? {
                 expandedRowRender: (row: any) => (
-                  <span>{row[expandField]}</span>
+                  <span>
+                    {'Categorie creee le : '}
+                    {DateFrHrWithTime(row[expandField])}
+                  </span>
                 ),
               }
             : {}
