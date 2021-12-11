@@ -1,9 +1,17 @@
+export type StatusEnchereType = 'en_cours' | 'termine';
+
 export class EnchereEntity {
   _id: string;
-  date: string;
+  lots: string[];
+  dateOuverture: string;
+  duree: number;
+  status: StatusEnchereType;
 
   constructor(enchere: EnchereEntity) {
     this._id = enchere._id;
-    this.date = enchere.date;
+    this.lots = enchere.lots;
+    this.dateOuverture = enchere.dateOuverture;
+    this.duree = enchere.duree;
+    this.status = enchere.status;
   }
 }

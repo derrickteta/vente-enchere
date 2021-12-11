@@ -22,6 +22,10 @@ export const getColor = (value: string) => {
     return 'volcano';
   } else if (value === 'livre') {
     return 'green';
+  } else if (value === 'en_cours') {
+    return 'green';
+  } else if (value === 'termine') {
+    return 'blue';
   }
 };
 
