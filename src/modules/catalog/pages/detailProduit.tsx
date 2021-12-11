@@ -101,9 +101,17 @@ export const ProductDetails = () => {
               Date création:{' '}
               <strong>{DateFrHrWithTime(product.dateCreation)}</strong>
             </p>
+            <p>
+              Numéro de Lot:{' '}
+              <strong style={{ fontSize: 20, color: 'red' }}>
+                {`${lot?.numeroLot.toString().slice(0, 3)}-${lot?.numeroLot
+                  .toString()
+                  .slice(3)}`}
+              </strong>
+            </p>
           </div>
           <div>
-            <Space style={{ justifyContent: 'center' }}>
+            <Space size={20}>
               <Tooltip title='Ajouter aux favoris'>
                 <AiOutlineHeart size={35} color='red' />
               </Tooltip>
@@ -130,7 +138,12 @@ export const ProductDetails = () => {
           lot.produits?.map(
             (produit) =>
               produit._id !== product._id && (
-                <ProductCard key={produit._id} produit={produit} showInfo />
+                <ProductCard
+                  key={produit._id}
+                  produit={produit}
+                  showInfo
+                  onClick={() => router.go(0)}
+                />
               ),
           )}
       </div>
