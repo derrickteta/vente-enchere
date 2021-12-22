@@ -105,9 +105,10 @@ export const ProductDetails = () => {
             <p>
               Numéro de Lot:{' '}
               <strong style={{ fontSize: 20, color: 'red' }}>
-                {`${lot?.numeroLot.toString().slice(0, 3)}-${lot?.numeroLot
-                  .toString()
-                  .slice(3)}`}
+                {lot &&
+                  `${lot.numeroLot.toString().slice(0, 3)}-${lot?.numeroLot
+                    .toString()
+                    .slice(3)}`}
               </strong>
             </p>
           </div>
