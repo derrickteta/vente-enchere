@@ -16,8 +16,6 @@ export class EnchereEntity {
     this.dateOuverture = enchere.dateOuverture;
     this.duree = enchere.duree;
     this.pas = enchere.pas;
-    this.dateOuverture = enchere.dateOuverture;
-    this.duree = enchere.duree;
     this.statut = enchere.statut;
   }
 }
