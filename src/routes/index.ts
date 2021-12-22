@@ -39,4 +39,7 @@ export const ROUTES = {
   AUCTION_ROOM: {
     ROOM: (id: string) => `/auction-room/?id=${id}`,
   },
+  ENCHERE_PAGE: {
+    ENCHERE_DETAIL: (id: string) => `/enchere/enchere-details/?id=${id}`,
+  },
 };
