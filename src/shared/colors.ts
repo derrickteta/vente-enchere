@@ -26,6 +26,8 @@ export const getColor = (value: string) => {
     return 'green';
   } else if (value === 'termine') {
     return 'blue';
+  } else if (value === 'pas_commence') {
+    return '#9c27b0';
   }
 };
 
