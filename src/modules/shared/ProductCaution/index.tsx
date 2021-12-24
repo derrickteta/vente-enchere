@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Card, Image, Space } from 'antd';
+import { Card, Image, Tooltip } from 'antd';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { defaultImage } from '../../../shared/defaultImage';
 import { API_ROUTES } from '../ApiRoutes';
@@ -65,13 +65,7 @@ const CardContainer = styled.div`
   }
 `;
 
-export const ProductCaution = ({
-  produit,
-  showInfo,
-}: {
-  produit: ProduitEntity;
-  showInfo?: boolean;
-}) => {
+export const ProductCaution = ({ produit }: { produit: ProduitEntity }) => {
   return (
     <CardContainer>
       <Card
@@ -100,17 +94,15 @@ export const ProductCaution = ({
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
           </div>
-          <Space size={20}>
-            <Space>
-              <p style={{ margin: 0 }}>Mise à prix : </p>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <Tooltip title='Mise à prix'>
               <p className='price'>{produit.prixMin} FCFA </p>
-            </Space>
+            </Tooltip>
             <p className='qte'>
               {produit.quantite.valeur} {produit.quantite.unite}{' '}
             </p>
-          </Space>
+          </div>
           <p className='description'>{produit.description}</p>
-          {showInfo}
         </div>
       </Card>
     </CardContainer>
