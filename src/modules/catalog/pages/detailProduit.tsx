@@ -77,7 +77,7 @@ export const ProductDetails = () => {
   }, [params.get('id')]);
 
   return (
-    <Layout maxWidth={1300} footer={<Footer />}>
+    <Layout footer={<Footer />}>
       <Space style={{ alignItems: 'flex-start', flexWrap: 'wrap' }} size={30}>
         <ImageCarousel imageListIds={product.images}></ImageCarousel>
         <ProductInfoContainer>

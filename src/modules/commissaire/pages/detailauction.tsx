@@ -264,9 +264,7 @@ export const DetailEnchere = () => {
       <Link href={ROUTES.COMMISSAIRE_PAGE.AUCTION}>
         <FaLongArrowAltLeft></FaLongArrowAltLeft> Go back
       </Link>
-      <h1 style={{ marginTop: 20, marginBottom: 20 }}>
-        Infos enchere {enchere._id}
-      </h1>
+      <h1 style={{ marginTop: 20, marginBottom: 20 }}>Infos enchere</h1>
 
       <Space direction='vertical'>
         <Space direction='horizontal' align='baseline'>
@@ -278,7 +276,7 @@ export const DetailEnchere = () => {
         <Space align='baseline'>
           <h2>Durée:</h2>
           <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
-            {enchere.duree}
+            {enchere.duree} heures
           </p>
         </Space>
       </Space>
