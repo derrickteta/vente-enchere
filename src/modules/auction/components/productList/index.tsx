@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useEffect, useState } from 'react';
 import { ProduitEntity } from '../../../../entities/Gestionproduit/produit.entity';
-import { fetchLotProduit } from '../../../catalog/network';
+import { getProduitEnchere } from '../../network';
 import { AuctionProductCard } from './AuctionProductCard';
 
 const Container = styled.div`
@@ -10,15 +10,16 @@ const Container = styled.div`
   }
 `;
 
-export const ProductList = () => {
+export const ProductList = ({ auctionId }: { auctionId: string }) => {
   const [products, setProducts] = useState<ProduitEntity[]>([]);
 
   useEffect(() => {
-    fetchLotProduit('61ab072fd8029b5757f52ff1').then((response) => {
+    getProduitEnchere(auctionId).then((response) => {
       if (response.success) {
-        setProducts(response.result[0].produits);
+        setProducts(response.result);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

@@ -6,14 +6,8 @@ import { AuctionProductDetails } from './AuctionProductDetail';
 
 const CardContainer = styled.div`
   margin: 5px;
-  height: 150px;
+  height: 120px;
   border-radius: 20px;
-  transition: 0.5s;
-
-  &:hover {
-    margin-top: -2px;
-    transition: 0.5s;
-  }
 
   .name {
     font-size: 15px;
@@ -71,6 +65,7 @@ export const AuctionProductCard = ({ produit }: { produit: ProduitEntity }) => {
           <ButtonWithModal
             buttonText='Détail'
             modalProps={{ title: 'Détail du produit', width: 900 }}
+            buttonProps={{ size: 'small' }}
           >
             {(closeModal) => (
               <AuctionProductDetails

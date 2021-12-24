@@ -43,6 +43,8 @@ export const API_ROUTES = {
   SALLES_ENCHERE: {
     BASE: `${BASE_URL}api/salleEncheres/`,
     BASEID: (id: string) => `${BASE_URL}api/salleEncheres/${id}`,
+    ALL_PRODUCTS: (salleId: string) =>
+      `${BASE_URL}api/salleEncheres/allProduits/${salleId}`,
     PRODUCT_ENCHERE: (id: string) =>
       `${BASE_URL}api/salleEncheres/getSalle/${id}`,
   },
