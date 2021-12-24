@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../routes';
 import { getColor } from '../../../shared/colors';
 import { Footer } from '../../homePage/components/Footer';
 import { DateFrHrWithTime } from '../../shared/DateToFrench';
@@ -56,7 +57,18 @@ export const EnchereDetails = () => {
             valueStyle={{ fontSize: 20, color: 'red' }}
             value={new Date(enchere.dateOuverture).getTime()}
           />
-          <Button size='large' type='primary'>
+          <Button
+            size='large'
+            type='primary'
+            style={{ marginLeft: 30 }}
+            onClick={() => {
+              const win = window.open(
+                ROUTES.AUCTION_ROOM.ROOM(enchere._id),
+                '_blank',
+              );
+              win?.focus();
+            }}
+          >
             Participer à l'enchère
           </Button>
         </Space>
