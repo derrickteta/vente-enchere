@@ -21,7 +21,7 @@ import { StatsCard } from '../../shared/StatsCard';
 import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { VendeurContainer } from '../components/VendeurContainer';
-import { createLot, fetchLot, fetchProduit } from '../network';
+import { createLot, fetchVendeurLot } from '../network';
 
 export const VendeurDashboard = () => {
   const router = useHistory();
@@ -35,18 +35,19 @@ export const VendeurDashboard = () => {
   ).user;
 
   useEffect(() => {
-    fetchLot().then((data) => {
+    fetchVendeurLot(connectedUser._id).then((data) => {
       if (data.success) {
         setLots(data.result);
         setIsLoading1(false);
-      }
-    });
-    fetchProduit().then((data) => {
-      if (data.success) {
-        setProduits(data.result);
+        let prods: ProduitEntity[] = [];
+        for (let lot of data.result) {
+          prods = prods.concat(lot.produits);
+        }
+        setProduits(prods);
         setIsLoading2(false);
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const LotColumns = [

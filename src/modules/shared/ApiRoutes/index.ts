@@ -13,6 +13,7 @@ export const API_ROUTES = {
   LOTS: {
     BASE: `${BASE_URL}api/lots`,
     BASEID: (id: string) => `${BASE_URL}api/lots/${id}`,
+    VENDEUR: (vendeurId: string) => `${BASE_URL}api/lots/vendeur/${vendeurId}`,
     GET_LOT_PRODUIT: (productId: string) =>
       `${BASE_URL}api/lots/produit/${productId}`,
   },
