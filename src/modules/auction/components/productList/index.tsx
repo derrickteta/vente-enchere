@@ -28,7 +28,7 @@ export const ProductList = ({ auctionId }: { auctionId: string }) => {
       <div style={{ maxWidth: 750 }}>
         <div className='horizontal-scroll y-scroll'>
           {products.map((product) => (
-            <AuctionProductCard produit={product} />
+            <AuctionProductCard key={product._id} produit={product} />
           ))}
         </div>
       </div>

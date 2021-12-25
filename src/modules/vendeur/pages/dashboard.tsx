@@ -33,7 +33,6 @@ export const VendeurDashboard = () => {
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
-  console.log(connectedUser);
 
   useEffect(() => {
     fetchVendeurLot(connectedUser._id).then((data) => {

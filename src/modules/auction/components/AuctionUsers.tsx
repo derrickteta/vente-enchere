@@ -13,11 +13,17 @@ const UsersContainer = styled.div`
   flex-direction: column;
 `;
 
+export type AuctionUser = {
+  salleEnchere: string;
+  username: string;
+  date: string;
+};
+
 export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
-  const [users, setUsers] = useState([]);
+  const [users, setUsers] = useState<AuctionUser[]>([]);
 
   useEffect(() => {
-    socket.on('count_clients', (data) => {
+    socket.on('count_clients', (data: AuctionUser[]) => {
       console.log(data);
       setUsers(data);
     });
@@ -29,7 +35,12 @@ export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
       <h3>Utilisateurs connectés</h3>
       <Divider />
       {users.map((item, index) => (
-        <UserItem name={item} key={index} index={index} socket={socket} />
+        <UserItem
+          name={item.username}
+          key={item.username}
+          index={index}
+          socket={socket}
+        />
       ))}
     </UsersContainer>
   );

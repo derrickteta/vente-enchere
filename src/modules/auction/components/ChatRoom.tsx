@@ -2,7 +2,9 @@ import styled from '@emotion/styled';
 import { Divider } from 'antd';
 import React, { useEffect, useState } from 'react';
 import { MdSend } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { RecieverMessage } from './message/reciever';
 import { SenderMessage } from './message/sender';
 
@@ -62,7 +64,10 @@ export const ChatRoom = ({
 }) => {
   const [textMessage, setTextMessage] = useState('');
   const [messages, setMessages] = useState<MessageType[]>([]);
-  const name = socket.id;
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
+  const name = connectedUser.nom + ' ' + connectedUser.prenom;
 
   useEffect(() => {
     socket.on('receive_message', (data) => {
@@ -76,7 +81,7 @@ export const ChatRoom = ({
       messageId: Math.round(
         Math.random() * (999999 - 100000 + 1) + 100000,
       ).toString(),
-      authorId: name,
+      authorId: connectedUser._id,
       authorName: name,
       message: textMessage,
       dateEnvoie: new Date().toUTCString(),
@@ -88,7 +93,7 @@ export const ChatRoom = ({
       messageId: Math.round(
         Math.random() * (999999 - 100000 + 1) + 100000,
       ).toString(),
-      authorId: name,
+      authorId: connectedUser._id,
       authorName: name,
       message: textMessage,
       dateEnvoie: new Date().toUTCString(),
@@ -106,7 +111,7 @@ export const ChatRoom = ({
       <Divider />
       <div id='m-block' className='message-section y-scroll'>
         {messages.map((mess, index) =>
-          mess.authorName === name ? (
+          mess.authorId === connectedUser._id ? (
             <SenderMessage key={index} message={mess} />
           ) : (
             <RecieverMessage key={index} message={mess} />
