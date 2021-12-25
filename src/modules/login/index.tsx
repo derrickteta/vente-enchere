@@ -94,6 +94,9 @@ export const LoginPage = () => {
                         _id: data.result._id,
                         nom: data.result.nom,
                         prenom: data.result.prenom,
+                        telephone: data.result.telephone,
+                        email: data.result.email,
+                        compteId: data.result.compte,
                         token: data.result.token,
                         nextAuthDate:
                           new Date().getTime() + 23.9 * 60 * 60 * 1000,

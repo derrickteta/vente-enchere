@@ -5,6 +5,7 @@ import { AdminRoutes } from './modules/admin/routes/admin.routes';
 import { AuctionRoom } from './modules/auction/pages/auctionRoom';
 import { CatalogRoutes } from './modules/catalog/routes/catalog.routes';
 import { CommissaireRoutes } from './modules/commissaire/routes/commissaire.routes';
+import { EnchereDetails } from './modules/enchere/page/detailenchere';
 import { GerantRoutes } from './modules/gerant/routes/gerant.routes';
 import { HomePage } from './modules/homePage';
 import { LoginPage } from './modules/login';
@@ -29,7 +30,7 @@ function App() {
         <Route path='/vendeur' render={() => <VendeurRoutes />} />
         <Route path='/gerant' render={() => <GerantRoutes />} />
         <Route path='/commissaire' render={() => <CommissaireRoutes />} />
-
+        <Route path='/enchere' render={() => <EnchereDetails />} />
         <Route exact path='/unauthorized' component={Unauthorized} />
       </Switch>
     </BrowserRouter>

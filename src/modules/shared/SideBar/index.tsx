@@ -175,9 +175,12 @@ export const SideBar = ({
               createUser({
                 authentifie: false,
                 roles: [],
-                id: '',
+                _id: '',
                 nom: '',
                 prenom: '',
+                telephone: '',
+                email: '',
+                compteId: '',
                 token: '',
                 nextAuthDate: 0,
               }),

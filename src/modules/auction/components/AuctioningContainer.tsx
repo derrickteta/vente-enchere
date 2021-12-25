@@ -110,7 +110,7 @@ export const AuctioningContainer = ({
 
   return (
     <AuctionContainer className='y-scroll'>
-      <ProductList />
+      <ProductList auctionId={roomId} />
       <Divider style={{ backgroundColor: 'white' }} />
       <Space
         className='nums'

@@ -41,6 +41,12 @@ export const fetchLot = (): Promise<ResponseType<LotEntity>> => {
   return customFetch.get(API_ROUTES.LOTS.BASE);
 };
 
+export const fetchVendeurLot = (
+  vendeurId: string,
+): Promise<ResponseType<LotEntity>> => {
+  return customFetch.get(API_ROUTES.LOTS.VENDEUR(vendeurId));
+};
+
 export const fetchProduit = (): Promise<ResponseType<ProduitEntity>> => {
   return customFetch.get(API_ROUTES.PRODUITS.BASE);
 };

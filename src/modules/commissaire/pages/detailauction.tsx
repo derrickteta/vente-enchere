@@ -19,37 +19,30 @@ import { DataTable } from '../../shared/Table';
 import { dateFormatter } from '../../shared/Table/cellFormatter';
 import { fetchLot } from '../../vendeur/network';
 import { CommissaireContainer } from '../components/CommissaireContainer';
-import { getOneLot, updateLotOfSalle } from '../network';
+import { updateLotOfSalle } from '../network';
 
 export const DetailEnchere = () => {
   const router = useHistory();
   const enchere: EnchereEntity = router.location.state as EnchereEntity;
-  const [enchereLots, setEnchereLots] = useState<any[]>([]);
+  const [enchereLots, setEnchereLots] = useState<LotEntity[]>(enchere.lots);
   const [lots, setLots] = useState<LotEntity[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedLotsKeys, setSelectedLotsKeys] = useState<Key[]>([]);
 
-  //For fetching lots infos of current enchere
-  useEffect(() => {
-    let lotsEnchere: any[] = [];
-    for (let lotID of enchere.lots) {
-      getOneLot(lotID).then((data) => {
-        if (data.success) {
-          lotsEnchere.push(data.result);
-          setEnchereLots(lotsEnchere);
-        }
-      });
-    }
-  }, [enchere.lots]);
-
   useEffect(() => {
     fetchLot().then((data) => {
       if (data.success) {
-        setLots(data.result.filter((lot) => enchere.lots.indexOf(lot._id) < 0));
-        setIsLoading(false);
+        let lotss = [];
+        for (let lot of data.result) {
+          if (enchereLots.filter((l) => l._id !== lot._id).length > 0) {
+            lotss.push(lot);
+          }
+        }
+        setLots(lotss);
       }
+      setIsLoading(false);
     });
-  }, [enchere.lots]);
+  }, [enchereLots]);
 
   const LotColumns = [
     {
@@ -271,9 +264,7 @@ export const DetailEnchere = () => {
       <Link href={ROUTES.COMMISSAIRE_PAGE.AUCTION}>
         <FaLongArrowAltLeft></FaLongArrowAltLeft> Go back
       </Link>
-      <h1 style={{ marginTop: 20, marginBottom: 20 }}>
-        Infos enchere {enchere._id}
-      </h1>
+      <h1 style={{ marginTop: 20, marginBottom: 20 }}>Infos enchere</h1>
 
       <Space direction='vertical'>
         <Space direction='horizontal' align='baseline'>
@@ -285,7 +276,7 @@ export const DetailEnchere = () => {
         <Space align='baseline'>
           <h2>Durée:</h2>
           <p style={{ fontSize: '1.5em', fontWeight: 'bold' }}>
-            {enchere.duree}
+            {enchere.duree} heures
           </p>
         </Space>
       </Space>
@@ -298,55 +289,6 @@ export const DetailEnchere = () => {
       <Divider />
       <h2 style={{ marginTop: 50 }}>Liste des Lots validés</h2>
 
-      <ButtonWithModal
-        buttonText='Ajouter les lots selectionnés'
-        buttonProps={{
-          danger: false,
-          style: { marginBottom: 20 },
-          disabled: selectedLotsKeys.length === 0,
-        }}
-        modalProps={{ title: 'Confirmation' }}
-      >
-        {(closeModal) => (
-          <div>
-            <h3>Voulez vous ajouter ce lot dans cette salle ?</h3>
-            <Space>
-              <Button
-                onClick={async () => {
-                  for (let lotID of selectedLotsKeys) {
-                    let dataToPost = [...enchere.lots, lotID];
-                    console.log(dataToPost);
-
-                    await updateLotOfSalle(enchere._id, dataToPost).then(
-                      async (data) => {
-                        if (data.success) {
-                          notification.success({
-                            message: 'Succès',
-                            description: data.message,
-                          });
-                          closeModal?.();
-                        } else {
-                          notification.error({
-                            message: 'Erreur',
-                            description: data.message,
-                          });
-                        }
-                      },
-                    );
-                  }
-
-                  closeModal();
-                }}
-              >
-                Oui
-              </Button>
-              <Button type='primary' onClick={() => closeModal()}>
-                Fermer
-              </Button>
-            </Space>
-          </div>
-        )}
-      </ButtonWithModal>
       <DataTable
         selectedRowKeys={selectedLotsKeys}
         onSelectedRowKeysChange={(newSelectedLotsKeys: Key[]) => {
@@ -355,6 +297,56 @@ export const DetailEnchere = () => {
         loading={isLoading}
         data={lots}
         columns={LotValidesColumns}
+        buttons={
+          <ButtonWithModal
+            buttonText='Ajouter les lots selectionnés'
+            buttonProps={{
+              danger: false,
+              disabled: selectedLotsKeys.length === 0,
+            }}
+            modalProps={{ title: 'Confirmation' }}
+          >
+            {(closeModal) => (
+              <div>
+                <h3>Voulez vous ajouter ce lot dans cette salle ?</h3>
+                <Space>
+                  <Button
+                    onClick={async () => {
+                      for (let lotID of selectedLotsKeys) {
+                        let dataToPost = [...enchere.lots, lotID];
+                        console.log(dataToPost);
+
+                        await updateLotOfSalle(enchere._id, dataToPost).then(
+                          async (data) => {
+                            if (data.success) {
+                              notification.success({
+                                message: 'Succès',
+                                description: data.message,
+                              });
+                              closeModal?.();
+                            } else {
+                              notification.error({
+                                message: 'Erreur',
+                                description: data.message,
+                              });
+                            }
+                          },
+                        );
+                      }
+
+                      closeModal();
+                    }}
+                  >
+                    Oui
+                  </Button>
+                  <Button type='primary' onClick={() => closeModal()}>
+                    Fermer
+                  </Button>
+                </Space>
+              </div>
+            )}
+          </ButtonWithModal>
+        }
       />
     </CommissaireContainer>
   );

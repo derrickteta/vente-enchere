@@ -1,6 +1,9 @@
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
-import { ResponseType } from '../../../entities/Response.entity';
+import {
+  ResponseEntityType,
+  ResponseType,
+} from '../../../entities/Response.entity';
 import { customFetch } from '../../../shared/customFetch';
 import { API_ROUTES } from '../../shared/ApiRoutes';
 
@@ -12,7 +15,9 @@ export const fetchSallesEnchere = (): Promise<ResponseType<EnchereEntity>> => {
   return customFetch.get(API_ROUTES.SALLES_ENCHERE.BASE);
 };
 
-export const getOneLot = (lotId: any): Promise<ResponseType<LotEntity>> => {
+export const getOneLot = (
+  lotId: any,
+): Promise<ResponseEntityType<LotEntity>> => {
   return customFetch.get(API_ROUTES.LOTS.BASEID(lotId));
 };
 

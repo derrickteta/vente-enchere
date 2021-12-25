@@ -21,12 +21,13 @@ export const SalleEnchereForm = ({
       scrollToFirstError
       onFinish={async (data) => {
         setIsLoading(true);
-        data.dateOuverture = data.dateOuverture.format('YYYY-MM-DD HH:mm:ss');
+        data.dateOuverture = data.dateOuverture.format('YYYY-MM-DD HH:mm');
         let dataToPost: any = {
           lots: [],
           dateOuverture: data.dateOuverture,
           duree: data.duree,
-          statut: 'en_cours',
+          statut: 'pas_commence',
+          pas: Number(data.pas),
         };
         console.log(dataToPost);
 
@@ -59,7 +60,7 @@ export const SalleEnchereForm = ({
             },
           ]}
         >
-          <DatePicker showTime picker='date' />
+          <DatePicker showTime picker='date' format="'YYYY-MM-DD HH:mm" />
         </Form.Item>
         <Form.Item
           label='Pas (FCFA)'

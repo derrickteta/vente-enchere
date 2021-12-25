@@ -30,3 +30,7 @@
 .y-scroll::-webkit-scrollbar {
   display: none; /* for Chrome, Safari, and Opera */
 }
+
+.ant-card-body {
+  padding-top: 5px;
+}
