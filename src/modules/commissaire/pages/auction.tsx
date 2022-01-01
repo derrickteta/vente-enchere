@@ -2,6 +2,7 @@ import { Button, notification, Space, Tag, Tooltip } from 'antd';
 import { useEffect, useState } from 'react';
 import {
   FaDoorClosed,
+  FaDoorOpen,
   FaExternalLinkAlt,
   FaPlus,
   FaTrash,
@@ -19,6 +20,7 @@ import {
   deleteSalleEnchere,
   fermerSalleEnchere,
   fetchSallesEnchere,
+  ouvrirSalleEnchere,
 } from '../network';
 
 export const CommissaireAuctions = () => {
@@ -87,10 +89,62 @@ export const CommissaireAuctions = () => {
               <FaExternalLinkAlt />
             </Button>
           </Tooltip>
+          <Tooltip title='Ouvrir la salle'>
+            <ButtonWithModal
+              buttonText={<FaDoorOpen />}
+              modalProps={{ title: 'Confirmation' }}
+            >
+              {(closeModal) => (
+                <div>
+                  <h3>Voulez vous débuter la séance d'enchere ?</h3>
+                  <Space>
+                    <Button danger onClick={() => closeModal()}>
+                      Fermer
+                    </Button>
+                    <Button
+                      onClick={async () => {
+                        if (row.statut === 'pas_commence') {
+                          setIsLoading(true);
+                          await ouvrirSalleEnchere(row._id).then((data) => {
+                            if (data.success) {
+                              const win = window.open(
+                                ROUTES.AUCTION_ROOM.ADMIN_ROOM(row._id),
+                                '_blank',
+                              );
+                              win?.focus();
+                              closeModal?.();
+                            } else {
+                              notification.error({
+                                message: 'Erreur',
+                                description: data.message,
+                              });
+                            }
+                          });
+                          setIsLoading(false);
+                        } else if (row.statut === 'en_cours') {
+                          closeModal?.();
+                          const win = window.open(
+                            ROUTES.AUCTION_ROOM.ADMIN_ROOM(row._id),
+                            '_blank',
+                          );
+                          win?.focus();
+                        } else {
+                          closeModal?.();
+                        }
+                      }}
+                      type='primary'
+                    >
+                      Ouvrir
+                    </Button>
+                  </Space>
+                </div>
+              )}
+            </ButtonWithModal>
+          </Tooltip>
           <Tooltip title='Fermer la salle'>
             <ButtonWithModal
               buttonText={<FaDoorClosed />}
-              buttonProps={{ danger: false }}
+              buttonProps={{ type: 'default', danger: true }}
               modalProps={{ title: 'Confirmation' }}
             >
               {(closeModal) => (
