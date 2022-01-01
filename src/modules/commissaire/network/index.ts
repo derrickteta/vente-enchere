@@ -37,6 +37,16 @@ export const fermerSalleEnchere = (
   );
 };
 
+export const ouvrirSalleEnchere = (
+  salleEnchereID: string,
+): Promise<ResponseType<EnchereEntity>> => {
+  const dataToPost = { statut: 'en_cours' };
+  return customFetch.put(
+    API_ROUTES.SALLES_ENCHERE.BASEID(salleEnchereID),
+    dataToPost,
+  );
+};
+
 export const deleteSalleEnchere = (
   salleEnchereID: string,
 ): Promise<ResponseType<EnchereEntity>> => {
