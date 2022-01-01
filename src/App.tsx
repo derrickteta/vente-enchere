@@ -25,6 +25,7 @@ function App() {
         <Route path='/success-activation' component={SuccessActivateAccount} />
         <Route exact path='/signup' component={RegistrationPage} />
         <Route path='/auction-room' component={AuctionRoom} />
+        <Route path='/auction-room-admin' component={AuctionRoom} />
         <Route path='/catalog' render={() => <CatalogRoutes />} />
         <Route path='/admin' render={() => <AdminRoutes />} />
         <Route path='/vendeur' render={() => <VendeurRoutes />} />
