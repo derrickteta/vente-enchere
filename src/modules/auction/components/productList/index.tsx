@@ -10,7 +10,13 @@ const Container = styled.div`
   }
 `;
 
-export const ProductList = ({ auctionId }: { auctionId: string }) => {
+export const ProductList = ({
+  auctionId,
+  getSelectedProduit,
+}: {
+  auctionId: string;
+  getSelectedProduit?: (produit: ProduitEntity) => void;
+}) => {
   const [products, setProducts] = useState<ProduitEntity[]>([]);
 
   useEffect(() => {
@@ -28,7 +34,11 @@ export const ProductList = ({ auctionId }: { auctionId: string }) => {
       <div style={{ maxWidth: 750 }}>
         <div className='horizontal-scroll y-scroll'>
           {products.map((product) => (
-            <AuctionProductCard key={product._id} produit={product} />
+            <AuctionProductCard
+              key={product._id}
+              produit={product}
+              getProduit={getSelectedProduit}
+            />
           ))}
         </div>
       </div>

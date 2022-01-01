@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Card, Space } from 'antd';
+import { Button, Card, Space } from 'antd';
 import { ProduitEntity } from '../../../../entities/Gestionproduit/produit.entity';
 import { ButtonWithModal } from '../../../shared/ButtonWithModal';
 import { AuctionProductDetails } from './AuctionProductDetail';
@@ -21,29 +21,25 @@ const CardContainer = styled.div`
   }
 
   .price {
-    color: red;
-    font-size: 12px;
+    font-size: 15px;
     margin-bottom: 0px;
-    border: 1.5px solid red;
-    border-radius: 5px;
-    padding: 2px;
-    min-width: 80px;
-    text-align: center;
+    font-family: 'Montserrat';
   }
 
   .qte {
-    color: blue;
-    font-size: 12px;
+    font-size: 14px;
     margin-bottom: 0px;
-    border: 1.5px solid blue;
-    border-radius: 5px;
-    min-width: 50px;
-    padding: 2px;
-    text-align: center;
+    font-style: italic;
   }
 `;
 
-export const AuctionProductCard = ({ produit }: { produit: ProduitEntity }) => {
+export const AuctionProductCard = ({
+  produit,
+  getProduit,
+}: {
+  produit: ProduitEntity;
+  getProduit?: (produit: ProduitEntity) => void;
+}) => {
   return (
     <CardContainer>
       <Card hoverable style={{ width: 200, height: '100%', borderRadius: 20 }}>
@@ -52,16 +48,43 @@ export const AuctionProductCard = ({ produit }: { produit: ProduitEntity }) => {
             <p className='name'>{produit.nom}</p>
             <p className='category'>{produit.category.nom} </p>
           </div>
-          <Space style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <p className='price'>{produit.prixMin} FCFA </p>
-            <p className='qte'>
+          <Space>
+            <span className='price'>{produit.prixMin} FCFA, </span>
+            <span className='qte'>
               {produit.quantite.valeur} {produit.quantite.unite}
-            </p>
+            </span>
           </Space>
         </div>
-        <div
-          style={{ marginTop: 10, display: 'flex', justifyContent: 'flex-end' }}
-        >
+        <Space style={{ marginTop: 10, justifyContent: 'flex-end' }}>
+          {getProduit && (
+            <ButtonWithModal
+              buttonText='Débuter'
+              modalProps={{ title: 'Détail du produit', width: 900 }}
+              buttonProps={{ size: 'small' }}
+            >
+              {(closeModal) => (
+                <div>
+                  <h2>Voulez-vous débuter la mise à enchère de ce produit ?</h2>
+
+                  <Space>
+                    <Button danger onClick={() => closeModal()}>
+                      Fermer
+                    </Button>
+                    <Button
+                      danger
+                      onClick={async () => {
+                        getProduit?.(produit);
+                        closeModal();
+                      }}
+                    >
+                      Débuter
+                    </Button>
+                  </Space>
+                </div>
+              )}
+            </ButtonWithModal>
+          )}
+
           <ButtonWithModal
             buttonText='Détail'
             modalProps={{ title: 'Détail du produit', width: 900 }}
@@ -74,7 +97,7 @@ export const AuctionProductCard = ({ produit }: { produit: ProduitEntity }) => {
               />
             )}
           </ButtonWithModal>
-        </div>
+        </Space>
       </Card>
     </CardContainer>
   );
