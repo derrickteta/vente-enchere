@@ -15,6 +15,12 @@ export const fetchSallesEnchere = (): Promise<ResponseType<EnchereEntity>> => {
   return customFetch.get(API_ROUTES.SALLES_ENCHERE.BASE);
 };
 
+export const fetchOneSallesEnchere = (
+  enchereId: string,
+): Promise<ResponseEntityType<EnchereEntity>> => {
+  return customFetch.get(API_ROUTES.SALLES_ENCHERE.BASEID(enchereId));
+};
+
 export const getOneLot = (
   lotId: any,
 ): Promise<ResponseEntityType<LotEntity>> => {
