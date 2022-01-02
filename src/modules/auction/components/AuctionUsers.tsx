@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Divider } from 'antd';
+import { Divider, Spin } from 'antd';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { UserItem } from './UserItem';
@@ -20,12 +20,13 @@ export type AuctionUser = {
 };
 
 export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
+  const [isLoading, setIsLoading] = useState(true);
   const [users, setUsers] = useState<AuctionUser[]>([]);
 
   useEffect(() => {
     socket.on('count_clients', (data: AuctionUser[]) => {
-      console.log(data);
       setUsers(data);
+      setIsLoading(false);
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
@@ -34,6 +35,7 @@ export const ConnectedAuctionUsers = ({ socket }: { socket: Socket }) => {
     <UsersContainer className='y-scroll'>
       <h3>Utilisateurs connectés</h3>
       <Divider />
+      <Spin spinning={isLoading} />
       {users.map((item, index) => (
         <UserItem
           name={item.username}
