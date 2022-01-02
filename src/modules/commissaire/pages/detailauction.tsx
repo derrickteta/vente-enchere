@@ -32,17 +32,26 @@ export const DetailEnchere = () => {
   useEffect(() => {
     fetchLot().then((data) => {
       if (data.success) {
-        let lotss = [];
-        for (let lot of data.result) {
-          if (enchereLots.filter((l) => l._id !== lot._id).length > 0) {
-            lotss.push(lot);
+        let lotss: LotEntity[] = [];
+        if (enchereLots.length === 0) {
+          lotss = data.result;
+        } else {
+          for (let lot of data.result) {
+            if (enchereLots.filter((l) => l._id !== lot._id).length > 0) {
+              lotss.push(lot);
+            }
           }
         }
         setLots(lotss);
+        console.log(lotss);
       }
       setIsLoading(false);
     });
   }, [enchereLots]);
+
+  if (!enchere) {
+    return null;
+  }
 
   const LotColumns = [
     {
