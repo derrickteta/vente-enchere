@@ -3,6 +3,7 @@ import { Button, Divider, message, notification, Space, Statistic } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
 import { Socket } from 'socket.io-client';
+import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ProductList } from './productList';
 
 const AuctionContainer = styled.div`
@@ -56,7 +57,6 @@ const AuctionContainer = styled.div`
 
 export type BidType = {
   room: string;
-  user: string;
   bid: number;
 };
 const counter = Date.now() + 1000 * 60 * 60 * 0.5;
@@ -68,12 +68,11 @@ export const AuctioningContainer = ({
   socket: Socket;
   roomId: string;
 }) => {
-  const minPrice = 8000;
-  const [bid, setBid] = useState(minPrice);
+  const [bid, setBid] = useState(0);
+  const [currentProduit, setCurrentProduit] = useState<ProduitEntity>();
   const [maxBid, setMaxBid] = useState<BidType>({
     room: roomId,
-    user: 'Admin',
-    bid: minPrice,
+    bid: bid,
   });
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -83,10 +82,27 @@ export const AuctioningContainer = ({
     socket.on('receive_bid', (data) => {
       setMaxBid(data);
       setBid(data.bid);
-      message.info('Nouvelle Offre!!!');
+      message.info('Nouvelle Offre!!!', 5);
+    });
+
+    socket.on('receive_current_product', (data) => {
+      setCurrentProduit(data.currentProduct);
+      message.info("L'enchère d'un nouveau produit va débuter", 5);
+    });
+    socket.on('receive_current_bid', (data) => {
+      setBid(data.currentBid);
+      setMaxBid({ room: data.room, bid: data.currentBid });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
+
+  useEffect(() => {
+    console.log(currentProduit);
+  }, [currentProduit]);
+
+  useEffect(() => {
+    console.log(bid);
+  }, [bid]);
 
   const sendBid = async () => {
     if (bid > maxBid.bid) {
@@ -112,27 +128,32 @@ export const AuctioningContainer = ({
     <AuctionContainer className='y-scroll'>
       <ProductList auctionId={roomId} />
       <Divider style={{ backgroundColor: 'white' }} />
-      <Space
-        className='nums'
-        style={{ display: 'flex', justifyContent: 'space-between' }}
-      >
-        <div>
-          <p>{minPrice} FCFA</p>
-        </div>
-        <div>
-          <p>Patate - 2 sac</p>
-        </div>
-        <div>
-          <p>Pas: {step} FCFA</p>
-        </div>
-        <div>
-          <Statistic.Countdown
-            valueStyle={{ fontSize: 20, color: 'red' }}
-            value={counter}
-          />
-        </div>
-      </Space>
-      <Divider style={{ backgroundColor: 'white' }} />
+      {currentProduit && (
+        <>
+          <p>En cours...</p>
+          <Space
+            className='nums'
+            style={{ display: 'flex', justifyContent: 'space-between' }}
+          >
+            <div>
+              <p>{currentProduit.prixMin} FCFA</p>
+            </div>
+            <div>
+              <p>{currentProduit.nom}</p>
+            </div>
+            <div>
+              <p>Pas: {step} FCFA</p>
+            </div>
+            <div>
+              <Statistic.Countdown
+                valueStyle={{ fontSize: 20, color: 'red' }}
+                value={counter}
+              />
+            </div>
+          </Space>
+          <Divider style={{ backgroundColor: 'white' }} />
+        </>
+      )}
 
       <div
         style={{
