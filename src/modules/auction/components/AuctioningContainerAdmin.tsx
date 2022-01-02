@@ -1,9 +1,10 @@
 import styled from '@emotion/styled';
-import { Divider, Space, Statistic } from 'antd';
+import { Divider, message, Space, Statistic } from 'antd';
 import { useEffect, useState } from 'react';
 import { Socket } from 'socket.io-client';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { BidType } from './AuctioningContainer';
 import { ProductList } from './productList';
 
 const AuctionContainer = styled.div`
@@ -33,6 +34,19 @@ const AuctionContainer = styled.div`
     color: black;
     margin-top: 10px;
   }
+
+  .highest-bid {
+    border-radius: 10px;
+    font-size: 25px;
+    border: 2px solid red;
+    min-width: 200px;
+    max-width: 250px;
+    padding: 5px;
+    font-family: 'Montserrat';
+    text-align: center;
+    align-self: center;
+    margin-top: 50px;
+  }
 `;
 
 const counter = Date.now() + 1000 * 60 * 60 * 0.5;
@@ -47,6 +61,10 @@ export const AuctioningContainerAdmin = ({
   enchere?: EnchereEntity;
 }) => {
   const [selectedProduit, setSelectedProduit] = useState<ProduitEntity>();
+  const [maxBid, setMaxBid] = useState<BidType>({
+    room: roomId,
+    bid: 0,
+  });
 
   useEffect(() => {
     if (selectedProduit) {
@@ -67,6 +85,10 @@ export const AuctioningContainerAdmin = ({
   };
 
   useEffect(() => {
+    socket.on('receive_bid', (data) => {
+      setMaxBid(data);
+      message.info('Nouvelle Offre!!!', 5);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
 
@@ -114,6 +136,7 @@ export const AuctioningContainerAdmin = ({
           minHeight: 400,
         }}
       >
+        <div className='highest-bid'>{maxBid.bid} FCFA</div>
         <div className='box'>
           <Space style={{ marginBottom: 10 }}></Space>
         </div>
