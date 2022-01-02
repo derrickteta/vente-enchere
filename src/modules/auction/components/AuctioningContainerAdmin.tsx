@@ -72,7 +72,11 @@ export const AuctioningContainerAdmin = ({
 
   return (
     <AuctionContainer className='y-scroll'>
-      <ProductList auctionId={roomId} getSelectedProduit={setSelectedProduit} />
+      <ProductList
+        auctionId={roomId}
+        getSelectedProduit={setSelectedProduit}
+        currentProductId={selectedProduit?._id}
+      />
 
       <Divider style={{ backgroundColor: 'white' }} />
       {selectedProduit && (

@@ -86,12 +86,16 @@ export const AuctioningContainer = ({
     });
 
     socket.on('receive_current_product', (data) => {
-      setCurrentProduit(data.currentProduct);
-      message.info("L'enchère d'un nouveau produit va débuter", 5);
+      if (data) {
+        setCurrentProduit(data.currentProduct);
+        message.info("L'enchère d'un nouveau produit va débuter", 5);
+      }
     });
     socket.on('receive_current_bid', (data) => {
-      setBid(data.currentBid);
-      setMaxBid({ room: data.room, bid: data.currentBid });
+      if (data) {
+        setBid(data.currentBid);
+        setMaxBid({ room: data.room, bid: data.currentBid });
+      }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [socket]);
@@ -126,7 +130,7 @@ export const AuctioningContainer = ({
 
   return (
     <AuctionContainer className='y-scroll'>
-      <ProductList auctionId={roomId} />
+      <ProductList auctionId={roomId} currentProductId={currentProduit?._id} />
       <Divider style={{ backgroundColor: 'white' }} />
       {currentProduit && (
         <>
