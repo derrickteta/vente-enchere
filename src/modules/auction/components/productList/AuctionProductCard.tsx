@@ -59,7 +59,7 @@ export const AuctionProductCard = ({
           {getProduit && (
             <ButtonWithModal
               buttonText='Débuter'
-              modalProps={{ title: 'Détail du produit', width: 900 }}
+              modalProps={{ title: 'Détail du produit' }}
               buttonProps={{ size: 'small' }}
             >
               {(closeModal) => (
@@ -71,7 +71,7 @@ export const AuctionProductCard = ({
                       Fermer
                     </Button>
                     <Button
-                      danger
+                      type='primary'
                       onClick={async () => {
                         getProduit?.(produit);
                         closeModal();
