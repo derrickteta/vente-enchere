@@ -1,10 +1,12 @@
 import styled from '@emotion/styled';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import io from 'socket.io-client';
 import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
+import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { SEMIDARK } from '../../../shared/colors';
+import { fetchOneSallesEnchere } from '../../commissaire/network';
 import { AuctioningContainer } from '../components/AuctioningContainer';
 import { ConnectedAuctionUsers } from '../components/AuctionUsers';
 import { ChatRoom } from '../components/ChatRoom';
@@ -28,11 +30,17 @@ socket.on('disconnect', () => {
 export const AuctionRoom = () => {
   const params = new URLSearchParams(useLocation().search);
   const roomId = params.get('id');
+  const [enchere, setEnchere] = useState<EnchereEntity>();
   const connectedUser: ConnectedUserEntity = useSelector(
     (state: any) => state.userReducer,
   ).user;
 
   useEffect(() => {
+    fetchOneSallesEnchere(roomId as string).then((data) => {
+      if (data.success) {
+        setEnchere(data.result);
+      }
+    });
     socket.emit('join_room', {
       room: roomId,
       salleEnchere: roomId,
@@ -46,7 +54,11 @@ export const AuctionRoom = () => {
   return (
     <AuctionContainer>
       <ConnectedAuctionUsers socket={socket} />
-      <AuctioningContainer socket={socket} roomId={roomId as string} />
+      <AuctioningContainer
+        enchere={enchere}
+        socket={socket}
+        roomId={roomId as string}
+      />
       <ChatRoom socket={socket} roomId={roomId as string} />
     </AuctionContainer>
   );
