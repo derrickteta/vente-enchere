@@ -28,6 +28,11 @@ export const SalleEnchereForm = ({
           duree: data.duree,
           statut: 'pas_commence',
           pas: Number(data.pas),
+          enchereEncours: {
+            montantMax: 0,
+            bids: [],
+          },
+          gagnants: [],
         };
         console.log(dataToPost);
 
