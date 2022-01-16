@@ -7,6 +7,7 @@ import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
 import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { SEMIDARK } from '../../../shared/colors';
 import { fetchOneSallesEnchere } from '../../commissaire/network';
+import { BASE_URL } from '../../shared/ApiRoutes';
 import { AuctioningContainerAdmin } from '../components/AuctioningContainerAdmin';
 import { ConnectedAuctionUsers } from '../components/AuctionUsers';
 import { ChatRoom } from '../components/ChatRoom';
@@ -17,7 +18,7 @@ const AuctionContainer = styled.div`
   display: flex;
 `;
 
-const socket = io('https://vente-enchere-api.herokuapp.com/');
+const socket = io(BASE_URL);
 
 socket.on('connect', () => {
   console.log(socket.id);
