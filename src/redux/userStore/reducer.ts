@@ -10,6 +10,7 @@ export type UserStateType = {
   telephone: string;
   email: string;
   compteId: string;
+  userId: string;
   token: string;
   nextAuthDate: number;
 };
@@ -22,6 +23,7 @@ const INITIAL_STORE: UserStateType = {
   telephone: '',
   email: '',
   compteId: '',
+  userId: '',
   token: '',
   nextAuthDate: 0,
 };

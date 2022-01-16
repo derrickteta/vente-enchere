@@ -14,6 +14,7 @@ export const createUser = (user: UserStateType): UserTypeAction => ({
     telephone: user.telephone,
     email: user.email,
     compteId: user.compteId,
+    userId: user.userId,
     token: user.token,
     nextAuthDate: user.nextAuthDate,
   },
