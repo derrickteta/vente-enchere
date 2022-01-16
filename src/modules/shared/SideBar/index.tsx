@@ -181,6 +181,7 @@ export const SideBar = ({
                 telephone: '',
                 email: '',
                 compteId: '',
+                userId: '',
                 token: '',
                 nextAuthDate: 0,
               }),
