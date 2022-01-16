@@ -78,9 +78,9 @@ export const AuctioningContainerAdmin = ({
       room: roomId,
       currentProduct: selectedProduit,
     });
-    await socket.emit('send_current_bid', {
+    setMaxBid({
       room: roomId,
-      currentBid: selectedProduit?.prixMin,
+      bid: selectedProduit?.prixMin || 0,
     });
   };
 
@@ -112,7 +112,7 @@ export const AuctioningContainerAdmin = ({
               <p>{selectedProduit?.prixMin} FCFA</p>
             </div>
             <div>
-              <p>Patate - 2 sac</p>
+              <p>{selectedProduit.nom}</p>
             </div>
             <div>
               <p>Pas: {enchere?.pas} FCFA</p>

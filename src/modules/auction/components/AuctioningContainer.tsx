@@ -2,7 +2,10 @@ import styled from '@emotion/styled';
 import { Button, Divider, message, notification, Space, Statistic } from 'antd';
 import { useEffect, useState } from 'react';
 import { FaMinus, FaPlus } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 import { Socket } from 'socket.io-client';
+import { ConnectedUserEntity } from '../../../entities/ConnectedUserEntity';
+import { EnchereEntity } from '../../../entities/GestionEnchere/enchere.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
 import { ProductList } from './productList';
 
@@ -64,9 +67,11 @@ const counter = Date.now() + 1000 * 60 * 60 * 0.5;
 export const AuctioningContainer = ({
   socket,
   roomId,
+  enchere,
 }: {
   socket: Socket;
   roomId: string;
+  enchere?: EnchereEntity;
 }) => {
   const [bid, setBid] = useState(0);
   const [currentProduit, setCurrentProduit] = useState<ProduitEntity>();
@@ -74,9 +79,9 @@ export const AuctioningContainer = ({
     room: roomId,
     bid: bid,
   });
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [step, setStep] = useState(500);
+  const connectedUser: ConnectedUserEntity = useSelector(
+    (state: any) => state.userReducer,
+  ).user;
 
   useEffect(() => {
     socket.on('receive_bid', (data) => {
@@ -86,15 +91,13 @@ export const AuctioningContainer = ({
     });
 
     socket.on('receive_current_product', (data) => {
+      console.log(data);
+
       if (data) {
         setCurrentProduit(data.currentProduct);
+        setBid(data.bid);
+        setMaxBid({ room: data.room, bid: data.bid });
         message.info("L'enchère d'un nouveau produit va débuter", 5);
-      }
-    });
-    socket.on('receive_current_bid', (data) => {
-      if (data) {
-        setBid(data.currentBid);
-        setMaxBid({ room: data.room, bid: data.currentBid });
       }
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -112,8 +115,9 @@ export const AuctioningContainer = ({
     if (bid > maxBid.bid) {
       const bidding = {
         room: roomId,
-        user: socket.id,
+        user: connectedUser._id,
         bid,
+        produit: currentProduit?._id,
       };
       setMaxBid(bidding);
 
@@ -146,7 +150,7 @@ export const AuctioningContainer = ({
               <p>{currentProduit.nom}</p>
             </div>
             <div>
-              <p>Pas: {step} FCFA</p>
+              <p>Pas: {enchere?.pas} FCFA</p>
             </div>
             <div>
               <Statistic.Countdown
@@ -170,10 +174,10 @@ export const AuctioningContainer = ({
         <div className='highest-bid'>{maxBid.bid} FCFA</div>
         <div className='box'>
           <Space style={{ marginBottom: 10 }}>
-            <Button onClick={() => setBid(bid + step)}>
+            <Button onClick={() => setBid(bid + (enchere?.pas || 0))}>
               <FaPlus color='green' size={16} />
             </Button>
-            <Button danger onClick={() => setBid(bid - step)}>
+            <Button danger onClick={() => setBid(bid - (enchere?.pas || 0))}>
               <FaMinus color='red' size={16} />
             </Button>
             <p className='bidNum'> {bid} FCFA</p>
