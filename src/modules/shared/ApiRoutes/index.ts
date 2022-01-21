@@ -53,4 +53,7 @@ export const API_ROUTES = {
     BASE: `${BASE_URL}api/events/`,
     BASEID: (id: string) => `${BASE_URL}api/events/${id}`,
   },
+  LOG: {
+    BASE: `${BASE_URL}api/logs/`,
+  },
 };
