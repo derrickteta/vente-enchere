@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { ReactNode, useState } from 'react';
 import { FaChalkboardTeacher, FaClipboardList, FaUser } from 'react-icons/fa';
+import { MdFeedback } from 'react-icons/md';
 import { DashboardHeader } from '../../shared/DashboardHeader';
 import { SideBar } from '../../shared/SideBar';
 
@@ -90,5 +91,16 @@ const ROUTES = [
     link: '/vendeur/account',
     text: 'Mon Compte',
     clicked: 'account',
+  },
+  {
+    icon: (clicked: string) => (
+      <MdFeedback
+        color={clicked === 'feedback' ? 'white' : 'black'}
+        size={24}
+      />
+    ),
+    link: '/vendeur/feedback',
+    text: 'Feedback',
+    clicked: 'feedback',
   },
 ];
