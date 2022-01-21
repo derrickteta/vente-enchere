@@ -1,8 +1,12 @@
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
+import { EventEntity } from '../../../entities/Gestionproduit/event.entity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
-import { ResponseType } from '../../../entities/Response.entity';
+import {
+  ResponseEntityType,
+  ResponseType,
+} from '../../../entities/Response.entity';
 import { customFetch } from '../../../shared/customFetch';
 import { API_ROUTES } from '../../shared/ApiRoutes';
 
@@ -56,4 +60,29 @@ export const update = (
   data: any,
 ): Promise<ResponseType<VendeurEntity>> => {
   return customFetch.put(API_ROUTES.USERS.BASEID(id), data);
+};
+
+export const fetchEvent = (): Promise<ResponseType<EventEntity>> => {
+  return customFetch.get(API_ROUTES.EVENT.BASE);
+};
+
+export const createEvent = (
+  event: EventEntity,
+): Promise<ResponseEntityType<EventEntity>> => {
+  return customFetch.post(API_ROUTES.EVENT.BASE, event);
+};
+
+export const addImageEvent = (
+  eventId: string,
+  images: [],
+): Promise<ResponseType<EventEntity>> => {
+  let formData = new FormData();
+  for (let image of images) {
+    formData.append('image', image);
+  }
+
+  return fetch(API_ROUTES.PRODUITS.ADD_IMAGES(eventId), {
+    method: 'put',
+    body: formData,
+  }).then((res) => res.json());
 };
