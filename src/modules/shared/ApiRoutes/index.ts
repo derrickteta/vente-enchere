@@ -49,4 +49,8 @@ export const API_ROUTES = {
     PRODUCT_ENCHERE: (id: string) =>
       `${BASE_URL}api/salleEncheres/getSalle/${id}`,
   },
+  EVENT: {
+    BASE: `${BASE_URL}api/events/`,
+    BASEID: (id: string) => `${BASE_URL}api/events/${id}`,
+  },
 };
