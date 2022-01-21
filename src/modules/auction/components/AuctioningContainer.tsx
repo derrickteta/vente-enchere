@@ -115,7 +115,7 @@ export const AuctioningContainer = ({
     if (bid > maxBid.bid) {
       const bidding = {
         room: roomId,
-        user: connectedUser._id,
+        user: connectedUser.userId,
         bid,
         produit: currentProduit?._id,
       };

@@ -81,7 +81,7 @@ export const ChatRoom = ({
       messageId: Math.round(
         Math.random() * (999999 - 100000 + 1) + 100000,
       ).toString(),
-      authorId: connectedUser._id,
+      authorId: connectedUser.userId,
       authorName: name,
       message: textMessage,
       dateEnvoie: new Date().toUTCString(),
@@ -93,7 +93,7 @@ export const ChatRoom = ({
       messageId: Math.round(
         Math.random() * (999999 - 100000 + 1) + 100000,
       ).toString(),
-      authorId: connectedUser._id,
+      authorId: connectedUser.userId,
       authorName: name,
       message: textMessage,
       dateEnvoie: new Date().toUTCString(),
@@ -111,7 +111,7 @@ export const ChatRoom = ({
       <Divider />
       <div id='m-block' className='message-section y-scroll'>
         {messages.map((mess, index) =>
-          mess.authorId === connectedUser._id ? (
+          mess.authorId === connectedUser.userId ? (
             <SenderMessage key={index} message={mess} />
           ) : (
             <RecieverMessage key={index} message={mess} />
