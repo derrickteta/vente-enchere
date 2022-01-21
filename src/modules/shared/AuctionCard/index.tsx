@@ -32,7 +32,7 @@ export const AuctionCard = ({ enchere }: { enchere: EnchereEntity }) => {
           router.push(ROUTES.CATALOG_PAGE.PRODUCT(enchere._id), enchere)
         }
       >
-        <p>{enchere.date} </p>
+        <p>{enchere.dateOuverture} </p>
       </Card>
     </CardContainer>
   );

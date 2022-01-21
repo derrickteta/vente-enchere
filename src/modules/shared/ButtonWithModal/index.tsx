@@ -6,6 +6,7 @@ export const ButtonWithModal = ({
   children,
   modalProps,
   buttonProps,
+  ...props
 }: {
   buttonText: React.ReactNode;
   children: (closeModal: () => void) => React.ReactNode;
@@ -15,7 +16,7 @@ export const ButtonWithModal = ({
   const [isModalVisible, setIsModalVisible] = useState(false);
   const closeModal = () => setIsModalVisible(false);
   return (
-    <>
+    <span {...props}>
       <Button
         onClick={() => setIsModalVisible(true)}
         type='primary'
@@ -32,6 +33,6 @@ export const ButtonWithModal = ({
       >
         {children(closeModal)}
       </Modal>
-    </>
+    </span>
   );
 };

@@ -16,6 +16,7 @@ export const ROUTES = {
     ACCOUNT: '/vendeur/account',
     NEW_PRODUCT: '/vendeur/products/new',
     LOT_DETAIL: (id: string) => `/vendeur/lot-details/?id=${id}`,
+    UPDATE: '/vendeur/account/update',
   },
   GERANT_PAGE: {
     DASHBOARD: '/gerant/dashboard',
@@ -32,5 +33,14 @@ export const ROUTES = {
     DASHBOARD: '/commissaire/dashboard',
     LOT_DETAIL: (id: string) => `/commissaire/lot-details/?id=${id}`,
     PRODUCT_DETAIL: (id: string) => `/commissaire/product-detail/?id=${id}`,
+    AUCTION: '/commissaire/auction',
+    AUCTION_DETAIL: (id: string) => `/commissaire/auction-detail/?id=${id}`,
+  },
+  AUCTION_ROOM: {
+    ROOM: (id: string) => `/auction-room/?id=${id}`,
+    ADMIN_ROOM: (id: string) => `/auction-room-admin/?id=${id}`,
+  },
+  ENCHERE_PAGE: {
+    ENCHERE_DETAIL: (id: string) => `/enchere/enchere-details/?id=${id}`,
   },
 };

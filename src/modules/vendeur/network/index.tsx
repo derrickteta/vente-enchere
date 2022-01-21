@@ -1,3 +1,4 @@
+import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
@@ -40,6 +41,19 @@ export const fetchLot = (): Promise<ResponseType<LotEntity>> => {
   return customFetch.get(API_ROUTES.LOTS.BASE);
 };
 
+export const fetchVendeurLot = (
+  vendeurId: string,
+): Promise<ResponseType<LotEntity>> => {
+  return customFetch.get(API_ROUTES.LOTS.VENDEUR(vendeurId));
+};
+
 export const fetchProduit = (): Promise<ResponseType<ProduitEntity>> => {
   return customFetch.get(API_ROUTES.PRODUITS.BASE);
+};
+
+export const update = (
+  id: string,
+  data: any,
+): Promise<ResponseType<VendeurEntity>> => {
+  return customFetch.put(API_ROUTES.USERS.BASEID(id), data);
 };

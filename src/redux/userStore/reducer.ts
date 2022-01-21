@@ -2,26 +2,30 @@ import { UserTypeAction } from './actions';
 import { CREATE_USER } from './actionTypes';
 
 export type UserStateType = {
-  user: {
-    authentifie: boolean;
-    roles: [];
-    id: string;
-    nom: string;
-    prenom: string;
-    token: string;
-    nextAuthDate: number;
-  };
+  authentifie: boolean;
+  roles: [];
+  _id: string;
+  nom: string;
+  prenom: string;
+  telephone: string;
+  email: string;
+  compteId: string;
+  userId: string;
+  token: string;
+  nextAuthDate: number;
 };
 const INITIAL_STORE: UserStateType = {
-  user: {
-    authentifie: false,
-    roles: [],
-    id: '',
-    nom: '',
-    prenom: '',
-    token: '',
-    nextAuthDate: 0,
-  },
+  authentifie: false,
+  roles: [],
+  _id: '',
+  nom: '',
+  prenom: '',
+  telephone: '',
+  email: '',
+  compteId: '',
+  userId: '',
+  token: '',
+  nextAuthDate: 0,
 };
 
 export const userReducer = (state = INITIAL_STORE, action: UserTypeAction) => {

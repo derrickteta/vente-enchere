@@ -137,7 +137,7 @@ const MenuContent = ({ closeMenu }: { closeMenu?: () => void }) => {
           closeMenu?.();
         }}
       >
-        Contacts
+        Favoris
       </NavLink>
       <Space>
         <NavLink onClick={() => {}}>

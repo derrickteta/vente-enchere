@@ -13,6 +13,7 @@ export const API_ROUTES = {
   LOTS: {
     BASE: `${BASE_URL}api/lots`,
     BASEID: (id: string) => `${BASE_URL}api/lots/${id}`,
+    VENDEUR: (vendeurId: string) => `${BASE_URL}api/lots/vendeur/${vendeurId}`,
     GET_LOT_PRODUIT: (productId: string) =>
       `${BASE_URL}api/lots/produit/${productId}`,
   },
@@ -39,5 +40,13 @@ export const API_ROUTES = {
   COMMISSAIRES: {
     BASE: `${BASE_URL}api/commissaires`,
     BASEID: (id: string) => `${BASE_URL}api/commissaires/${id}`,
+  },
+  SALLES_ENCHERE: {
+    BASE: `${BASE_URL}api/salleEncheres/`,
+    BASEID: (id: string) => `${BASE_URL}api/salleEncheres/${id}`,
+    ALL_PRODUCTS: (salleId: string) =>
+      `${BASE_URL}api/salleEncheres/allProduits/${salleId}`,
+    PRODUCT_ENCHERE: (id: string) =>
+      `${BASE_URL}api/salleEncheres/getSalle/${id}`,
   },
 };

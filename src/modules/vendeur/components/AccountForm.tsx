@@ -22,6 +22,20 @@ export const AccountForm = () => {
       onFinish={async (data) => {
         setIsLoading(true);
         notification.success({ message: 'Success' });
+        let dataToPost: any = {
+          nom: data.nom,
+          prenom: data.prenom,
+          telephone: data.telephone,
+          email: data.email,
+          password: data.password,
+          roles: [],
+          localisation: {
+            adresse: data.adresse,
+            ville: data.ville,
+            pays: 'Cameroun',
+          },
+        };
+        console.log({ dataToPost });
       }}
     >
       <Form.Item
@@ -119,7 +133,7 @@ export const AccountForm = () => {
         rules={[
           {
             required: true,
-            message: 'Veuillez renseigner votre contact téléhonique',
+            message: 'Veuillez renseigner votre contact téléphonique',
           },
         ]}
       >

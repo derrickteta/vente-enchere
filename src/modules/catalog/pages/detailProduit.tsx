@@ -9,6 +9,7 @@ import { useHistory } from 'react-router';
 import { useLocation } from 'react-router-dom';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
 import { ProduitEntity } from '../../../entities/Gestionproduit/produit.entity';
+import { ROUTES } from '../../../routes';
 import { PRIMARY } from '../../../shared/colors';
 import { Footer } from '../../homePage/components/Footer';
 import { DateFrHrWithTime } from '../../shared/DateToFrench';
@@ -76,7 +77,7 @@ export const ProductDetails = () => {
   }, [params.get('id')]);
 
   return (
-    <Layout maxWidth={1300} footer={<Footer />}>
+    <Layout footer={<Footer />}>
       <Space style={{ alignItems: 'flex-start', flexWrap: 'wrap' }} size={30}>
         <ImageCarousel imageListIds={product.images}></ImageCarousel>
         <ProductInfoContainer>
@@ -101,9 +102,18 @@ export const ProductDetails = () => {
               Date création:{' '}
               <strong>{DateFrHrWithTime(product.dateCreation)}</strong>
             </p>
+            <p>
+              Numéro de Lot:{' '}
+              <strong style={{ fontSize: 20, color: 'red' }}>
+                {lot &&
+                  `${lot.numeroLot.toString().slice(0, 3)}-${lot?.numeroLot
+                    .toString()
+                    .slice(3)}`}
+              </strong>
+            </p>
           </div>
           <div>
-            <Space style={{ justifyContent: 'center' }}>
+            <Space size={20}>
               <Tooltip title='Ajouter aux favoris'>
                 <AiOutlineHeart size={35} color='red' />
               </Tooltip>
@@ -114,7 +124,16 @@ export const ProductDetails = () => {
                 valueStyle={{ fontSize: 20, color: 'red' }}
                 value={Date.now() + 1000 * 60 * 60 * 24 * 1 + 1000 * 30}
               />
-              <Button type='primary' size='large'>
+              <Button
+                type='primary'
+                size='large'
+                onClick={() =>
+                  router.push(
+                    ROUTES.ENCHERE_PAGE.ENCHERE_DETAIL(product._id),
+                    product,
+                  )
+                }
+              >
                 Visiter l'enchère
               </Button>
             </Space>
@@ -130,7 +149,12 @@ export const ProductDetails = () => {
           lot.produits?.map(
             (produit) =>
               produit._id !== product._id && (
-                <ProductCard key={produit._id} produit={produit} showInfo />
+                <ProductCard
+                  key={produit._id}
+                  produit={produit}
+                  showInfo
+                  onClick={() => router.go(0)}
+                />
               ),
           )}
       </div>

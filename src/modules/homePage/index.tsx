@@ -19,7 +19,7 @@ export const HomePage = () => {
           duration={10000}
           carouselContent={[
             {
-              title: 'AGRIC AUCTIONS',
+              title: 'AGRIC AUCTIONSSSSS',
               subtitle:
                 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nesciunt pariatur magni id, facilis cupiditate unde nihil sit quidem sequi? Lorem ipsum dolor sit amet, ',
               backgroundImage: slide1,
