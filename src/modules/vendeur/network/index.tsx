@@ -1,4 +1,5 @@
 import { VendeurEntity } from '../../../entities/GestionCompte/vendeur.entity';
+import { FeedbackEntity } from '../../../entities/GestionEnchere/feedback.entity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { EventEntity } from '../../../entities/Gestionproduit/event.entity';
 import { LotEntity } from '../../../entities/Gestionproduit/lot.entity';
@@ -49,6 +50,12 @@ export const fetchVendeurLot = (
   vendeurId: string,
 ): Promise<ResponseType<LotEntity>> => {
   return customFetch.get(API_ROUTES.LOTS.VENDEUR(vendeurId));
+};
+
+export const fetchVendeurFeedback = (): Promise<
+  ResponseType<FeedbackEntity>
+> => {
+  return customFetch.get(API_ROUTES.FEEDBACK.BASE);
 };
 
 export const fetchProduit = (): Promise<ResponseType<ProduitEntity>> => {

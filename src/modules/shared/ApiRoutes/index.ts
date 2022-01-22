@@ -56,4 +56,7 @@ export const API_ROUTES = {
   LOG: {
     BASE: `${BASE_URL}api/logs/`,
   },
+  FEEDBACK: {
+    BASE: `${BASE_URL}api/feedback/`,
+  },
 };
