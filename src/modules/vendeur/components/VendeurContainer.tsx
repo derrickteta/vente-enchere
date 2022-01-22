@@ -75,13 +75,13 @@ const ROUTES = [
   {
     icon: (clicked: string) => (
       <FaClipboardList
-        color={clicked === 'products' ? 'white' : 'black'}
+        color={clicked === 'event' ? 'white' : 'black'}
         size={24}
       />
     ),
-    link: '/vendeur/products',
+    link: '/vendeur/event',
     text: 'Mes Evènements',
-    clicked: 'products',
+    clicked: 'event',
   },
   {
     icon: (clicked: string) => (
