@@ -16,6 +16,7 @@ export class ProduitEntity {
   images: string[];
   estBio: boolean;
   statut: string;
+  favoris: string[];
   dateCreation: string;
   dateModification?: string;
   dateSuppression?: string;
@@ -29,6 +30,7 @@ export class ProduitEntity {
     this.vendeur = produit.vendeur;
     this.category = produit.category;
     this.images = produit.images;
+    this.favoris = produit.favoris;
     this.estBio = produit.estBio;
     this.statut = produit.statut;
     this.dateCreation = produit.dateCreation;

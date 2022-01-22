@@ -1,6 +1,7 @@
 import { CommissaireEntity } from '../../../entities/GestionCompte/commissiare.entity';
 import { GerantEntity } from '../../../entities/GestionCompte/gerant.entity';
 import { UserEntity } from '../../../entities/GestionCompte/user.entity';
+import { LogEntity } from '../../../entities/GestionLog/log.entity';
 import { CategorieEntity } from '../../../entities/Gestionproduit/categorie.entity';
 import { ResponseType } from '../../../entities/Response.entity';
 import { customFetch } from '../../../shared/customFetch';
@@ -11,6 +12,10 @@ export const fetchUsers = (): Promise<ResponseType<UserEntity>> => {
 };
 export const fetchCategories = (): Promise<ResponseType<CategorieEntity>> => {
   return customFetch.get(API_ROUTES.CATEGORIES.BASE);
+};
+
+export const fecthLogs = (): Promise<ResponseType<LogEntity>> => {
+  return customFetch.get(API_ROUTES.LOG.BASE);
 };
 
 export const createGerant = (
